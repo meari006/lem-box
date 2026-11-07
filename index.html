@@ -31,7 +31,7 @@ header{padding:26px 20px 18px;max-width:1200px;margin:auto}h1{margin:0;font-size
  <div class="field"><label for="brightness">整体浓度 <span id="brightnessVal">25</span></label><input id="brightness" type="range" min="-150" max="150" value="25"></div>
  <div class="field"><label for="contrast">对比度 <span id="contrastVal">125</span></label><input id="contrast" type="range" min="50" max="200" value="125"></div>
  <div class="field"><label for="fontSize">导出 PNG 字符大小 <span id="fontSizeVal">10</span></label><input id="fontSize" type="range" min="4" max="14" value="10"></div>
- <div class="field wide"><label class="check"><input id="invert" type="checkbox">反转明暗</label><label class="check"><input id="blackBg" type="checkbox">黑色背景、浅色文字</label></div>
+ <div class="field wide"><label class="check"><input id="invert" type="checkbox">反转明暗（亮部生成字符）</label><label class="check"><input id="blackBg" type="checkbox">黑底白字配色</label><div class="hint">反转明暗会改变原图哪些区域生成字符；黑底白字只改变成品颜色，不改变网点分布。</div></div>
  <div class="actions wide"><button class="primary" id="convert" disabled>生成文字网点图</button><button id="txt" disabled>导出 TXT</button><button id="png" disabled>导出 PNG</button></div>
  <div class="hint wide">建议先用 360 行确认效果，再切换 1080 行导出。超大网格可能需要较多内存。</div>
 </section>
@@ -64,7 +64,7 @@ function process(){if(!source||busy)return;busy=true;convert.disabled=true;txt.d
 try{
 gridH=getRows();gridW=Math.max(1,Math.round(gridH*source.naturalWidth/source.naturalHeight));
 const tmp=document.createElement('canvas');tmp.width=gridW;tmp.height=gridH;const cx=tmp.getContext('2d',{willReadFrequently:true});cx.drawImage(source,0,0,gridW,gridH);const pix=cx.getImageData(0,0,gridW,gridH).data;
-const contrast=Number($('contrast').value)/100,bias=Number($('brightness').value)*1.25,invert=$('invert').checked,algo=$('algorithm').value,values=new Float32Array(gridW*gridH);
+const contrast=Number($('contrast').value)/100,bias=Number($('brightness').value),invert=$('invert').checked,algo=$('algorithm').value,values=new Float32Array(gridW*gridH);
 for(let i=0,j=0;i<pix.length;i+=4,j++){let l=(.2126*pix[i]+.7152*pix[i+1]+.0722*pix[i+2]);l=Math.max(0,Math.min(255,(l-127.5)*contrast+127.5));let d=invert?l:255-l;values[j]=Math.max(0,Math.min(255,d+bias))}
 const out=new Uint8Array(gridW*gridH);
 if(algo==='fs'){for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++){let i=y*gridW+x,old=values[i],v=old>=127.5?255:0;out[i]=v?1:0;let e=old-v;if(x+1<gridW)values[i+1]+=e*7/16;if(y+1<gridH){if(x>0)values[i+gridW-1]+=e*3/16;values[i+gridW]+=e*5/16;if(x+1<gridW)values[i+gridW+1]+=e/16}}}
