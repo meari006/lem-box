@@ -247,7 +247,7 @@ statusProcessing:'正在计算网点…',statusDone:'完成',statusProcessError:
 statusModeCrt:'已切换为 CRT 显像管点阵预览',statusModeHalftone:'已切换为 HALFTONE 报纸字符预览',
 statusPalette:'CRT 荧光颜色已更新',statusCustomColor:'自定义荧光颜色已更新',statusPreview:'预览质量已更新',
 statusGlyph:'文字已更新；TXT/PNG 导出将使用新文字',statusTxt:'正在整理 TXT…',statusTxtDone:'TXT 已导出',
-statusPng:'正在绘制 PNG…',statusPngDone:'PNG 已导出',statusPngError:'PNG 导出失败：内存不足',
+statusPng:'正在绘制 PNG…',statusPngDone:'PNG 已导出',statusPngError:'PNG 导出失败：内存不足',statusPngUnsupported:'当前浏览器不支持流式 PNG 导出，请更新浏览器',
 statusPngTooLarge:'PNG 尺寸过大，请减小行数或单元大小',statusPngFailed:'PNG 导出失败',
 fileReady:'已就绪',fileSizeUnit:'MB'
 },
@@ -276,7 +276,7 @@ statusProcessing:'Calculating pattern…',statusDone:'Done',statusProcessError:'
 statusModeCrt:'Switched to CRT preview',statusModeHalftone:'Switched to HALFTONE preview',
 statusPalette:'CRT phosphor color updated',statusCustomColor:'Custom phosphor color updated',statusPreview:'Preview quality updated',
 statusGlyph:'Text updated. TXT and PNG exports will use the new text.',statusTxt:'Preparing TXT…',statusTxtDone:'TXT exported',
-statusPng:'Rendering PNG…',statusPngDone:'PNG exported',statusPngError:'PNG export failed: insufficient memory',
+statusPng:'Rendering PNG…',statusPngDone:'PNG exported',statusPngError:'PNG export failed: insufficient memory',statusPngUnsupported:'This browser does not support streamed PNG export. Please update it.',
 statusPngTooLarge:'PNG is too large. Reduce the grid height or cell size.',statusPngFailed:'PNG export failed',
 fileReady:'Ready',fileSizeUnit:'MB'
 }
@@ -638,7 +638,7 @@ png.addEventListener('click',()=>{
    }
    download(blob,grid.mode==='crt'?'lem-box-crt.png':'lem-box-halftone.png');
    setStatus(tr('statusPngDone')+' · '+w+' × '+h);
-  }catch(e){console.error(e);setStatus(tr('statusPngError')+(e?.message==='CompressionStream unavailable'?' · 请更新浏览器':''))}
+  }catch(e){console.error(e);setStatus(tr(e?.message==='CompressionStream unavailable'?'statusPngUnsupported':'statusPngError'))}
   finally{png.disabled=false}
  },30);
 });
