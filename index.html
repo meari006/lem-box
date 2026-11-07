@@ -27,10 +27,10 @@ header{padding:26px 20px 18px;max-width:1200px;margin:auto}h1{margin:0;font-size
  <div class="field"><label for="rows">字符网格高度（行）</label><select id="rows"><option value="360">360 行 · 快速</option><option value="720">720 行 · 高清</option><option value="1080" selected>1080 行 · Full HD</option><option value="1440">1440 行 · 超清</option><option value="custom">自定义</option></select></div>
  <div class="field" id="customWrap" hidden><label for="customRows">自定义行数</label><input id="customRows" type="number" min="64" max="2400" value="1080"></div>
  <div class="field"><label for="algorithm">网点算法</label><select id="algorithm"><option value="fs">Floyd–Steinberg · 细节优先</option><option value="bayer">Bayer · 规则网点</option><option value="random">随机网点 · 颗粒感</option></select></div>
- <div class="field"><label for="brightness">整体浓度 <span id="brightnessVal">0</span></label><input id="brightness" type="range" min="-100" max="100" value="0"></div>
- <div class="field"><label for="contrast">对比度 <span id="contrastVal">100</span></label><input id="contrast" type="range" min="50" max="200" value="100"></div>
+ <div class="field"><label for="brightness">整体浓度 <span id="brightnessVal">25</span></label><input id="brightness" type="range" min="-100" max="100" value="25"></div>
+ <div class="field"><label for="contrast">对比度 <span id="contrastVal">125</span></label><input id="contrast" type="range" min="50" max="200" value="125"></div>
  <div class="field"><label for="fontSize">导出 PNG 字符大小 <span id="fontSizeVal">10</span></label><input id="fontSize" type="range" min="4" max="14" value="10"></div>
- <div class="field wide"><label class="check"><input id="invert" type="checkbox">反转明暗</label><label class="check"><input id="blackBg" type="checkbox" checked>黑色背景、浅色文字</label></div>
+ <div class="field wide"><label class="check"><input id="invert" type="checkbox">反转明暗</label><label class="check"><input id="blackBg" type="checkbox">黑色背景、浅色文字</label></div>
  <div class="actions wide"><button class="primary" id="convert" disabled>生成文字网点图</button><button id="txt" disabled>导出 TXT</button><button id="png" disabled>导出 PNG</button></div>
  <div class="hint wide">建议先用 360 行确认效果，再切换 1080 行导出。超大网格可能需要较多内存。</div>
 </section>
