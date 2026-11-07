@@ -36,9 +36,139 @@ header{padding:26px 20px 18px;max-width:1200px;margin:auto}.headerTop{display:fl
 :root[data-theme="light"] .previewHead.paper-head .status{color:#65563e}.preview canvas{max-width:100%;max-height:72vh;object-fit:contain}.preview canvas.crt-preview{max-width:100%;max-height:72vh;width:auto;height:auto;image-rendering:auto;border-radius:0;box-shadow:none}.empty{text-align:center;color:var(--muted);padding:65px 20px}.empty b{display:block;color:#dce8f1;font-size:18px;margin-bottom:8px}.stats{display:flex;gap:8px;flex-wrap:wrap}.tag{font-size:12px;color:#b9c7d2;border:1px solid var(--line);border-radius:20px;padding:4px 9px}.foot{color:var(--muted);font-size:12px;padding:0 2px}.drop{border:1px dashed #536779;padding:14px;border-radius:10px;background:#0c131b}.drop.drag{border-color:var(--accent);background:#142534}.filePreview{display:flex;align-items:center;gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);min-width:0}.filePreview[hidden]{display:none}.filePreview img{width:88px;height:88px;flex:0 0 88px;object-fit:contain;background:#07090c;border:1px solid var(--line);border-radius:8px}.fileInfo{display:flex;flex-direction:column;gap:5px;min-width:0}.fileInfo strong{font-size:13px;overflow-wrap:anywhere;color:var(--text)}.fileInfo span{font-size:12px;color:var(--muted)}
 @media(max-width:850px){main{grid-template-columns:1fr}.preview{min-height:280px}.controls{display:grid;grid-template-columns:1fr 1fr}.controls .wide{grid-column:1/-1}}
 @media(max-width:520px){header{padding:20px 14px 14px}main{padding:0 14px 28px}.controls{display:flex}.panel{padding:14px}}
+
+/* LEM BOX 0.6 — application-wide mode skins */
+:root[data-skin="halftone"]{
+ color-scheme:light;
+ --line:#756044;--muted:#706047;--text:#302719;--accent:#9f402b;
+}
+:root[data-skin="halftone"] body{
+ background:
+  repeating-linear-gradient(0deg,rgba(95,77,46,.035) 0,rgba(95,77,46,.035) 1px,transparent 1px,transparent 4px),
+  radial-gradient(ellipse at 80% 0%,#f0e6d2 0,#d8c9aa 58%,#c9b995 100%);
+ color:var(--text);font-family:Georgia,"Noto Serif SC","Songti SC",serif;
+}
+:root[data-skin="halftone"] header{border-bottom:2px solid #68563d;padding-bottom:20px}
+:root[data-skin="halftone"] h1{color:#302719;text-shadow:1px 1px 0 rgba(255,255,255,.45);letter-spacing:.075em}
+:root[data-skin="halftone"] h1 span:first-of-type{color:#8f3929!important}
+:root[data-skin="halftone"] header p{color:#67583f}
+:root[data-skin="halftone"] .languageControl{color:#65563e}
+:root[data-skin="halftone"] .version{border-color:#907b5b;color:#68583f;background:rgba(255,250,235,.35)}
+:root[data-skin="halftone"] .panel{
+ background:linear-gradient(145deg,rgba(239,229,208,.97),rgba(218,204,175,.97));
+ border:2px solid #6c593e;border-radius:6px;padding:17px;
+ box-shadow:inset 0 0 0 3px rgba(94,73,43,.08),0 7px 18px rgba(61,46,25,.17);
+}
+:root[data-skin="halftone"] label{color:#403321}
+:root[data-skin="halftone"] .hint,:root[data-skin="halftone"] .status,:root[data-skin="halftone"] .foot{color:#6c5c43}
+:root[data-skin="halftone"] input[type=text],
+:root[data-skin="halftone"] input[type=number],
+:root[data-skin="halftone"] select,
+:root[data-skin="halftone"] input[type=color]{
+ background:#f1e8d5;border:1px solid #8a7656;border-radius:4px;color:#302719;
+ box-shadow:inset 0 1px 3px rgba(71,53,29,.12);
+}
+:root[data-skin="halftone"] input[type=file]{color:#5d503c}
+:root[data-skin="halftone"] input[type=range]{accent-color:#98412d}
+:root[data-skin="halftone"] .check{color:#403321}
+:root[data-skin="halftone"] .check input{accent-color:#98412d}
+:root[data-skin="halftone"] button{
+ background:linear-gradient(180deg,#e7dbc1,#cfc09f);border:1px solid #806b4a;
+ border-radius:4px;color:#33291d;box-shadow:0 2px 0 rgba(75,55,29,.2);
+}
+:root[data-skin="halftone"] button:hover:not(:disabled){background:linear-gradient(180deg,#f0e5ce,#d8c7a4)}
+:root[data-skin="halftone"] button.primary{
+ background:linear-gradient(180deg,#a94c35,#813322);color:#fff4df;border:1px solid #6f2b20;
+ font-weight:700;text-shadow:0 1px 0 #56251c;
+}
+:root[data-skin="halftone"] button:disabled{opacity:.42}
+:root[data-skin="halftone"] .drop{
+ background:rgba(255,249,234,.42);border:1px dashed #8c7653;border-radius:4px;
+}
+:root[data-skin="halftone"] .drop.drag{background:#f0dfbd;border-color:#9f402b}
+:root[data-skin="halftone"] .previewHead{background:linear-gradient(135deg,#e8ddc6,#d9c9aa);border-color:#68563d;color:#302719}
+:root[data-skin="halftone"] .previewHead .status{color:#65563e}
+:root[data-skin="halftone"] .preview{background:#d8cbb0}
+:root[data-skin="halftone"] .tag{color:#51432f;border-color:#9b8764;background:rgba(255,249,234,.28);border-radius:3px}
+:root[data-skin="halftone"] .filePreview{border-color:#9c8968}
+:root[data-skin="halftone"] .filePreview img{background:#f1e8d5;border-color:#9c8968;border-radius:4px}
+:root[data-skin="halftone"] .fileInfo strong{color:#302719}
+:root[data-skin="halftone"] .fileInfo span{color:#6c5c43}
+:root[data-skin="halftone"] .empty{color:#6c5c43}
+:root[data-skin="halftone"] .empty b{color:#302719}
+:root[data-skin="halftone"] input:focus-visible,
+:root[data-skin="halftone"] select:focus-visible,
+:root[data-skin="halftone"] button:focus-visible{outline:2px solid #a34b32;outline-offset:2px}
+
+:root[data-skin="crt"]{
+ color-scheme:dark;
+ --line:#28613a;--muted:#75a583;--text:#c9ffd2;--accent:#72ff8c;
+}
+:root[data-skin="crt"] body{
+ background:
+  radial-gradient(ellipse at 50% -12%,rgba(31,111,52,.25),transparent 58%),
+  repeating-linear-gradient(0deg,rgba(91,255,123,.018) 0,rgba(91,255,123,.018) 1px,transparent 1px,transparent 3px),
+  #020805;
+ color:var(--text);font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+}
+:root[data-skin="crt"] header{border-bottom:1px solid #28613a;padding-bottom:20px}
+:root[data-skin="crt"] h1{color:#bdffca;text-shadow:0 0 10px rgba(92,255,121,.28);letter-spacing:.09em}
+:root[data-skin="crt"] h1 span:first-of-type{color:#65ef80!important}
+:root[data-skin="crt"] header p{color:#81b991}
+:root[data-skin="crt"] .languageControl{color:#8ebd99}
+:root[data-skin="crt"] .version{border-color:#347e43;color:#a4eeb1;background:rgba(13,45,21,.5)}
+:root[data-skin="crt"] .panel{
+ background:linear-gradient(145deg,rgba(8,28,14,.98),rgba(4,17,8,.98));
+ border:1px solid #28613a;border-radius:8px;padding:17px;
+ box-shadow:inset 0 0 0 1px rgba(83,255,112,.055),0 0 18px rgba(37,180,66,.08);
+}
+:root[data-skin="crt"] label{color:#b4efbf}
+:root[data-skin="crt"] .hint,:root[data-skin="crt"] .status,:root[data-skin="crt"] .foot{color:#78a987}
+:root[data-skin="crt"] input[type=text],
+:root[data-skin="crt"] input[type=number],
+:root[data-skin="crt"] select,
+:root[data-skin="crt"] input[type=color]{
+ background:#020a04;border:1px solid #28613a;border-radius:5px;color:#c9ffd2;
+ box-shadow:inset 0 0 10px rgba(38,255,83,.045);
+}
+:root[data-skin="crt"] input[type=file]{color:#83b892}
+:root[data-skin="crt"] input[type=range]{accent-color:#68ff85}
+:root[data-skin="crt"] .check{color:#b4efbf}
+:root[data-skin="crt"] .check input{accent-color:#68ff85}
+:root[data-skin="crt"] button{
+ background:linear-gradient(180deg,#10321a,#092111);border:1px solid #347e43;
+ border-radius:5px;color:#baffc7;box-shadow:0 0 8px rgba(69,255,104,.07);
+}
+:root[data-skin="crt"] button:hover:not(:disabled){
+ background:linear-gradient(180deg,#174b25,#0d2c16);border-color:#62dc7b;
+ box-shadow:0 0 12px rgba(69,255,104,.16);
+}
+:root[data-skin="crt"] button.primary{
+ background:linear-gradient(180deg,#9dffb2,#45cf68);color:#031006;border:1px solid #aaffba;
+ font-weight:800;text-shadow:none;box-shadow:0 0 15px rgba(73,255,105,.18);
+}
+:root[data-skin="crt"] button:disabled{opacity:.38}
+:root[data-skin="crt"] .drop{
+ background:rgba(2,12,5,.8);border:1px dashed #347e43;border-radius:5px;
+}
+:root[data-skin="crt"] .drop.drag{background:#0b2b13;border-color:#79ff91;box-shadow:inset 0 0 18px rgba(69,255,104,.1)}
+:root[data-skin="crt"] .previewHead{background:linear-gradient(145deg,#142b1a,#0c1b10);border-color:#347e43;color:#c6ffd0}
+:root[data-skin="crt"] .previewHead .status{color:#8ec99b}
+:root[data-skin="crt"] .preview{background:#06170b}
+:root[data-skin="crt"] .tag{color:#a8eab5;border-color:#28613a;background:rgba(13,45,21,.45);border-radius:3px}
+:root[data-skin="crt"] .filePreview{border-color:#245a34}
+:root[data-skin="crt"] .filePreview img{background:#020805;border-color:#28613a;border-radius:4px}
+:root[data-skin="crt"] .fileInfo strong{color:#c9ffd2}
+:root[data-skin="crt"] .fileInfo span{color:#78a987}
+:root[data-skin="crt"] .empty{color:#78a987}
+:root[data-skin="crt"] .empty b{color:#baffc7;text-shadow:0 0 8px rgba(69,255,104,.22)}
+:root[data-skin="crt"] input:focus-visible,
+:root[data-skin="crt"] select:focus-visible,
+:root[data-skin="crt"] button:focus-visible{outline:2px solid #68ff85;outline-offset:2px}
+
 </style></head>
 <body>
-<header><div class="headerTop"><h1>LEM BOX <span style="color:var(--accent);font-weight:400">/ IMAGE LAB</span> <span class="version">v0.5.1</span></h1><div class="headerTools"><label class="languageControl" for="language"><span id="languageLabel">语言</span><select id="language"><option value="zh" selected>中文</option><option value="en">English</option></select></label><label class="languageControl" for="themeMode"><span id="themeLabel">界面主题</span><select id="themeMode"><option value="dark" selected>暗色</option><option value="light">浅色</option></select></label></div></div><p id="intro">在复古报纸字符网点与 CRT 显像管点阵之间切换。所有处理都在本地浏览器完成，图片不会上传。</p></header>
+<header><div class="headerTop"><h1>LEM BOX <span style="color:var(--accent);font-weight:400">/ IMAGE LAB</span> <span class="version">v0.6.0</span></h1><div class="headerTools"><label class="languageControl" for="language"><span id="languageLabel">语言</span><select id="language"><option value="zh" selected>中文</option><option value="en">English</option></select></label><label class="languageControl" for="themeMode"><span id="themeLabel">界面主题</span><select id="themeMode"><option value="dark" selected>暗色</option><option value="light">浅色</option></select></label></div></div><p id="intro">在复古报纸字符网点与 CRT 显像管点阵之间切换。所有处理都在本地浏览器完成，图片不会上传。</p></header>
 <main>
 <section class="panel controls">
  <div class="field wide"><label id="uploadTitle">输入图片</label><div class="drop" id="drop">
@@ -225,6 +355,7 @@ $('rowMode').addEventListener('change',updateRowMode);
 updateRowMode();
 function setPreviewSkin(mode){
  const crt=mode==='crt';
+ document.documentElement.dataset.skin=crt?'crt':'halftone';
  $('preview').classList.toggle('crt-shell',crt);
  $('preview').classList.toggle('halftone-shell',!crt);
  $('previewHead').classList.toggle('crt-head',crt);
