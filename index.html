@@ -168,7 +168,7 @@ header{padding:26px 20px 18px;max-width:1200px;margin:auto}.headerTop{display:fl
 
 </style></head>
 <body>
-<header><div class="headerTop"><h1>LEM BOX <span style="color:var(--accent);font-weight:400">/ IMAGE LAB</span> <span class="version">v0.7.0</span></h1><div class="headerTools"><label class="languageControl" for="language"><span id="languageLabel">语言</span><select id="language"><option value="zh" selected>中文</option><option value="en">English</option></select></label></div></div><p id="intro">在复古报纸字符网点与 CRT 显像管点阵之间切换。所有处理都在本地浏览器完成，图片不会上传。</p></header>
+<header><div class="headerTop"><h1>LEM BOX <span style="color:var(--accent);font-weight:400">/ IMAGE LAB</span> <span class="version">v0.8.0</span></h1><div class="headerTools"><label class="languageControl" for="language"><span id="languageLabel">语言</span><select id="language"><option value="zh" selected>中文</option><option value="en">English</option></select></label></div></div><p id="intro">在复古报纸字符网点与 CRT 显像管点阵之间切换。所有处理都在本地浏览器完成，图片不会上传。</p></header>
 <main>
 <section class="panel controls">
  <div class="field wide"><label id="uploadTitle">输入图片</label><div class="drop" id="drop">
@@ -187,11 +187,11 @@ header{padding:26px 20px 18px;max-width:1200px;margin:auto}.headerTop{display:fl
  <div class="field" id="presetRowsWrap"><label for="rows" id="rowsLabel">输出网格高度（行）</label><select id="rows"><option value="360">360 行 · 快速</option><option value="720">720 行 · 高清</option><option value="1080" selected>1080 行 · Full HD</option><option value="1440">1440 行 · 超清</option></select></div>
  <div class="field" id="customWrap" hidden><label for="customRows" id="customRowsLabel">自定义行数（64–2400）</label><input id="customRows" type="number" min="64" max="2400" value="1080"></div>
  <div class="field"><label for="algorithm" id="algorithmLabel">网点算法</label><select id="algorithm"><option value="fs">Floyd–Steinberg · 细节优先</option><option value="bayer">Bayer · 规则网点</option><option value="random">随机网点 · 颗粒感</option></select></div>
- <div class="field"><label for="brightness"><span id="brightnessName">整体浓度</span> <span id="brightnessVal">25</span></label><input id="brightness" type="range" min="-150" max="150" value="25"></div>
+ <div class="field"><label for="brightness"><span id="brightnessName">整体浓度</span> <span id="brightnessVal">5</span></label><input id="brightness" type="range" min="-150" max="150" value="5"></div>
  <div class="field"><label for="contrast"><span id="contrastName">对比度</span> <span id="contrastVal">125</span></label><input id="contrast" type="range" min="50" max="200" value="125"></div>
  <div class="field"><label for="fontSize"><span id="fontSizeLabel">导出 PNG 字符大小</span> <span id="fontSizeVal">10</span></label><input id="fontSize" type="range" min="4" max="14" value="10"></div>
  <div class="field wide"><label class="check"><input id="invert" type="checkbox"><span id="invertName">反转明暗（亮部生成图案）</span></label><div class="hint" id="paletteHint">反转明暗会改变原图哪些区域生成图案。</div></div>
- <div class="field wide" id="halftonePaletteField"><label for="halftonePalette" id="halftonePaletteLabel">HALFTONE 配色</label><select id="halftonePalette"><option value="light" selected>灰底黑字</option><option value="dark">黑底白字</option></select><div class="hint" id="halftonePaletteHint">只改变字符画的底色和文字颜色，不改变网点分布。</div></div>
+ <div class="field wide" id="halftonePaletteField"><label for="halftonePalette" id="halftonePaletteLabel">HALFTONE 配色</label><select id="halftonePalette"><option value="light" selected>白底黑字</option><option value="dark">黑底白字</option></select><div class="hint" id="halftonePaletteHint">只改变字符画的底色和文字颜色，不改变网点分布。</div></div>
  <div class="actions wide"><button class="primary" id="convert" disabled>生成文字网点图</button><button id="txt" disabled>导出 TXT</button><button id="png" disabled>导出 PNG</button></div>
  <div class="hint wide" id="mainHint">建议先用 360 行确认效果，再切换 1080 行导出。超大网格可能需要较多内存。</div>
 </section>
@@ -211,7 +211,7 @@ const I18N={
 zh:{
 intro:'在复古报纸字符网点与 CRT 显像管点阵之间切换。所有处理都在本地浏览器完成，图片不会上传。',
 themeLabel:'界面主题',themeDark:'暗色',themeLight:'浅色',
-halftonePaletteLabel:'HALFTONE 配色',halftoneLight:'灰底黑字',halftoneDark:'黑底白字',halftonePaletteHint:'只改变字符画的底色和文字颜色，不改变网点分布。',
+halftonePaletteLabel:'HALFTONE 配色',halftoneLight:'白底黑字',halftoneDark:'黑底白字',halftonePaletteHint:'只改变字符画的底色和文字颜色，不改变网点分布。',
 uploadTitle:'输入图片',uploadHint:'也可以把图片拖到这里。支持 JPG / PNG / WebP。',
 outputModeLabel:'输出模式',outputModeHint:'HALFTONE 使用文字形成油墨网点；CRT 使用荧光圆点模拟显像管。',
 crtPaletteLabel:'CRT 荧光颜色',crtCustomColorLabel:'自定义荧光色',crtPaletteHint:'选择单色显像管风格；自定义颜色会自动生成匹配的暗色屏幕背景。',
@@ -239,7 +239,7 @@ fileReady:'已就绪',fileSizeUnit:'MB'
 en:{
 intro:'Switch between vintage newspaper halftone typography and CRT phosphor dots. Everything runs locally in your browser; your images are never uploaded.',
 themeLabel:'Interface theme',themeDark:'Dark',themeLight:'Light',
-halftonePaletteLabel:'HALFTONE palette',halftoneLight:'Gray background · Black text',halftoneDark:'Black background · White text',halftonePaletteHint:'Changes only the text and background colors, not the halftone pattern.',
+halftonePaletteLabel:'HALFTONE palette',halftoneLight:'White background · Black text',halftoneDark:'Black background · White text',halftonePaletteHint:'Changes only the text and background colors, not the halftone pattern.',
 uploadTitle:'Source image',uploadHint:'Drop an image here, or browse. Supports JPG / PNG / WebP.',
 outputModeLabel:'Output mode',outputModeHint:'HALFTONE uses repeating text as ink dots; CRT recreates a phosphor display with glowing dots.',
 crtPaletteLabel:'CRT phosphor color',crtCustomColorLabel:'Custom phosphor color',crtPaletteHint:'Choose a monochrome CRT phosphor. A matching dark screen background is generated automatically for custom colors.',
@@ -393,19 +393,71 @@ file.addEventListener('change',e=>loadFile(e.target.files?.[0]));
 drop.addEventListener('drop',e=>loadFile(e.dataTransfer.files?.[0]));
 function loadFile(f){if(!f)return;const u=URL.createObjectURL(f),im=new Image();im.onload=()=>{const oldUrl=sourceUrl;source=im;sourceUrl=u;if(oldUrl)URL.revokeObjectURL(oldUrl);convert.disabled=false;currentFile=f;setPreviewSkin($('outputMode').value);setStatus(tr('statusImageReady')+' '+im.naturalWidth+' × '+im.naturalHeight);$('preview').innerHTML='<div class="empty"><b>IMAGE READY</b><span>'+tr('imageReadyPrompt')+'</span></div>';$('thumbnail').src=u;$('fileName').textContent=f.name;updateFileMeta();$('filePreview').hidden=false;grid=null;txt.disabled=png.disabled=true};im.onerror=()=>{URL.revokeObjectURL(u);setStatus(tr('statusLoadError'))};im.src=u}
 function bayerMatrix(n){let m=[[0,2],[3,1]];while(m.length<n){const s=m.length,out=Array.from({length:s*2},()=>Array(s*2).fill(0));for(let y=0;y<s;y++)for(let x=0;x<s;x++){let v=m[y][x]*4;out[y][x]=v;out[y][x+s]=v+2;out[y+s][x]=v+3;out[y+s][x+s]=v+1}m=out}return m}
-function process(){if(!source||busy)return;busy=true;convert.disabled=true;txt.disabled=png.disabled=true;setStatus(tr('statusProcessing'));setTimeout(()=>{
-try{
-gridH=getRows();gridW=Math.max(1,Math.round(gridH*source.naturalWidth/source.naturalHeight));
-const tmp=document.createElement('canvas');tmp.width=gridW;tmp.height=gridH;const cx=tmp.getContext('2d',{willReadFrequently:true});cx.drawImage(source,0,0,gridW,gridH);const pix=cx.getImageData(0,0,gridW,gridH).data;
-const contrast=Number($('contrast').value)/100,bias=Number($('brightness').value),invert=$('invert').checked,algo=$('algorithm').value,values=new Float32Array(gridW*gridH);
-for(let i=0,j=0;i<pix.length;i+=4,j++){let l=(.2126*pix[i]+.7152*pix[i+1]+.0722*pix[i+2]);l=Math.max(0,Math.min(255,(l-127.5)*contrast+127.5));let d=invert?l:255-l;values[j]=Math.max(0,Math.min(255,d+bias))}
-const out=new Uint8Array(gridW*gridH);
-if(algo==='fs'){for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++){let i=y*gridW+x,old=values[i],v=old>=127.5?255:0;out[i]=v?1:0;let e=old-v;if(x+1<gridW)values[i+1]+=e*7/16;if(y+1<gridH){if(x>0)values[i+gridW-1]+=e*3/16;values[i+gridW]+=e*5/16;if(x+1<gridW)values[i+gridW+1]+=e/16}}}
-else if(algo==='bayer'){const m=bayerMatrix(8);for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++)out[y*gridW+x]=values[y*gridW+x]>(m[y%8][x%8]+.5)/64*255?1:0}
-else{let seed=982451653;function rand(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296}for(let i=0;i<out.length;i++)out[i]=values[i]>rand()*255?1:0}
-const chars=Array.from($('glyphs').value.trim()||'LUM3N'),mode=$('outputMode').value,crtColors=getCrtPalette();grid={mask:out,chars,background:$('halftonePalette').value==='dark',mode,crtForeground:crtColors.foreground,crtBackground:crtColors.background,crtFrame:crtColors.frame,activeCount:0};let count=0;for(const v of out)count+=v;grid.activeCount=count;renderPreview();updateStats();txt.disabled=png.disabled=false;setStatus(tr('statusDone'))
-}catch(e){console.error(e);setStatus(tr('statusProcessError'))}finally{convert.disabled=false;busy=false}
-},20)}
+function yieldToBrowser(){return new Promise(resolve=>setTimeout(resolve,0))}
+function process(){
+ if(!source||busy)return;
+ busy=true;convert.disabled=true;txt.disabled=png.disabled=true;setStatus(tr('statusProcessing'));
+ setTimeout(async()=>{
+  try{
+   gridH=getRows();gridW=Math.max(1,Math.round(gridH*source.naturalWidth/source.naturalHeight));
+   const tmp=document.createElement('canvas');tmp.width=gridW;tmp.height=gridH;
+   const cx=tmp.getContext('2d',{willReadFrequently:true});cx.drawImage(source,0,0,gridW,gridH);
+   const pix=cx.getImageData(0,0,gridW,gridH).data;
+   const contrast=Number($('contrast').value)/100,bias=Number($('brightness').value),invert=$('invert').checked,algo=$('algorithm').value;
+   const values=new Float32Array(gridW*gridH);
+   // Split pixel conversion into row batches so the page can repaint while processing.
+   for(let y=0;y<gridH;y++){
+    const row=y*gridW;
+    for(let x=0;x<gridW;x++){
+     const i=(row+x)*4;
+     let l=.2126*pix[i]+.7152*pix[i+1]+.0722*pix[i+2];
+     l=Math.max(0,Math.min(255,(l-127.5)*contrast+127.5));
+     const d=invert?l:255-l;
+     values[row+x]=Math.max(0,Math.min(255,d+bias));
+    }
+    if((y+1)%64===0)await yieldToBrowser();
+   }
+   const out=new Uint8Array(gridW*gridH);
+   if(algo==='fs'){
+    for(let y=0;y<gridH;y++){
+     const row=y*gridW;
+     for(let x=0;x<gridW;x++){
+      const i=row+x,old=values[i],v=old>=127.5?255:0;
+      out[i]=v?1:0;
+      const e=old-v;
+      if(x+1<gridW)values[i+1]+=e*7/16;
+      if(y+1<gridH){
+       if(x>0)values[i+gridW-1]+=e*3/16;
+       values[i+gridW]+=e*5/16;
+       if(x+1<gridW)values[i+gridW+1]+=e/16;
+      }
+     }
+     if((y+1)%64===0)await yieldToBrowser();
+    }
+   }else if(algo==='bayer'){
+    const m=bayerMatrix(8);
+    for(let y=0;y<gridH;y++){
+     const row=y*gridW;
+     for(let x=0;x<gridW;x++)out[row+x]=values[row+x]>(m[y%8][x%8]+.5)/64*255?1:0;
+     if((y+1)%96===0)await yieldToBrowser();
+    }
+   }else{
+    let seed=982451653;
+    function rand(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296}
+    for(let y=0;y<gridH;y++){
+     const row=y*gridW;
+     for(let x=0;x<gridW;x++)out[row+x]=values[row+x]>rand()*255?1:0;
+     if((y+1)%96===0)await yieldToBrowser();
+    }
+   }
+   const chars=Array.from($('glyphs').value.trim()||'LUM3N'),mode=$('outputMode').value,crtColors=getCrtPalette();
+   grid={mask:out,chars,background:$('halftonePalette').value==='dark',mode,crtForeground:crtColors.foreground,crtBackground:crtColors.background,crtFrame:crtColors.frame,activeCount:0};
+   let count=0;for(const v of out)count+=v;grid.activeCount=count;
+   renderPreview();updateStats();txt.disabled=png.disabled=false;setStatus(tr('statusDone'));
+  }catch(e){console.error(e);setStatus(tr('statusProcessError'))}
+  finally{convert.disabled=false;busy=false}
+ },20);
+}
 function drawDotMatrix(ctx,unit,color,cols=gridW,rows=gridH){
  const radius=Math.max(.35,unit*.29);
  ctx.fillStyle=color;ctx.shadowColor=color;ctx.shadowBlur=Math.min(8,Math.max(.8,unit*.38));
@@ -465,8 +517,10 @@ function renderPreview(){
  const c=document.createElement('canvas');
  const ctx=c.getContext('2d');
  if(grid.mode==='crt'){
-  // Render a tone-preserving preview: each display dot represents the average coverage of its source area.
-  const high=$('crtPreviewQuality').value==='high',maxCols=high?720:360,maxRows=high?480:240,factor=Math.min(1,maxCols/gridW,maxRows/gridH),cols=Math.max(1,Math.floor(gridW*factor)),rows=Math.max(1,Math.floor(gridH*factor)),unit=3;
+  // CRT preview is deliberately sampled; PNG export still draws the full grid.
+  const high=$('crtPreviewQuality').value==='high',maxCols=high?720:360,maxRows=high?480:240;
+  const factor=Math.min(1,maxCols/gridW,maxRows/gridH);
+  const cols=Math.max(1,Math.floor(gridW*factor)),rows=Math.max(1,Math.floor(gridH*factor)),unit=3;
   c.width=Math.round(cols*unit);c.height=Math.round(rows*unit);
   ctx.fillStyle=grid.crtBackground;ctx.fillRect(0,0,c.width,c.height);
   drawCrtPreviewMatrix(ctx,unit,grid.crtForeground,cols,rows);
@@ -478,11 +532,33 @@ function renderPreview(){
   ctx.fillStyle=glass;ctx.fillRect(0,0,c.width,c.height);
   c.className='crt-preview';
  }else{
-  const scale=Math.min(1000/gridW,760/gridH,1),w=Math.max(1,Math.round(gridW*scale)),h=Math.max(1,Math.round(gridH*scale));c.width=w;c.height=h;
-  const bg=grid.background?'#07090c':'#c3c5c6',fg=grid.background?'#e9f2f8':'#08090a';ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);ctx.fillStyle=fg;ctx.font=Math.max(2,Math.ceil(scale*3))+'px monospace';ctx.textBaseline='top';let i=0;
-  for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++,i++)if(grid.mask[i])ctx.fillText(grid.chars[(x+y*gridW)%grid.chars.length],x*scale,y*scale);
+  // HALFTONE preview caps visible cells and batches glyphs by row.
+  // This avoids millions of individual fillText() calls on mobile devices.
+  const factor=Math.min(1,900/gridW,680/gridH);
+  const cols=Math.max(1,Math.floor(gridW*factor)),rows=Math.max(1,Math.floor(gridH*factor));
+  c.width=cols;c.height=rows;
+  ctx.fillStyle=grid.background?'#07090c':'#ffffff';ctx.fillRect(0,0,cols,rows);
+  ctx.fillStyle=grid.background?'#e9f2f8':'#08090a';
+  ctx.font=Math.max(2,Math.ceil(factor*3))+'px monospace';
+  ctx.textBaseline='top';
+  const advance=ctx.measureText('M').width;
+  ctx.save();
+  if('letterSpacing' in ctx)ctx.letterSpacing=(1-advance)+'px';
+  else ctx.scale(1/Math.max(.1,advance),1);
+  for(let y=0;y<rows;y++){
+   const sourceY=Math.min(gridH-1,Math.floor((y+.5)*gridH/rows));
+   const sourceRow=sourceY*gridW;
+   let line='';
+   for(let x=0;x<cols;x++){
+    const sourceX=Math.min(gridW-1,Math.floor((x+.5)*gridW/cols));
+    const index=sourceRow+sourceX;
+    line+=grid.mask[index]?grid.chars[(sourceX+sourceRow)%grid.chars.length]:' ';
+   }
+   ctx.fillText(line,0,y);
+  }
+  ctx.restore();
  }
- $('preview').replaceChildren(c)
+ $('preview').replaceChildren(c);
 }
 $('glyphs').addEventListener('input',()=>{if(grid){grid.chars=Array.from($('glyphs').value.trim()||'LUM3N');renderPreview();setStatus(tr('statusGlyph'))}});
 convert.addEventListener('click',process);
@@ -491,7 +567,7 @@ function download(blob,name){const u=URL.createObjectURL(blob),a=document.create
 txt.addEventListener('click',()=>{if(!grid)return;setStatus(tr('statusTxt'));setTimeout(()=>{download(new Blob([buildText()],{type:'text/plain;charset=utf-8'}),grid.mode==='crt'?'lem-box-crt.txt':'lem-box-halftone.txt');setStatus(tr('statusTxtDone'))},20)});
 png.addEventListener('click',()=>{if(!grid||busy)return;const fs=Number($('fontSize').value),w=gridW*fs,h=gridH*fs;if(w*h>70000000){setStatus(tr('statusPngTooLarge'));return}setStatus(tr('statusPng'));png.disabled=true;setTimeout(()=>{try{const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');
 if(grid.mode==='crt'){ctx.fillStyle=grid.crtBackground;ctx.fillRect(0,0,w,h);drawDotMatrix(ctx,fs,grid.crtForeground,gridW,gridH);drawScanlines(ctx,w,h,fs);const shade=ctx.createRadialGradient(w/2,h/2,Math.min(w,h)*.18,w/2,h/2,Math.max(w,h)*.72);shade.addColorStop(0,'rgba(0,0,0,0)');shade.addColorStop(1,'rgba(0,0,0,.3)');ctx.fillStyle=shade;ctx.fillRect(0,0,w,h)}
-else{ctx.fillStyle=grid.background?'#07090c':'#c3c5c6';ctx.fillRect(0,0,w,h);ctx.fillStyle=grid.background?'#e9f2f8':'#08090a';ctx.font=fs+'px monospace';ctx.textBaseline='top';let k=0;for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++,k++)if(grid.mask[k])ctx.fillText(grid.chars[(x+y*gridW)%grid.chars.length],x*fs,y*fs)}
+else{ctx.fillStyle=grid.background?'#07090c':'#ffffff';ctx.fillRect(0,0,w,h);ctx.fillStyle=grid.background?'#e9f2f8':'#08090a';ctx.font=fs+'px monospace';ctx.textBaseline='top';let k=0;for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++,k++)if(grid.mask[k])ctx.fillText(grid.chars[(x+y*gridW)%grid.chars.length],x*fs,y*fs)}
 c.toBlob(b=>{if(b){download(b,grid.mode==='crt'?'lem-box-crt.png':'lem-box-halftone.png');setStatus(tr('statusPngDone')+' · '+w+' × '+h)}else setStatus(tr('statusPngFailed'));png.disabled=false},'image/png')
 }catch(e){console.error(e);setStatus(tr('statusPngError'));png.disabled=false}},30)});
 applyLanguage();
