@@ -6,49 +6,142 @@
 <style>
 :root{color-scheme:dark;--bg:#0b0e12;--panel:#141a21;--line:#28323d;--muted:#9aa8b5;--text:#e8eef4;--accent:#9ad8ff}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% 0%,#172635 0,#0b0e12 48%);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
-header{padding:26px 20px 18px;max-width:1200px;margin:auto}h1{margin:0;font-size:clamp(24px,4vw,36px);letter-spacing:.04em}header p{margin:7px 0 0;color:var(--muted)}.version{display:inline-block;vertical-align:middle;margin-left:8px;padding:3px 8px;border:1px solid var(--line);border-radius:7px;color:var(--muted);font:11px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.04em}main{max-width:1200px;padding:0 20px 40px;margin:auto;display:grid;grid-template-columns:340px 1fr;gap:18px}
+header{padding:26px 20px 18px;max-width:1200px;margin:auto}.headerTop{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}h1{margin:0;font-size:clamp(24px,4vw,36px);letter-spacing:.04em}header p{margin:7px 0 0;color:var(--muted)}.languageControl{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;white-space:nowrap}.languageControl select{width:auto;min-width:108px;padding:7px 9px}.version{display:inline-block;vertical-align:middle;margin-left:8px;padding:3px 8px;border:1px solid var(--line);border-radius:7px;color:var(--muted);font:11px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.04em}main{max-width:1200px;padding:0 20px 40px;margin:auto;display:grid;grid-template-columns:340px 1fr;gap:18px}
 .panel{background:rgba(20,26,33,.94);border:1px solid var(--line);border-radius:16px;padding:17px;box-shadow:0 14px 40px #0003}.controls{display:flex;flex-direction:column;gap:15px}.field{display:flex;flex-direction:column;gap:6px}[hidden]{display:none!important}label{font-size:13px;color:#c2cfda;display:flex;justify-content:space-between;gap:10px}input,select,button{font:inherit}input[type=text],input[type=number],select{width:100%;background:#0b1118;border:1px solid #34414e;border-radius:9px;color:var(--text);padding:10px}input[type=file]{width:100%;font-size:13px;color:var(--muted)}input[type=color]{width:100%;height:42px;padding:4px;background:#0b1118;border:1px solid #34414e;border-radius:9px;cursor:pointer}input[type=range]{width:100%;accent-color:var(--accent)}.hint{font-size:12px;color:var(--muted)}.check{display:flex;align-items:center;gap:8px;color:#c2cfda;font-size:13px}.check input{accent-color:var(--accent)}button{border:1px solid #415667;border-radius:10px;padding:10px 12px;background:#1b2b38;color:var(--text);cursor:pointer}button.primary{background:linear-gradient(135deg,#bceaff,#6ab4dc);color:#08131b;border:0;font-weight:700}button:disabled{opacity:.45;cursor:not-allowed}.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.actions .primary{grid-column:1/-1}.workspace{display:flex;flex-direction:column;gap:12px;min-width:0}.previewHead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.previewHead strong{font-size:14px}.status{font-size:12px;color:var(--muted)}.preview{background:#07090c;border:1px solid var(--line);border-radius:14px;min-height:360px;display:flex;align-items:center;justify-content:center;overflow:auto;padding:12px}.preview canvas{max-width:100%;max-height:72vh;object-fit:contain}.preview canvas.crt-preview{max-width:100%;max-height:72vh;width:auto;height:auto;image-rendering:auto;border-radius:8px;box-shadow:0 0 22px rgba(100,220,150,.10)}.empty{text-align:center;color:var(--muted);padding:65px 20px}.empty b{display:block;color:#dce8f1;font-size:18px;margin-bottom:8px}.stats{display:flex;gap:8px;flex-wrap:wrap}.tag{font-size:12px;color:#b9c7d2;border:1px solid var(--line);border-radius:20px;padding:4px 9px}.foot{color:var(--muted);font-size:12px;padding:0 2px}.drop{border:1px dashed #536779;padding:14px;border-radius:10px;background:#0c131b}.drop.drag{border-color:var(--accent);background:#142534}.filePreview{display:flex;align-items:center;gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);min-width:0}.filePreview[hidden]{display:none}.filePreview img{width:88px;height:88px;flex:0 0 88px;object-fit:contain;background:#07090c;border:1px solid var(--line);border-radius:8px}.fileInfo{display:flex;flex-direction:column;gap:5px;min-width:0}.fileInfo strong{font-size:13px;overflow-wrap:anywhere;color:var(--text)}.fileInfo span{font-size:12px;color:var(--muted)}
 @media(max-width:850px){main{grid-template-columns:1fr}.preview{min-height:280px}.controls{display:grid;grid-template-columns:1fr 1fr}.controls .wide{grid-column:1/-1}}
 @media(max-width:520px){header{padding:20px 14px 14px}main{padding:0 14px 28px}.controls{display:flex}.panel{padding:14px}}
 </style></head>
 <body>
-<header><h1>LEM BOX <span style="color:var(--accent);font-weight:400">/ IMAGE LAB</span> <span class="version">v0.3.1</span></h1><p>在复古报纸字符网点与 CRT 显像管点阵之间切换。所有处理都在本地浏览器完成，图片不会上传。</p></header>
+<header><div class="headerTop"><h1>LEM BOX <span style="color:var(--accent);font-weight:400">/ IMAGE LAB</span> <span class="version">v0.4.0</span></h1><label class="languageControl" for="language"><span id="languageLabel">语言</span><select id="language"><option value="zh" selected>中文</option><option value="en">English</option></select></label></div><p id="intro">在复古报纸字符网点与 CRT 显像管点阵之间切换。所有处理都在本地浏览器完成，图片不会上传。</p></header>
 <main>
 <section class="panel controls">
- <div class="field wide"><label>输入图片</label><div class="drop" id="drop">
+ <div class="field wide"><label id="uploadTitle">输入图片</label><div class="drop" id="drop">
   <input id="file" type="file" accept="image/*">
-  <div class="hint">也可以把图片拖到这里。支持 JPG / PNG / WebP。</div>
+  <div class="hint" id="uploadHint">也可以把图片拖到这里。支持 JPG / PNG / WebP。</div>
   <div class="filePreview" id="filePreview" hidden>
     <img id="thumbnail" alt="已选择图片预览">
     <div class="fileInfo"><strong id="fileName"></strong><span id="fileMeta"></span></div>
   </div>
 </div></div>
- <div class="field wide"><label for="outputMode">输出模式</label><select id="outputMode"><option value="halftone" selected>HALFTONE · 报纸字符网点</option><option value="crt">CRT · 显像管点阵</option></select><div class="hint">HALFTONE 使用文字形成油墨网点；CRT 使用荧光圆点模拟显像管。</div></div>
- <div class="field wide" id="crtPaletteField" hidden><label for="crtPalette">CRT 荧光颜色</label><select id="crtPalette"><option value="green" selected>Phosphor Green · 荧光绿</option><option value="amber">Amber · 琥珀色</option><option value="ice">Ice Blue · 冰蓝</option><option value="white">Cool White · 冷白</option><option value="red">Ruby · 红色</option><option value="violet">Violet · 紫色</option><option value="custom">Custom · 自定义颜色</option></select><div class="field" id="crtCustomWrap" hidden><label for="crtCustomColor">自定义荧光色</label><input id="crtCustomColor" type="color" value="#9dffb2"></div><div class="hint">选择单色显像管风格；自定义颜色会自动生成匹配的暗色屏幕背景。</div></div>
- <div class="field wide" id="glyphField"><label for="glyphs">替换网点的文字</label><input id="glyphs" type="text" maxlength="80" value="LUM3N" placeholder="例如：LUM3N / DEAD VALLEY"><div class="hint">文字会循环填充所有被网点算法选中的位置。</div></div>
- <div class="field"><label for="rowMode">行数设置方式</label><select id="rowMode"><option value="preset" selected>选择预设行数</option><option value="custom">自定义行数</option></select></div>
- <div class="field" id="presetRowsWrap"><label for="rows">输出网格高度（行）</label><select id="rows"><option value="360">360 行 · 快速</option><option value="720">720 行 · 高清</option><option value="1080" selected>1080 行 · Full HD</option><option value="1440">1440 行 · 超清</option></select></div>
- <div class="field" id="customWrap" hidden><label for="customRows">自定义行数（64–2400）</label><input id="customRows" type="number" min="64" max="2400" value="1080"></div>
- <div class="field"><label for="algorithm">网点算法</label><select id="algorithm"><option value="fs">Floyd–Steinberg · 细节优先</option><option value="bayer">Bayer · 规则网点</option><option value="random">随机网点 · 颗粒感</option></select></div>
- <div class="field"><label for="brightness">整体浓度 <span id="brightnessVal">25</span></label><input id="brightness" type="range" min="-150" max="150" value="25"></div>
- <div class="field"><label for="contrast">对比度 <span id="contrastVal">125</span></label><input id="contrast" type="range" min="50" max="200" value="125"></div>
+ <div class="field wide"><label for="outputMode" id="outputModeLabel">输出模式</label><select id="outputMode"><option value="halftone" selected>HALFTONE · 报纸字符网点</option><option value="crt">CRT · 显像管点阵</option></select><div class="hint" id="outputModeHint">HALFTONE 使用文字形成油墨网点；CRT 使用荧光圆点模拟显像管。</div></div>
+ <div class="field wide" id="crtPaletteField" hidden><label for="crtPalette" id="crtPaletteLabel">CRT 荧光颜色</label><select id="crtPalette"><option value="green" selected>Phosphor Green · 荧光绿</option><option value="amber">Amber · 琥珀色</option><option value="ice">Ice Blue · 冰蓝</option><option value="white">Cool White · 冷白</option><option value="red">Ruby · 红色</option><option value="violet">Violet · 紫色</option><option value="custom">Custom · 自定义颜色</option></select><div class="field" id="crtCustomWrap" hidden><label for="crtCustomColor" id="crtCustomColorLabel">自定义荧光色</label><input id="crtCustomColor" type="color" value="#9dffb2"></div><div class="hint" id="crtPaletteHint">选择单色显像管风格；自定义颜色会自动生成匹配的暗色屏幕背景。</div></div>
+ <div class="field wide" id="crtPreviewQualityField" hidden><label for="crtPreviewQuality" id="crtPreviewQualityLabel">CRT 预览质量</label><select id="crtPreviewQuality"><option value="standard" selected>标准预览 · 流畅</option><option value="high">高清预览 · 更多细节</option></select><div class="hint" id="crtPreviewQualityHint">只影响屏幕预览；PNG 导出使用完整网格，细节更多。</div></div>
+ <div class="field wide" id="glyphField"><label for="glyphs" id="glyphLabel">替换网点的文字</label><input id="glyphs" type="text" maxlength="80" value="LUM3N" placeholder="例如：LUM3N / DEAD VALLEY"><div class="hint" id="glyphHint">文字会循环填充所有被网点算法选中的位置。</div></div>
+ <div class="field"><label for="rowMode" id="rowModeLabel">行数设置方式</label><select id="rowMode"><option id="rowPresetOption" value="preset" selected>选择预设行数</option><option id="rowCustomOption" value="custom">自定义行数</option></select></div>
+ <div class="field" id="presetRowsWrap"><label for="rows" id="rowsLabel">输出网格高度（行）</label><select id="rows"><option value="360">360 行 · 快速</option><option value="720">720 行 · 高清</option><option value="1080" selected>1080 行 · Full HD</option><option value="1440">1440 行 · 超清</option></select></div>
+ <div class="field" id="customWrap" hidden><label for="customRows" id="customRowsLabel">自定义行数（64–2400）</label><input id="customRows" type="number" min="64" max="2400" value="1080"></div>
+ <div class="field"><label for="algorithm" id="algorithmLabel">网点算法</label><select id="algorithm"><option value="fs">Floyd–Steinberg · 细节优先</option><option value="bayer">Bayer · 规则网点</option><option value="random">随机网点 · 颗粒感</option></select></div>
+ <div class="field"><label for="brightness"><span id="brightnessName">整体浓度</span> <span id="brightnessVal">25</span></label><input id="brightness" type="range" min="-150" max="150" value="25"></div>
+ <div class="field"><label for="contrast"><span id="contrastName">对比度</span> <span id="contrastVal">125</span></label><input id="contrast" type="range" min="50" max="200" value="125"></div>
  <div class="field"><label for="fontSize"><span id="fontSizeLabel">导出 PNG 字符大小</span> <span id="fontSizeVal">10</span></label><input id="fontSize" type="range" min="4" max="14" value="10"></div>
- <div class="field wide"><label class="check"><input id="invert" type="checkbox">反转明暗（亮部生成图案）</label><label id="blackBgOption" class="check"><input id="blackBg" type="checkbox">黑底白字配色（字符模式）</label><div class="hint" id="paletteHint">反转明暗会改变原图哪些区域生成图案；黑底白字只改变字符模式的成品颜色。</div></div>
+ <div class="field wide"><label class="check"><input id="invert" type="checkbox"><span id="invertName">反转明暗（亮部生成图案）</span></label><label id="blackBgOption" class="check"><input id="blackBg" type="checkbox"><span id="blackBgName">黑底白字配色（字符模式）</span></label><div class="hint" id="paletteHint">反转明暗会改变原图哪些区域生成图案；黑底白字只改变字符模式的成品颜色。</div></div>
  <div class="actions wide"><button class="primary" id="convert" disabled>生成文字网点图</button><button id="txt" disabled>导出 TXT</button><button id="png" disabled>导出 PNG</button></div>
- <div class="hint wide">建议先用 360 行确认效果，再切换 1080 行导出。超大网格可能需要较多内存。</div>
+ <div class="hint wide" id="mainHint">建议先用 360 行确认效果，再切换 1080 行导出。超大网格可能需要较多内存。</div>
 </section>
 <section class="workspace">
- <div class="panel previewHead"><strong>实时预览</strong><span class="status" id="status">等待上传图片</span></div>
- <div class="preview" id="preview"><div class="empty"><b>NO IMAGE LOADED</b>选择一张图片，开始生成文字网点。</div></div>
+ <div class="panel previewHead"><strong id="previewTitle">实时预览</strong><span class="status" id="status">等待上传图片</span></div>
+ <div class="preview" id="preview"><div class="empty"><b id="emptyTitle">NO IMAGE LOADED</b><span id="emptyText">选择一张图片，开始生成文字网点。</span></div></div>
  <div class="panel stats" id="stats"><span class="tag">网格：—</span><span class="tag">字符：—</span><span class="tag">本地处理</span></div>
- <div class="foot">TXT 是逐格矩阵文本；PNG 是按所选单元尺寸绘制的视觉成品。</div>
+ <div class="foot" id="foot">TXT 是逐格矩阵文本；PNG 使用完整网格绘制，细节比屏幕预览更多。</div>
 </section>
 </main>
 <script>
 (()=>{
 const $=id=>document.getElementById(id);let source=null,sourceUrl=null,grid=null,gridW=0,gridH=0,busy=false;
 const file=$('file'),drop=$('drop'),convert=$('convert'),txt=$('txt'),png=$('png'),status=$('status');
+let language='zh',currentFile=null;
+const I18N={
+zh:{
+intro:'在复古报纸字符网点与 CRT 显像管点阵之间切换。所有处理都在本地浏览器完成，图片不会上传。',
+uploadTitle:'输入图片',uploadHint:'也可以把图片拖到这里。支持 JPG / PNG / WebP。',
+outputModeLabel:'输出模式',outputModeHint:'HALFTONE 使用文字形成油墨网点；CRT 使用荧光圆点模拟显像管。',
+crtPaletteLabel:'CRT 荧光颜色',crtCustomColorLabel:'自定义荧光色',crtPaletteHint:'选择单色显像管风格；自定义颜色会自动生成匹配的暗色屏幕背景。',
+previewQualityLabel:'CRT 预览质量',previewStandard:'标准预览 · 流畅',previewHigh:'高清预览 · 更多细节',previewQualityHint:'只影响屏幕预览；PNG 导出使用完整网格，细节更多。',
+glyphLabel:'替换网点的文字',glyphHint:'文字会循环填充所有被网点算法选中的位置。',glyphPlaceholder:'例如：LUM3N / DEAD VALLEY',
+rowModeLabel:'行数设置方式',rowPresetOption:'选择预设行数',rowCustomOption:'自定义行数',
+rowsLabel:'输出网格高度（行）',row360:'360 行 · 快速',row720:'720 行 · 高清',row1080:'1080 行 · Full HD',row1440:'1440 行 · 超清',
+customRowsLabel:'自定义行数（64–2400）',algorithmLabel:'网点算法',algoFs:'Floyd–Steinberg · 细节优先',algoBayer:'Bayer · 规则网点',algoRandom:'随机网点 · 颗粒感',
+brightness:'整体浓度',contrast:'对比度',fontCharSize:'导出 PNG 字符大小',fontDotSize:'导出 PNG 点阵单元大小',
+invert:'反转明暗（亮部生成图案）',blackBg:'黑底白字配色（字符模式）',paletteHint:'反转明暗会改变原图哪些区域生成图案；黑底白字只改变字符模式的成品颜色。',
+convertHalftone:'生成 HALFTONE 图',convertCrt:'生成 CRT 点阵',exportTxt:'导出 TXT',exportPng:'导出 PNG',
+mainHint:'建议先用 360 行确认效果，再切换 1080 行导出。超大网格可能需要较多内存。',
+previewTitle:'实时预览',emptyTitle:'NO IMAGE LOADED',emptyText:'选择一张图片，开始生成图案。',
+statsGrid:'网格',statsChars:'字符位置',statsDots:'点阵单元',statsFilled:'已填充',statsLocal:'本地处理',
+foot:'TXT 是逐格矩阵文本；PNG 使用完整网格绘制，细节比屏幕预览更多。',
+statusWaiting:'等待上传图片',statusImageReady:'图片已载入，点击生成按钮开始转换。',statusLoadError:'图片读取失败：格式不支持或文件可能已损坏。',
+statusProcessing:'正在计算网点…',statusDone:'完成',statusProcessError:'处理失败：图片可能过大或内存不足。',
+statusModeCrt:'已切换为 CRT 显像管点阵预览',statusModeHalftone:'已切换为 HALFTONE 报纸字符预览',
+statusPalette:'CRT 荧光颜色已更新',statusCustomColor:'自定义荧光颜色已更新',statusPreview:'预览质量已更新',
+statusGlyph:'文字已更新；TXT/PNG 导出将使用新文字',statusTxt:'正在整理 TXT…',statusTxtDone:'TXT 已导出',
+statusPng:'正在绘制 PNG…',statusPngDone:'PNG 已导出',statusPngError:'PNG 导出失败：内存不足',
+statusPngTooLarge:'PNG 尺寸过大，请减小行数或单元大小',statusPngFailed:'PNG 导出失败',
+fileReady:'已就绪',fileSizeUnit:'MB'
+},
+en:{
+intro:'Switch between vintage newspaper halftone typography and CRT phosphor dots. Everything runs locally in your browser; your images are never uploaded.',
+uploadTitle:'Source image',uploadHint:'Drop an image here, or browse. Supports JPG / PNG / WebP.',
+outputModeLabel:'Output mode',outputModeHint:'HALFTONE uses repeating text as ink dots; CRT recreates a phosphor display with glowing dots.',
+crtPaletteLabel:'CRT phosphor color',crtCustomColorLabel:'Custom phosphor color',crtPaletteHint:'Choose a monochrome CRT phosphor. A matching dark screen background is generated automatically for custom colors.',
+previewQualityLabel:'CRT preview quality',previewStandard:'Standard · Faster',previewHigh:'High detail · More dots',previewQualityHint:'Affects screen preview only. PNG export uses the full grid for higher detail.',
+glyphLabel:'Text for the halftone pattern',glyphHint:'Your text repeats across all positions selected by the halftone algorithm.',glyphPlaceholder:'e.g. LUM3N / DEAD VALLEY',
+rowModeLabel:'Grid height setting',rowPresetOption:'Use a preset',rowCustomOption:'Custom height',
+rowsLabel:'Output grid height (rows)',row360:'360 rows · Fast',row720:'720 rows · HD',row1080:'1080 rows · Full HD',row1440:'1440 rows · Ultra',
+customRowsLabel:'Custom rows (64–2400)',algorithmLabel:'Dithering algorithm',algoFs:'Floyd–Steinberg · Detail',algoBayer:'Bayer · Ordered pattern',algoRandom:'Random · Grain',
+brightness:'Density',contrast:'Contrast',fontCharSize:'PNG character size',fontDotSize:'PNG dot cell size',
+invert:'Invert luminance (use highlights)',blackBg:'Black background, light text (HALFTONE)',
+paletteHint:'Invert luminance changes which parts of the image form the pattern. The color option only changes the HALFTONE output palette.',
+convertHalftone:'Generate HALFTONE',convertCrt:'Generate CRT pattern',exportTxt:'Export TXT',exportPng:'Export PNG',
+mainHint:'Try 360 rows for a quick check, then use 1080 rows for export. Very large grids may require more memory.',
+previewTitle:'Preview',emptyTitle:'NO IMAGE LOADED',emptyText:'Choose an image to create a pattern.',
+statsGrid:'Grid',statsChars:'Character cells',statsDots:'Dot cells',statsFilled:'Filled',statsLocal:'Local processing',
+foot:'TXT contains the character matrix. PNG is rendered from the full grid and contains more detail than the on-screen preview.',
+statusWaiting:'Waiting for an image',statusImageReady:'Image loaded. Select Generate to begin.',statusLoadError:'Could not read this image. The format may be unsupported or the file may be damaged.',
+statusProcessing:'Calculating pattern…',statusDone:'Done',statusProcessError:'Processing failed: the image may be too large or memory may be insufficient.',
+statusModeCrt:'Switched to CRT preview',statusModeHalftone:'Switched to HALFTONE preview',
+statusPalette:'CRT phosphor color updated',statusCustomColor:'Custom phosphor color updated',statusPreview:'Preview quality updated',
+statusGlyph:'Text updated. TXT and PNG exports will use the new text.',statusTxt:'Preparing TXT…',statusTxtDone:'TXT exported',
+statusPng:'Rendering PNG…',statusPngDone:'PNG exported',statusPngError:'PNG export failed: insufficient memory',
+statusPngTooLarge:'PNG is too large. Reduce the grid height or cell size.',statusPngFailed:'PNG export failed',
+fileReady:'Ready',fileSizeUnit:'MB'
+}
+};
+function tr(key){return (I18N[language]&&I18N[language][key])||I18N.zh[key]||key}
 function setStatus(s){status.textContent=s}
+function updateFileMeta(){
+ if(!currentFile||!source)return;
+ $('fileMeta').textContent=source.naturalWidth+' × '+source.naturalHeight+' · '+(currentFile.size/1024/1024).toFixed(2)+' '+tr('fileSizeUnit')+' · '+tr('fileReady');
+}
+function updateStats(){
+ if(!grid){$('stats').innerHTML='<span class="tag">'+tr('statsGrid')+': —</span><span class="tag">'+tr('statsChars')+': —</span><span class="tag">'+tr('statsLocal')+'</span>';return}
+ const count=grid.activeCount||0;
+ $('stats').innerHTML='<span class="tag">'+tr('statsGrid')+': '+gridW+' × '+gridH+'</span><span class="tag">'+(grid.mode==='crt'?tr('statsDots'):tr('statsChars'))+': '+(gridW*gridH).toLocaleString()+'</span><span class="tag">'+tr('statsFilled')+': '+count.toLocaleString()+' ('+(count/(gridW*gridH)*100).toFixed(1)+'%)</span>';
+}
+function applyLanguage(){
+ document.documentElement.lang=language==='zh'?'zh-CN':'en';
+ document.title=language==='zh'?'Lem Box · 图像转换器':'Lem Box · Image Converter';
+ $('languageLabel').textContent=language==='zh'?'语言':'Language';
+ const map={intro:'intro',uploadTitle:'uploadTitle',uploadHint:'uploadHint',outputModeLabel:'outputModeLabel',outputModeHint:'outputModeHint',
+ crtPaletteLabel:'crtPaletteLabel',crtCustomColorLabel:'crtCustomColorLabel',crtPaletteHint:'crtPaletteHint',
+ crtPreviewQualityLabel:'previewQualityLabel',crtPreviewQualityHint:'previewQualityHint',glyphLabel:'glyphLabel',glyphHint:'glyphHint',
+ rowModeLabel:'rowModeLabel',rowPresetOption:'rowPresetOption',rowCustomOption:'rowCustomOption',rowsLabel:'rowsLabel',
+ customRowsLabel:'customRowsLabel',algorithmLabel:'algorithmLabel',brightnessName:'brightness',contrastName:'contrast',
+ invertName:'invert',blackBgName:'blackBg',paletteHint:'paletteHint',mainHint:'mainHint',previewTitle:'previewTitle',emptyTitle:'emptyTitle',
+ emptyText:'emptyText',foot:'foot'};
+ for(const [id,key] of Object.entries(map))$(id).textContent=tr(key);
+ $('outputMode').options[0].textContent=language==='zh'?'HALFTONE · 报纸字符网点':'HALFTONE · Newspaper halftone';
+ $('outputMode').options[1].textContent=language==='zh'?'CRT · 显像管点阵':'CRT · Cathode-ray tube';
+ $('rows').options[0].textContent=tr('row360');$('rows').options[1].textContent=tr('row720');$('rows').options[2].textContent=tr('row1080');$('rows').options[3].textContent=tr('row1440');
+ $('algorithm').options[0].textContent=tr('algoFs');$('algorithm').options[1].textContent=tr('algoBayer');$('algorithm').options[2].textContent=tr('algoRandom');
+ const paletteNames=language==='zh'?['Phosphor Green · 荧光绿','Amber · 琥珀色','Ice Blue · 冰蓝','Cool White · 冷白','Ruby · 红色','Violet · 紫色','Custom · 自定义颜色']:['Phosphor Green','Amber','Ice Blue','Cool White','Ruby','Violet','Custom'];
+ paletteNames.forEach((name,i)=>$('crtPalette').options[i].textContent=name);
+ $('crtPreviewQuality').options[0].textContent=tr('previewStandard');$('crtPreviewQuality').options[1].textContent=tr('previewHigh');
+ $('glyphs').placeholder=tr('glyphPlaceholder');
+ $('txt').textContent=tr('exportTxt');$('png').textContent=tr('exportPng');
+ $('fontSizeLabel').textContent=tr($('outputMode').value==='crt'?'fontDotSize':'fontCharSize');
+ updateOutputMode();updateStats();updateFileMeta();
+ if(grid)setStatus(tr('statusDone'));else if(source)setStatus(tr('statusImageReady'));else setStatus(tr('statusWaiting'));
+}
+function getRows(){return $('rowMode').value==='custom'?Math.max(64,Math.min(2400,Number($('customRows').value)||1080)):Number($('rows').value)}
 const CRT_PALETTES={
  green:{foreground:'#9dffb2',background:'#030a06'},
  amber:{foreground:'#ffbd4a',background:'#100900'},
@@ -82,11 +175,14 @@ function applyCrtPalette(){
 }
 $('crtPalette').addEventListener('change',()=>{
  applyCrtPalette();
- if(grid&&grid.mode==='crt')setStatus('CRT 荧光颜色已更新');
+ if(grid&&grid.mode==='crt')setStatus(tr('statusPalette'));
 });
 $('crtCustomColor').addEventListener('input',()=>{
  applyCrtPalette();
- if(grid&&grid.mode==='crt')setStatus('自定义荧光颜色已更新');
+ if(grid&&grid.mode==='crt')setStatus(tr('statusCustomColor'));
+});
+$('crtPreviewQuality').addEventListener('change',()=>{
+ if(grid&&grid.mode==='crt'){renderPreview();setStatus(tr('statusPreview'))}
 });
 function getRows(){return $('rowMode').value==='custom'?Math.max(64,Math.min(2400,Number($('customRows').value)||1080)):Number($('rows').value)}
 function updateRowMode(){const custom=$('rowMode').value==='custom';$('presetRowsWrap').hidden=custom;$('customWrap').hidden=!custom}
@@ -96,19 +192,21 @@ function updateOutputMode(){
  const crt=$('outputMode').value==='crt';
  $('glyphField').hidden=crt;
  $('crtPaletteField').hidden=!crt;
+ $('crtPreviewQualityField').hidden=!crt;
  $('blackBgOption').hidden=crt;
  $('paletteHint').hidden=crt;
- $('fontSizeLabel').textContent=crt?'导出 PNG 点阵单元大小':'导出 PNG 字符大小';
- convert.textContent=crt?'生成 CRT 点阵':'生成 HALFTONE 图';
+ $('fontSizeLabel').textContent=tr(crt?'fontDotSize':'fontCharSize');
+ convert.textContent=tr(crt?'convertCrt':'convertHalftone');
  if(grid){
   grid.mode=crt?'crt':'halftone';
   grid.background=$('blackBg').checked;
   if(crt){const colors=getCrtPalette();grid.crtForeground=colors.foreground;grid.crtBackground=colors.background}
   renderPreview();
-  setStatus(crt?'已切换为 CRT 显像管点阵预览':'已切换为 HALFTONE 报纸字符预览')
+  setStatus(tr(crt?'statusModeCrt':'statusModeHalftone'))
  }
 }
 $('outputMode').addEventListener('change',updateOutputMode);
+$('language').addEventListener('change',()=>{language=$('language').value;applyLanguage()});
 updateOutputMode();
 $('brightness').addEventListener('input',()=> $('brightnessVal').textContent=$('brightness').value);
 $('contrast').addEventListener('input',()=> $('contrastVal').textContent=$('contrast').value);
@@ -117,9 +215,9 @@ file.addEventListener('change',e=>loadFile(e.target.files?.[0]));
 ['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('drag')}));
 ['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('drag')}));
 drop.addEventListener('drop',e=>loadFile(e.dataTransfer.files?.[0]));
-function loadFile(f){if(!f)return;const u=URL.createObjectURL(f),im=new Image();im.onload=()=>{const oldUrl=sourceUrl;source=im;sourceUrl=u;if(oldUrl)URL.revokeObjectURL(oldUrl);convert.disabled=false;setStatus('已载入：'+im.naturalWidth+' × '+im.naturalHeight);$('preview').innerHTML='<div class="empty"><b>IMAGE READY</b>点击“生成文字网点图”。</div>';$('thumbnail').src=u;$('fileName').textContent=f.name;$('fileMeta').textContent=im.naturalWidth+' × '+im.naturalHeight+' · '+(f.size/1024/1024).toFixed(2)+' MB · 已就绪';$('filePreview').hidden=false;grid=null;txt.disabled=png.disabled=true};im.onerror=()=>{URL.revokeObjectURL(u);setStatus('图片读取失败：格式不支持或文件可能已损坏')};im.src=u}
+function loadFile(f){if(!f)return;const u=URL.createObjectURL(f),im=new Image();im.onload=()=>{const oldUrl=sourceUrl;source=im;sourceUrl=u;if(oldUrl)URL.revokeObjectURL(oldUrl);convert.disabled=false;currentFile=f;setStatus(tr('statusImageReady')+' '+im.naturalWidth+' × '+im.naturalHeight);$('preview').innerHTML='<div class="empty"><b>IMAGE READY</b><span>'+tr('emptyText')+'</span></div>';$('thumbnail').src=u;$('fileName').textContent=f.name;updateFileMeta();$('filePreview').hidden=false;grid=null;txt.disabled=png.disabled=true};im.onerror=()=>{URL.revokeObjectURL(u);setStatus(tr('statusLoadError'))};im.src=u}
 function bayerMatrix(n){let m=[[0,2],[3,1]];while(m.length<n){const s=m.length,out=Array.from({length:s*2},()=>Array(s*2).fill(0));for(let y=0;y<s;y++)for(let x=0;x<s;x++){let v=m[y][x]*4;out[y][x]=v;out[y][x+s]=v+2;out[y+s][x]=v+3;out[y+s][x+s]=v+1}m=out}return m}
-function process(){if(!source||busy)return;busy=true;convert.disabled=true;txt.disabled=png.disabled=true;setStatus('正在计算网点…');setTimeout(()=>{
+function process(){if(!source||busy)return;busy=true;convert.disabled=true;txt.disabled=png.disabled=true;setStatus(tr('statusProcessing'));setTimeout(()=>{
 try{
 gridH=getRows();gridW=Math.max(1,Math.round(gridH*source.naturalWidth/source.naturalHeight));
 const tmp=document.createElement('canvas');tmp.width=gridW;tmp.height=gridH;const cx=tmp.getContext('2d',{willReadFrequently:true});cx.drawImage(source,0,0,gridW,gridH);const pix=cx.getImageData(0,0,gridW,gridH).data;
@@ -129,9 +227,8 @@ const out=new Uint8Array(gridW*gridH);
 if(algo==='fs'){for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++){let i=y*gridW+x,old=values[i],v=old>=127.5?255:0;out[i]=v?1:0;let e=old-v;if(x+1<gridW)values[i+1]+=e*7/16;if(y+1<gridH){if(x>0)values[i+gridW-1]+=e*3/16;values[i+gridW]+=e*5/16;if(x+1<gridW)values[i+gridW+1]+=e/16}}}
 else if(algo==='bayer'){const m=bayerMatrix(8);for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++)out[y*gridW+x]=values[y*gridW+x]>(m[y%8][x%8]+.5)/64*255?1:0}
 else{let seed=982451653;function rand(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296}for(let i=0;i<out.length;i++)out[i]=values[i]>rand()*255?1:0}
-const chars=Array.from($('glyphs').value.trim()||'LUM3N'),mode=$('outputMode').value,crtColors=getCrtPalette();grid={mask:out,chars,background:$('blackBg').checked,mode,crtForeground:crtColors.foreground,crtBackground:crtColors.background};renderPreview();let count=0;for(const v of out)count+=v;
-$('stats').innerHTML='<span class="tag">网格：'+gridW+' × '+gridH+'</span><span class="tag">'+(mode==='crt'?'点阵单元：':'字符位置：')+(gridW*gridH).toLocaleString()+'</span><span class="tag">已填充：'+count.toLocaleString()+' ('+(count/out.length*100).toFixed(1)+'%)</span>';txt.disabled=png.disabled=false;setStatus('完成')
-}catch(e){console.error(e);setStatus('处理失败：图片可能过大或内存不足')}finally{convert.disabled=false;busy=false}
+const chars=Array.from($('glyphs').value.trim()||'LUM3N'),mode=$('outputMode').value,crtColors=getCrtPalette();grid={mask:out,chars,background:$('blackBg').checked,mode,crtForeground:crtColors.foreground,crtBackground:crtColors.background,activeCount:0};let count=0;for(const v of out)count+=v;grid.activeCount=count;renderPreview();updateStats();txt.disabled=png.disabled=false;setStatus(tr('statusDone'))
+}catch(e){console.error(e);setStatus(tr('statusProcessError'))}finally{convert.disabled=false;busy=false}
 },20)}
 function drawDotMatrix(ctx,unit,color,cols=gridW,rows=gridH){
  const radius=Math.max(.35,unit*.29);
@@ -192,7 +289,7 @@ function renderPreview(){
  const ctx=c.getContext('2d');
  if(grid.mode==='crt'){
   // Render a tone-preserving preview: each display dot represents the average coverage of its source area.
-  const factor=Math.min(1,360/gridW,240/gridH),cols=Math.max(1,Math.floor(gridW*factor)),rows=Math.max(1,Math.floor(gridH*factor)),unit=3;
+  const high=$('crtPreviewQuality').value==='high',maxCols=high?720:360,maxRows=high?480:240,factor=Math.min(1,maxCols/gridW,maxRows/gridH),cols=Math.max(1,Math.floor(gridW*factor)),rows=Math.max(1,Math.floor(gridH*factor)),unit=3;
   c.width=Math.round(cols*unit);c.height=Math.round(rows*unit);
   ctx.fillStyle=grid.crtBackground;ctx.fillRect(0,0,c.width,c.height);
   drawCrtPreviewMatrix(ctx,unit,grid.crtForeground,cols,rows);
@@ -210,15 +307,16 @@ function renderPreview(){
  }
  $('preview').replaceChildren(c)
 }
-$('glyphs').addEventListener('input',()=>{if(grid){grid.chars=Array.from($('glyphs').value.trim()||'LUM3N');renderPreview();setStatus('文字已更新；TXT/PNG 导出将使用新文字')}});
+$('glyphs').addEventListener('input',()=>{if(grid){grid.chars=Array.from($('glyphs').value.trim()||'LUM3N');renderPreview();setStatus(tr('statusGlyph'))}});
 convert.addEventListener('click',process);
 function buildText(){const lines=new Array(gridH);let k=0;for(let y=0;y<gridH;y++){let s='';for(let x=0;x<gridW;x++,k++)s+=grid.mask[k]?(grid.mode==='crt'?'.':grid.chars[(x+y*gridW)%grid.chars.length]):' ';lines[y]=s}return lines.join('\n')}
 function download(blob,name){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),30000)}
-txt.addEventListener('click',()=>{if(!grid)return;setStatus('正在整理 TXT…');setTimeout(()=>{download(new Blob([buildText()],{type:'text/plain;charset=utf-8'}),grid.mode==='crt'?'lem-box-crt.txt':'lem-box-halftone.txt');setStatus('TXT 已导出')},20)});
-png.addEventListener('click',()=>{if(!grid||busy)return;const fs=Number($('fontSize').value),w=gridW*fs,h=gridH*fs;if(w*h>70000000){setStatus('PNG 尺寸过大，请减小行数或单元大小');return}setStatus('正在绘制 PNG…');png.disabled=true;setTimeout(()=>{try{const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');
+txt.addEventListener('click',()=>{if(!grid)return;setStatus(tr('statusTxt'));setTimeout(()=>{download(new Blob([buildText()],{type:'text/plain;charset=utf-8'}),grid.mode==='crt'?'lem-box-crt.txt':'lem-box-halftone.txt');setStatus(tr('statusTxtDone'))},20)});
+png.addEventListener('click',()=>{if(!grid||busy)return;const fs=Number($('fontSize').value),w=gridW*fs,h=gridH*fs;if(w*h>70000000){setStatus(tr('statusPngTooLarge'));return}setStatus(tr('statusPng'));png.disabled=true;setTimeout(()=>{try{const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');
 if(grid.mode==='crt'){ctx.fillStyle=grid.crtBackground;ctx.fillRect(0,0,w,h);drawDotMatrix(ctx,fs,grid.crtForeground,gridW,gridH);drawScanlines(ctx,w,h,fs);const shade=ctx.createRadialGradient(w/2,h/2,Math.min(w,h)*.18,w/2,h/2,Math.max(w,h)*.72);shade.addColorStop(0,'rgba(0,0,0,0)');shade.addColorStop(1,'rgba(0,0,0,.3)');ctx.fillStyle=shade;ctx.fillRect(0,0,w,h)}
 else{ctx.fillStyle=grid.background?'#07090c':'#f2f4f6';ctx.fillRect(0,0,w,h);ctx.fillStyle=grid.background?'#e9f2f8':'#101419';ctx.font=fs+'px monospace';ctx.textBaseline='top';let k=0;for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++,k++)if(grid.mask[k])ctx.fillText(grid.chars[(x+y*gridW)%grid.chars.length],x*fs,y*fs)}
-c.toBlob(b=>{if(b){download(b,grid.mode==='crt'?'lem-box-crt.png':'lem-box-halftone.png');setStatus('PNG 已导出 · '+w+' × '+h)}else setStatus('PNG 导出失败');png.disabled=false},'image/png')
-}catch(e){console.error(e);setStatus('PNG 导出失败：内存不足');png.disabled=false}},30)});
+c.toBlob(b=>{if(b){download(b,grid.mode==='crt'?'lem-box-crt.png':'lem-box-halftone.png');setStatus(tr('statusPngDone')+' · '+w+' × '+h)}else setStatus(tr('statusPngFailed'));png.disabled=false},'image/png')
+}catch(e){console.error(e);setStatus(tr('statusPngError'));png.disabled=false}},30)});
+applyLanguage();
 })();
 </script></body></html>
