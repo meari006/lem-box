@@ -589,12 +589,13 @@ async function buildHalftonePng(fs,w,h){
  async function appendRow(row){let offset=0;while(offset<row.length){const count=Math.min(batch.length-used,row.length-offset);batch.set(row.subarray(offset,offset+count),used);used+=count;offset+=count;if(used===batch.length)await flush()}}
  const cellsPerTile=Math.max(1,Math.floor(4096/fs));
  const background=grid.background?'#07090c':'#ffffff',foreground=grid.background?'#e9f2f8':'#08090a';
+ const canvas=document.createElement('canvas');
  try{
   for(let gy=0;gy<gridH;gy++){
    const tiles=[];
    for(let x0=0;x0<gridW;x0+=cellsPerTile){
     const cols=Math.min(cellsPerTile,gridW-x0),tw=cols*fs;
-    const canvas=document.createElement('canvas');canvas.width=tw;canvas.height=fs;
+    canvas.width=tw;canvas.height=fs;
     const ctx=canvas.getContext('2d',{willReadFrequently:true});
     ctx.fillStyle=background;ctx.fillRect(0,0,tw,fs);
     ctx.fillStyle=foreground;ctx.font=fs+'px monospace';ctx.textBaseline='top';
