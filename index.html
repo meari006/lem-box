@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LUM3N · 文字网点转换器</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0e12;--panel:#141a21;--line:#28323d;--muted:#9aa8b5;--text:#e8eef4;--accent:#9ad8ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% 0%,#172635 0,#0b0e12 48%);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{padding:26px 20px 18px;max-width:1200px;margin:auto}h1{margin:0;font-size:clamp(24px,4vw,36px);letter-spacing:.04em}header p{margin:7px 0 0;color:var(--muted)}main{max-width:1200px;padding:0 20px 40px;margin:auto;display:grid;grid-template-columns:340px 1fr;gap:18px}
+.panel{background:rgba(20,26,33,.94);border:1px solid var(--line);border-radius:16px;padding:17px;box-shadow:0 14px 40px #0003}.controls{display:flex;flex-direction:column;gap:15px}.field{display:flex;flex-direction:column;gap:6px}label{font-size:13px;color:#c2cfda;display:flex;justify-content:space-between;gap:10px}input,select,button{font:inherit}input[type=text],input[type=number],select{width:100%;background:#0b1118;border:1px solid #34414e;border-radius:9px;color:var(--text);padding:10px}input[type=file]{width:100%;font-size:13px;color:var(--muted)}input[type=range]{width:100%;accent-color:var(--accent)}.hint{font-size:12px;color:var(--muted)}.check{display:flex;align-items:center;gap:8px;color:#c2cfda;font-size:13px}.check input{accent-color:var(--accent)}button{border:1px solid #415667;border-radius:10px;padding:10px 12px;background:#1b2b38;color:var(--text);cursor:pointer}button.primary{background:linear-gradient(135deg,#bceaff,#6ab4dc);color:#08131b;border:0;font-weight:700}button:disabled{opacity:.45;cursor:not-allowed}.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.actions .primary{grid-column:1/-1}.workspace{display:flex;flex-direction:column;gap:12px;min-width:0}.previewHead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.previewHead strong{font-size:14px}.status{font-size:12px;color:var(--muted)}.preview{background:#07090c;border:1px solid var(--line);border-radius:14px;min-height:360px;display:flex;align-items:center;justify-content:center;overflow:auto;padding:12px}.preview canvas{max-width:100%;max-height:72vh;object-fit:contain}.empty{text-align:center;color:var(--muted);padding:65px 20px}.empty b{display:block;color:#dce8f1;font-size:18px;margin-bottom:8px}.stats{display:flex;gap:8px;flex-wrap:wrap}.tag{font-size:12px;color:#b9c7d2;border:1px solid var(--line);border-radius:20px;padding:4px 9px}.foot{color:var(--muted);font-size:12px;padding:0 2px}.drop{border:1px dashed #536779;padding:14px;border-radius:10px;background:#0c131b}.drop.drag{border-color:var(--accent);background:#142534}
+@media(max-width:850px){main{grid-template-columns:1fr}.preview{min-height:280px}.controls{display:grid;grid-template-columns:1fr 1fr}.controls .wide{grid-column:1/-1}}
+@media(max-width:520px){header{padding:20px 14px 14px}main{padding:0 14px 28px}.controls{display:flex}.panel{padding:14px}}
+</style></head>
+<body>
+<header><h1>LUM3N <span style="color:var(--accent);font-weight:400">/ HALFTONE</span></h1><p>把照片变成由文字构成的黑白网点图。所有处理都在本地浏览器完成，图片不会上传。</p></header>
+<main>
+<section class="panel controls">
+ <div class="field wide"><label>输入图片</label><div class="drop" id="drop"><input id="file" type="file" accept="image/*"><div class="hint">也可以把图片拖到这里。支持 JPG / PNG / WebP。</div></div></div>
+ <div class="field wide"><label for="glyphs">替换网点的文字</label><input id="glyphs" type="text" maxlength="80" value="LUM3N" placeholder="例如：LUM3N / DEAD VALLEY"><div class="hint">文字会循环填充所有被网点算法选中的位置。</div></div>
+ <div class="field"><label for="rows">字符网格高度（行）</label><select id="rows"><option value="360">360 行 · 快速</option><option value="720">720 行 · 高清</option><option value="1080" selected>1080 行 · Full HD</option><option value="1440">1440 行 · 超清</option><option value="custom">自定义</option></select></div>
+ <div class="field" id="customWrap" hidden><label for="customRows">自定义行数</label><input id="customRows" type="number" min="64" max="2400" value="1080"></div>
+ <div class="field"><label for="algorithm">网点算法</label><select id="algorithm"><option value="fs">Floyd–Steinberg · 细节优先</option><option value="bayer">Bayer · 规则网点</option><option value="random">随机网点 · 颗粒感</option></select></div>
+ <div class="field"><label for="brightness">整体浓度 <span id="brightnessVal">0</span></label><input id="brightness" type="range" min="-100" max="100" value="0"></div>
+ <div class="field"><label for="contrast">对比度 <span id="contrastVal">100</span></label><input id="contrast" type="range" min="50" max="200" value="100"></div>
+ <div class="field"><label for="fontSize">导出 PNG 字符大小 <span id="fontSizeVal">4</span></label><input id="fontSize" type="range" min="4" max="14" value="4"></div>
+ <div class="field wide"><label class="check"><input id="invert" type="checkbox">反转明暗</label><label class="check"><input id="blackBg" type="checkbox" checked>黑色背景、浅色文字</label></div>
+ <div class="actions wide"><button class="primary" id="convert" disabled>生成文字网点图</button><button id="txt" disabled>导出 TXT</button><button id="png" disabled>导出 PNG</button></div>
+ <div class="hint wide">建议先用 360 行确认效果，再切换 1080 行导出。超大网格可能需要较多内存。</div>
+</section>
+<section class="workspace">
+ <div class="panel previewHead"><strong>实时预览</strong><span class="status" id="status">等待上传图片</span></div>
+ <div class="preview" id="preview"><div class="empty"><b>NO IMAGE LOADED</b>选择一张图片，开始生成文字网点。</div></div>
+ <div class="panel stats" id="stats"><span class="tag">网格：—</span><span class="tag">字符：—</span><span class="tag">本地处理</span></div>
+ <div class="foot">TXT 是逐格字符矩阵；PNG 是按所选字体尺寸绘制的视觉成品。不同字体会影响字符宽高比例。</div>
+</section>
+</main>
+<script>
+(()=>{
+const $=id=>document.getElementById(id);let source=null,grid=null,gridW=0,gridH=0,busy=false;
+const file=$('file'),drop=$('drop'),convert=$('convert'),txt=$('txt'),png=$('png'),status=$('status');
+function setStatus(s){status.textContent=s}
+function getRows(){return $('rows').value==='custom'?Math.max(64,Math.min(2400,Number($('customRows').value)||1080)):Number($('rows').value)}
+$('rows').addEventListener('change',()=>{$('customWrap').hidden=$('rows').value!=='custom'});
+$('brightness').addEventListener('input',()=> $('brightnessVal').textContent=$('brightness').value);
+$('contrast').addEventListener('input',()=> $('contrastVal').textContent=$('contrast').value);
+$('fontSize').addEventListener('input',()=> $('fontSizeVal').textContent=$('fontSize').value);
+file.addEventListener('change',e=>loadFile(e.target.files?.[0]));
+['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('drag')}));
+['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('drag')}));
+drop.addEventListener('drop',e=>loadFile(e.dataTransfer.files?.[0]));
+function loadFile(f){if(!f)return;if(!f.type.startsWith('image/')){setStatus('文件不是图片');return}const u=URL.createObjectURL(f),im=new Image();im.onload=()=>{source=im;URL.revokeObjectURL(u);convert.disabled=false;setStatus(im.naturalWidth+' × '+im.naturalHeight+' · '+f.name);$('preview').innerHTML='<div class="empty"><b>IMAGE READY</b>点击“生成文字网点图”。</div>';grid=null;txt.disabled=png.disabled=true};im.onerror=()=>{URL.revokeObjectURL(u);setStatus('图片读取失败')};im.src=u}
+function bayerMatrix(n){let m=[[0,2],[3,1]];while(m.length<n){const s=m.length,out=Array.from({length:s*2},()=>Array(s*2).fill(0));for(let y=0;y<s;y++)for(let x=0;x<s;x++){let v=m[y][x]*4;out[y][x]=v;out[y][x+s]=v+2;out[y+s][x]=v+3;out[y+s][x+s]=v+1}m=out}return m}
+function process(){if(!source||busy)return;busy=true;convert.disabled=true;txt.disabled=png.disabled=true;setStatus('正在计算网点…');setTimeout(()=>{
+try{
+gridH=getRows();gridW=Math.max(1,Math.round(gridH*source.naturalWidth/source.naturalHeight));
+const tmp=document.createElement('canvas');tmp.width=gridW;tmp.height=gridH;const cx=tmp.getContext('2d',{willReadFrequently:true});cx.drawImage(source,0,0,gridW,gridH);const pix=cx.getImageData(0,0,gridW,gridH).data;
+const contrast=Number($('contrast').value)/100,bias=Number($('brightness').value)*1.25,invert=$('invert').checked,algo=$('algorithm').value,values=new Float32Array(gridW*gridH);
+for(let i=0,j=0;i<pix.length;i+=4,j++){let l=(.2126*pix[i]+.7152*pix[i+1]+.0722*pix[i+2]);l=Math.max(0,Math.min(255,(l-127.5)*contrast+127.5));let d=invert?l:255-l;values[j]=Math.max(0,Math.min(255,d+bias))}
+const out=new Uint8Array(gridW*gridH);
+if(algo==='fs'){for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++){let i=y*gridW+x,old=values[i],v=old>=127.5?255:0;out[i]=v?1:0;let e=old-v;if(x+1<gridW)values[i+1]+=e*7/16;if(y+1<gridH){if(x>0)values[i+gridW-1]+=e*3/16;values[i+gridW]+=e*5/16;if(x+1<gridW)values[i+gridW+1]+=e/16}}}
+else if(algo==='bayer'){const m=bayerMatrix(8);for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++)out[y*gridW+x]=values[y*gridW+x]>(m[y%8][x%8]+.5)/64*255?1:0}
+else{let seed=982451653;function rand(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296}for(let i=0;i<out.length;i++)out[i]=values[i]>rand()*255?1:0}
+const chars=Array.from($('glyphs').value||'LUM3N');grid={mask:out,chars,background:$('blackBg').checked};renderPreview();let count=0;for(const v of out)count+=v;
+$('stats').innerHTML='<span class="tag">网格：'+gridW+' × '+gridH+'</span><span class="tag">字符位置：'+(gridW*gridH).toLocaleString()+'</span><span class="tag">已填充：'+count.toLocaleString()+' ('+(count/out.length*100).toFixed(1)+'%)</span>';txt.disabled=png.disabled=false;setStatus('完成')
+}catch(e){console.error(e);setStatus('处理失败：图片可能过大或内存不足')}finally{convert.disabled=false;busy=false}
+},20)}
+function renderPreview(){const scale=Math.min(1000/gridW,760/gridH,1),w=Math.max(1,Math.round(gridW*scale)),h=Math.max(1,Math.round(gridH*scale)),c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d'),bg=grid.background?'#07090c':'#f2f4f6',fg=grid.background?'#e9f2f8':'#101419';ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);ctx.fillStyle=fg;ctx.font=Math.max(1,Math.ceil(scale*1.1))+'px monospace';ctx.textBaseline='top';let i=0;for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++,i++)if(grid.mask[i])ctx.fillText(grid.chars[(x+y*gridW)%grid.chars.length],x*scale,y*scale);$('preview').replaceChildren(c)}
+convert.addEventListener('click',process);
+function buildText(){const lines=new Array(gridH);let k=0;for(let y=0;y<gridH;y++){let s='';for(let x=0;x<gridW;x++,k++)s+=grid.mask[k]?grid.chars[(x+y*gridW)%grid.chars.length]:' ';lines[y]=s}return lines.join('\n')}
+function download(blob,name){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),30000)}
+txt.addEventListener('click',()=>{if(!grid)return;setStatus('正在整理 TXT…');setTimeout(()=>{download(new Blob([buildText()],{type:'text/plain;charset=utf-8'}),'lumen-halftone.txt');setStatus('TXT 已导出')},20)});
+png.addEventListener('click',()=>{if(!grid||busy)return;const fs=Number($('fontSize').value),w=gridW*fs,h=gridH*fs;if(w*h>70000000){setStatus('PNG 尺寸过大，请减小行数或字体大小');return}setStatus('正在绘制 PNG…');png.disabled=true;setTimeout(()=>{try{const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');ctx.fillStyle=grid.background?'#07090c':'#f2f4f6';ctx.fillRect(0,0,w,h);ctx.fillStyle=grid.background?'#e9f2f8':'#101419';ctx.font=fs+'px monospace';ctx.textBaseline='top';let k=0;for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++,k++)if(grid.mask[k])ctx.fillText(grid.chars[(x+y*gridW)%grid.chars.length],x*fs,y*fs);c.toBlob(b=>{if(b){download(b,'lumen-halftone.png');setStatus('PNG 已导出 · '+w+' × '+h)}else setStatus('PNG 导出失败');png.disabled=false},'image/png')}catch(e){setStatus('PNG 导出失败：内存不足');png.disabled=false}},30)});
+})();
+</script></body></html>
