@@ -6,13 +6,28 @@
 <style>
 :root{color-scheme:dark;--bg:#0b0e12;--panel:#141a21;--line:#28323d;--muted:#9aa8b5;--text:#e8eef4;--accent:#9ad8ff}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% 0%,#172635 0,#0b0e12 48%);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
-header{padding:26px 20px 18px;max-width:1200px;margin:auto}.headerTop{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}h1{margin:0;font-size:clamp(24px,4vw,36px);letter-spacing:.04em}header p{margin:7px 0 0;color:var(--muted)}.languageControl{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;white-space:nowrap}.languageControl select{width:auto;min-width:108px;padding:7px 9px}.version{display:inline-block;vertical-align:middle;margin-left:8px;padding:3px 8px;border:1px solid var(--line);border-radius:7px;color:var(--muted);font:11px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.04em}main{max-width:1200px;padding:0 20px 40px;margin:auto;display:grid;grid-template-columns:340px 1fr;gap:18px}
+header{padding:26px 20px 18px;max-width:1200px;margin:auto}.headerTop{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}.headerTools{display:flex;align-items:center;gap:12px;flex-wrap:wrap}h1{margin:0;font-size:clamp(24px,4vw,36px);letter-spacing:.04em}header p{margin:7px 0 0;color:var(--muted)}.languageControl{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;white-space:nowrap}.languageControl select{width:auto;min-width:108px;padding:7px 9px}
+:root[data-theme="light"]{color-scheme:light;--line:#d5dee6;--muted:#5c6b78;--text:#1c2833;--accent:#347ca2}
+:root[data-theme="light"] body{background:radial-gradient(ellipse at 80% 0%,#e1edf4 0,#f2f5f8 52%);color:var(--text)}
+:root[data-theme="light"] .panel{background:rgba(255,255,255,.94);border-color:var(--line);box-shadow:0 12px 32px rgba(40,65,85,.09)}
+:root[data-theme="light"] label,:root[data-theme="light"] .check{color:#344452}
+:root[data-theme="light"] input[type=text],:root[data-theme="light"] input[type=number],:root[data-theme="light"] select,:root[data-theme="light"] input[type=color]{background:#fff;border-color:#c5d0d9;color:#1c2833}
+:root[data-theme="light"] input[type=file]{color:#596b79}
+:root[data-theme="light"] button{background:#e8eef3;border-color:#c4d0da;color:#1c2833}
+:root[data-theme="light"] button.primary{background:linear-gradient(135deg,#d4efff,#9bcce7);color:#0a2535}
+:root[data-theme="light"] .drop{background:#f6f9fb;border-color:#b5c4cf}
+:root[data-theme="light"] .preview{background:#e7edf1}
+:root[data-theme="light"] .empty b{color:#263746}
+:root[data-theme="light"] .tag{color:#425563;border-color:#d0dbe3}
+:root[data-theme="light"] .filePreview img{background:#e8edf1;border-color:#d0dbe3}
+:root[data-theme="light"] .version{border-color:#cbd6df;color:#536775}
+@media(max-width:520px){.headerTools{width:100%;justify-content:space-between}}.version{display:inline-block;vertical-align:middle;margin-left:8px;padding:3px 8px;border:1px solid var(--line);border-radius:7px;color:var(--muted);font:11px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.04em}main{max-width:1200px;padding:0 20px 40px;margin:auto;display:grid;grid-template-columns:340px 1fr;gap:18px}
 .panel{background:rgba(20,26,33,.94);border:1px solid var(--line);border-radius:16px;padding:17px;box-shadow:0 14px 40px #0003}.controls{display:flex;flex-direction:column;gap:15px}.field{display:flex;flex-direction:column;gap:6px}[hidden]{display:none!important}label{font-size:13px;color:#c2cfda;display:flex;justify-content:space-between;gap:10px}input,select,button{font:inherit}input[type=text],input[type=number],select{width:100%;background:#0b1118;border:1px solid #34414e;border-radius:9px;color:var(--text);padding:10px}input[type=file]{width:100%;font-size:13px;color:var(--muted)}input[type=color]{width:100%;height:42px;padding:4px;background:#0b1118;border:1px solid #34414e;border-radius:9px;cursor:pointer}input[type=range]{width:100%;accent-color:var(--accent)}.hint{font-size:12px;color:var(--muted)}.check{display:flex;align-items:center;gap:8px;color:#c2cfda;font-size:13px}.check input{accent-color:var(--accent)}button{border:1px solid #415667;border-radius:10px;padding:10px 12px;background:#1b2b38;color:var(--text);cursor:pointer}button.primary{background:linear-gradient(135deg,#bceaff,#6ab4dc);color:#08131b;border:0;font-weight:700}button:disabled{opacity:.45;cursor:not-allowed}.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.actions .primary{grid-column:1/-1}.workspace{display:flex;flex-direction:column;gap:12px;min-width:0}.previewHead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.previewHead strong{font-size:14px}.status{font-size:12px;color:var(--muted)}.preview{background:#07090c;border:1px solid var(--line);border-radius:14px;min-height:360px;display:flex;align-items:center;justify-content:center;overflow:auto;padding:12px}.preview canvas{max-width:100%;max-height:72vh;object-fit:contain}.preview canvas.crt-preview{max-width:100%;max-height:72vh;width:auto;height:auto;image-rendering:auto;border-radius:8px;box-shadow:0 0 22px rgba(100,220,150,.10)}.empty{text-align:center;color:var(--muted);padding:65px 20px}.empty b{display:block;color:#dce8f1;font-size:18px;margin-bottom:8px}.stats{display:flex;gap:8px;flex-wrap:wrap}.tag{font-size:12px;color:#b9c7d2;border:1px solid var(--line);border-radius:20px;padding:4px 9px}.foot{color:var(--muted);font-size:12px;padding:0 2px}.drop{border:1px dashed #536779;padding:14px;border-radius:10px;background:#0c131b}.drop.drag{border-color:var(--accent);background:#142534}.filePreview{display:flex;align-items:center;gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);min-width:0}.filePreview[hidden]{display:none}.filePreview img{width:88px;height:88px;flex:0 0 88px;object-fit:contain;background:#07090c;border:1px solid var(--line);border-radius:8px}.fileInfo{display:flex;flex-direction:column;gap:5px;min-width:0}.fileInfo strong{font-size:13px;overflow-wrap:anywhere;color:var(--text)}.fileInfo span{font-size:12px;color:var(--muted)}
 @media(max-width:850px){main{grid-template-columns:1fr}.preview{min-height:280px}.controls{display:grid;grid-template-columns:1fr 1fr}.controls .wide{grid-column:1/-1}}
 @media(max-width:520px){header{padding:20px 14px 14px}main{padding:0 14px 28px}.controls{display:flex}.panel{padding:14px}}
 </style></head>
 <body>
-<header><div class="headerTop"><h1>LEM BOX <span style="color:var(--accent);font-weight:400">/ IMAGE LAB</span> <span class="version">v0.4.0</span></h1><label class="languageControl" for="language"><span id="languageLabel">语言</span><select id="language"><option value="zh" selected>中文</option><option value="en">English</option></select></label></div><p id="intro">在复古报纸字符网点与 CRT 显像管点阵之间切换。所有处理都在本地浏览器完成，图片不会上传。</p></header>
+<header><div class="headerTop"><h1>LEM BOX <span style="color:var(--accent);font-weight:400">/ IMAGE LAB</span> <span class="version">v0.5.0</span></h1><div class="headerTools"><label class="languageControl" for="language"><span id="languageLabel">语言</span><select id="language"><option value="zh" selected>中文</option><option value="en">English</option></select></label><label class="languageControl" for="themeMode"><span id="themeLabel">界面主题</span><select id="themeMode"><option value="dark" selected>暗色</option><option value="light">浅色</option></select></label></div></div><p id="intro">在复古报纸字符网点与 CRT 显像管点阵之间切换。所有处理都在本地浏览器完成，图片不会上传。</p></header>
 <main>
 <section class="panel controls">
  <div class="field wide"><label id="uploadTitle">输入图片</label><div class="drop" id="drop">
@@ -34,7 +49,8 @@ header{padding:26px 20px 18px;max-width:1200px;margin:auto}.headerTop{display:fl
  <div class="field"><label for="brightness"><span id="brightnessName">整体浓度</span> <span id="brightnessVal">25</span></label><input id="brightness" type="range" min="-150" max="150" value="25"></div>
  <div class="field"><label for="contrast"><span id="contrastName">对比度</span> <span id="contrastVal">125</span></label><input id="contrast" type="range" min="50" max="200" value="125"></div>
  <div class="field"><label for="fontSize"><span id="fontSizeLabel">导出 PNG 字符大小</span> <span id="fontSizeVal">10</span></label><input id="fontSize" type="range" min="4" max="14" value="10"></div>
- <div class="field wide"><label class="check"><input id="invert" type="checkbox"><span id="invertName">反转明暗（亮部生成图案）</span></label><label id="blackBgOption" class="check"><input id="blackBg" type="checkbox"><span id="blackBgName">黑底白字配色（字符模式）</span></label><div class="hint" id="paletteHint">反转明暗会改变原图哪些区域生成图案；黑底白字只改变字符模式的成品颜色。</div></div>
+ <div class="field wide"><label class="check"><input id="invert" type="checkbox"><span id="invertName">反转明暗（亮部生成图案）</span></label><div class="hint" id="paletteHint">反转明暗会改变原图哪些区域生成图案。</div></div>
+ <div class="field wide" id="halftonePaletteField"><label for="halftonePalette" id="halftonePaletteLabel">HALFTONE 配色</label><select id="halftonePalette"><option value="light" selected>白底黑字</option><option value="dark">黑底白字</option></select><div class="hint" id="halftonePaletteHint">只改变字符画的底色和文字颜色，不改变网点分布。</div></div>
  <div class="actions wide"><button class="primary" id="convert" disabled>生成文字网点图</button><button id="txt" disabled>导出 TXT</button><button id="png" disabled>导出 PNG</button></div>
  <div class="hint wide" id="mainHint">建议先用 360 行确认效果，再切换 1080 行导出。超大网格可能需要较多内存。</div>
 </section>
@@ -53,6 +69,8 @@ let language='zh',currentFile=null;
 const I18N={
 zh:{
 intro:'在复古报纸字符网点与 CRT 显像管点阵之间切换。所有处理都在本地浏览器完成，图片不会上传。',
+themeLabel:'界面主题',themeDark:'暗色',themeLight:'浅色',
+halftonePaletteLabel:'HALFTONE 配色',halftoneLight:'白底黑字',halftoneDark:'黑底白字',halftonePaletteHint:'只改变字符画的底色和文字颜色，不改变网点分布。',
 uploadTitle:'输入图片',uploadHint:'也可以把图片拖到这里。支持 JPG / PNG / WebP。',
 outputModeLabel:'输出模式',outputModeHint:'HALFTONE 使用文字形成油墨网点；CRT 使用荧光圆点模拟显像管。',
 crtPaletteLabel:'CRT 荧光颜色',crtCustomColorLabel:'自定义荧光色',crtPaletteHint:'选择单色显像管风格；自定义颜色会自动生成匹配的暗色屏幕背景。',
@@ -79,6 +97,8 @@ fileReady:'已就绪',fileSizeUnit:'MB'
 },
 en:{
 intro:'Switch between vintage newspaper halftone typography and CRT phosphor dots. Everything runs locally in your browser; your images are never uploaded.',
+themeLabel:'Interface theme',themeDark:'Dark',themeLight:'Light',
+halftonePaletteLabel:'HALFTONE palette',halftoneLight:'White background · Black text',halftoneDark:'Black background · White text',halftonePaletteHint:'Changes only the text and background colors, not the halftone pattern.',
 uploadTitle:'Source image',uploadHint:'Drop an image here, or browse. Supports JPG / PNG / WebP.',
 outputModeLabel:'Output mode',outputModeHint:'HALFTONE uses repeating text as ink dots; CRT recreates a phosphor display with glowing dots.',
 crtPaletteLabel:'CRT phosphor color',crtCustomColorLabel:'Custom phosphor color',crtPaletteHint:'Choose a monochrome CRT phosphor. A matching dark screen background is generated automatically for custom colors.',
@@ -122,12 +142,15 @@ function applyLanguage(){
  $('languageLabel').textContent=language==='zh'?'语言':'Language';
  const map={intro:'intro',uploadTitle:'uploadTitle',uploadHint:'uploadHint',outputModeLabel:'outputModeLabel',outputModeHint:'outputModeHint',
  crtPaletteLabel:'crtPaletteLabel',crtCustomColorLabel:'crtCustomColorLabel',crtPaletteHint:'crtPaletteHint',
+ themeLabel:'themeLabel',halftonePaletteLabel:'halftonePaletteLabel',halftonePaletteHint:'halftonePaletteHint',
  crtPreviewQualityLabel:'previewQualityLabel',crtPreviewQualityHint:'previewQualityHint',glyphLabel:'glyphLabel',glyphHint:'glyphHint',
  rowModeLabel:'rowModeLabel',rowPresetOption:'rowPresetOption',rowCustomOption:'rowCustomOption',rowsLabel:'rowsLabel',
  customRowsLabel:'customRowsLabel',algorithmLabel:'algorithmLabel',brightnessName:'brightness',contrastName:'contrast',
  invertName:'invert',blackBgName:'blackBg',paletteHint:'paletteHint',mainHint:'mainHint',previewTitle:'previewTitle',emptyTitle:'emptyTitle',
  emptyText:'emptyText',foot:'foot'};
  for(const [id,key] of Object.entries(map))$(id).textContent=tr(key);
+ $('themeMode').options[0].textContent=tr('themeDark');$('themeMode').options[1].textContent=tr('themeLight');
+ $('halftonePalette').options[0].textContent=tr('halftoneLight');$('halftonePalette').options[1].textContent=tr('halftoneDark');
  $('outputMode').options[0].textContent=language==='zh'?'HALFTONE · 报纸字符网点':'HALFTONE · Newspaper halftone';
  $('outputMode').options[1].textContent=language==='zh'?'CRT · 显像管点阵':'CRT · Cathode-ray tube';
  $('rows').options[0].textContent=tr('row360');$('rows').options[1].textContent=tr('row720');$('rows').options[2].textContent=tr('row1080');$('rows').options[3].textContent=tr('row1440');
@@ -143,12 +166,12 @@ function applyLanguage(){
 }
 function getRows(){return $('rowMode').value==='custom'?Math.max(64,Math.min(2400,Number($('customRows').value)||1080)):Number($('rows').value)}
 const CRT_PALETTES={
- green:{foreground:'#9dffb2',background:'#030a06'},
- amber:{foreground:'#ffbd4a',background:'#100900'},
- ice:{foreground:'#8fcaff',background:'#030914'},
- white:{foreground:'#e8e8df',background:'#0a0a0a'},
- red:{foreground:'#ff8585',background:'#100404'},
- violet:{foreground:'#d6a5ff',background:'#0d0615'}
+ green:{foreground:'#9dffb2',background:'#06190b',frame:'#65ff83'},
+ amber:{foreground:'#ffbd4a',background:'#1b1003',frame:'#ffd16e'},
+ ice:{foreground:'#8fcaff',background:'#061626',frame:'#83d5ff'},
+ white:{foreground:'#e8e8df',background:'#111310',frame:'#f4f4e8'},
+ red:{foreground:'#ff8585',background:'#1b0707',frame:'#ff7777'},
+ violet:{foreground:'#d6a5ff',background:'#150b21',frame:'#dfb2ff'}
 };
 function tintedDark(hex){
  const raw=hex.replace('#','');
@@ -160,7 +183,7 @@ function getCrtPalette(){
  const key=$('crtPalette').value;
  if(key==='custom'){
   const foreground=$('crtCustomColor').value;
-  return {foreground,background:tintedDark(foreground)};
+  return {foreground,background:tintedDark(foreground),frame:foreground};
  }
  return CRT_PALETTES[key]||CRT_PALETTES.green;
 }
@@ -170,6 +193,7 @@ function applyCrtPalette(){
  if(grid){
   grid.crtForeground=colors.foreground;
   grid.crtBackground=colors.background;
+  grid.crtFrame=colors.frame;
   if(grid.mode==='crt')renderPreview();
  }
 }
@@ -193,20 +217,31 @@ function updateOutputMode(){
  $('glyphField').hidden=crt;
  $('crtPaletteField').hidden=!crt;
  $('crtPreviewQualityField').hidden=!crt;
- $('blackBgOption').hidden=crt;
+ $('halftonePaletteField').hidden=crt;
  $('paletteHint').hidden=crt;
  $('fontSizeLabel').textContent=tr(crt?'fontDotSize':'fontCharSize');
  convert.textContent=tr(crt?'convertCrt':'convertHalftone');
  if(grid){
   grid.mode=crt?'crt':'halftone';
-  grid.background=$('blackBg').checked;
-  if(crt){const colors=getCrtPalette();grid.crtForeground=colors.foreground;grid.crtBackground=colors.background}
+  grid.background=$('halftonePalette').value==='dark';
+  if(crt){const colors=getCrtPalette();grid.crtForeground=colors.foreground;grid.crtBackground=colors.background;grid.crtFrame=colors.frame}
   renderPreview();
   setStatus(tr(crt?'statusModeCrt':'statusModeHalftone'))
  }
 }
+$('halftonePalette').addEventListener('change',()=>{
+ if(grid&&grid.mode==='halftone'){grid.background=$('halftonePalette').value==='dark';renderPreview()}
+});
 $('outputMode').addEventListener('change',updateOutputMode);
 $('language').addEventListener('change',()=>{language=$('language').value;applyLanguage()});
+function applyTheme(){
+ const theme=$('themeMode').value;
+ document.documentElement.dataset.theme=theme;
+ try{localStorage.setItem('lem-box-theme',theme)}catch(e){}
+}
+try{const savedTheme=localStorage.getItem('lem-box-theme');if(savedTheme==='light'||savedTheme==='dark')$('themeMode').value=savedTheme}catch(e){}
+$('themeMode').addEventListener('change',applyTheme);
+applyTheme();
 updateOutputMode();
 $('brightness').addEventListener('input',()=> $('brightnessVal').textContent=$('brightness').value);
 $('contrast').addEventListener('input',()=> $('contrastVal').textContent=$('contrast').value);
@@ -227,7 +262,7 @@ const out=new Uint8Array(gridW*gridH);
 if(algo==='fs'){for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++){let i=y*gridW+x,old=values[i],v=old>=127.5?255:0;out[i]=v?1:0;let e=old-v;if(x+1<gridW)values[i+1]+=e*7/16;if(y+1<gridH){if(x>0)values[i+gridW-1]+=e*3/16;values[i+gridW]+=e*5/16;if(x+1<gridW)values[i+gridW+1]+=e/16}}}
 else if(algo==='bayer'){const m=bayerMatrix(8);for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++)out[y*gridW+x]=values[y*gridW+x]>(m[y%8][x%8]+.5)/64*255?1:0}
 else{let seed=982451653;function rand(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296}for(let i=0;i<out.length;i++)out[i]=values[i]>rand()*255?1:0}
-const chars=Array.from($('glyphs').value.trim()||'LUM3N'),mode=$('outputMode').value,crtColors=getCrtPalette();grid={mask:out,chars,background:$('blackBg').checked,mode,crtForeground:crtColors.foreground,crtBackground:crtColors.background,activeCount:0};let count=0;for(const v of out)count+=v;grid.activeCount=count;renderPreview();updateStats();txt.disabled=png.disabled=false;setStatus(tr('statusDone'))
+const chars=Array.from($('glyphs').value.trim()||'LUM3N'),mode=$('outputMode').value,crtColors=getCrtPalette();grid={mask:out,chars,background:$('halftonePalette').value==='dark',mode,crtForeground:crtColors.foreground,crtBackground:crtColors.background,crtFrame:crtColors.frame,activeCount:0};let count=0;for(const v of out)count+=v;grid.activeCount=count;renderPreview();updateStats();txt.disabled=png.disabled=false;setStatus(tr('statusDone'))
 }catch(e){console.error(e);setStatus(tr('statusProcessError'))}finally{convert.disabled=false;busy=false}
 },20)}
 function drawDotMatrix(ctx,unit,color,cols=gridW,rows=gridH){
@@ -278,6 +313,20 @@ function drawCrtPreviewMatrix(ctx,unit,color,cols,rows){
  }
  ctx.globalAlpha=1;
 }
+function drawCrtFrame(ctx,w,h,color,unit){
+ const line=Math.max(1.5,unit*.42),inset=line/2;
+ ctx.save();
+ ctx.strokeStyle=color;
+ ctx.lineWidth=line;
+ ctx.shadowColor=color;
+ ctx.shadowBlur=Math.max(3,unit*1.1);
+ ctx.strokeRect(inset,inset,Math.max(0,w-line),Math.max(0,h-line));
+ ctx.shadowBlur=0;
+ ctx.strokeStyle='rgba(255,255,255,.22)';
+ ctx.lineWidth=Math.max(.5,line*.18);
+ ctx.strokeRect(line*1.5,line*1.5,Math.max(0,w-line*3),Math.max(0,h-line*3));
+ ctx.restore();
+}
 function drawScanlines(ctx,w,h,unit){
  ctx.save();ctx.fillStyle='rgba(0,0,0,.12)';
  const step=Math.max(2,Math.round(unit*2)),line=Math.max(.35,unit*.06);
@@ -299,6 +348,7 @@ function renderPreview(){
   const glass=ctx.createLinearGradient(0,0,c.width,0);
   glass.addColorStop(0,'rgba(255,255,255,.025)');glass.addColorStop(.5,'rgba(255,255,255,0)');glass.addColorStop(1,'rgba(255,255,255,.018)');
   ctx.fillStyle=glass;ctx.fillRect(0,0,c.width,c.height);
+  drawCrtFrame(ctx,c.width,c.height,grid.crtFrame,unit);
   c.className='crt-preview';
  }else{
   const scale=Math.min(1000/gridW,760/gridH,1),w=Math.max(1,Math.round(gridW*scale)),h=Math.max(1,Math.round(gridH*scale));c.width=w;c.height=h;
@@ -313,7 +363,7 @@ function buildText(){const lines=new Array(gridH);let k=0;for(let y=0;y<gridH;y+
 function download(blob,name){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),30000)}
 txt.addEventListener('click',()=>{if(!grid)return;setStatus(tr('statusTxt'));setTimeout(()=>{download(new Blob([buildText()],{type:'text/plain;charset=utf-8'}),grid.mode==='crt'?'lem-box-crt.txt':'lem-box-halftone.txt');setStatus(tr('statusTxtDone'))},20)});
 png.addEventListener('click',()=>{if(!grid||busy)return;const fs=Number($('fontSize').value),w=gridW*fs,h=gridH*fs;if(w*h>70000000){setStatus(tr('statusPngTooLarge'));return}setStatus(tr('statusPng'));png.disabled=true;setTimeout(()=>{try{const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');
-if(grid.mode==='crt'){ctx.fillStyle=grid.crtBackground;ctx.fillRect(0,0,w,h);drawDotMatrix(ctx,fs,grid.crtForeground,gridW,gridH);drawScanlines(ctx,w,h,fs);const shade=ctx.createRadialGradient(w/2,h/2,Math.min(w,h)*.18,w/2,h/2,Math.max(w,h)*.72);shade.addColorStop(0,'rgba(0,0,0,0)');shade.addColorStop(1,'rgba(0,0,0,.3)');ctx.fillStyle=shade;ctx.fillRect(0,0,w,h)}
+if(grid.mode==='crt'){ctx.fillStyle=grid.crtBackground;ctx.fillRect(0,0,w,h);drawDotMatrix(ctx,fs,grid.crtForeground,gridW,gridH);drawScanlines(ctx,w,h,fs);const shade=ctx.createRadialGradient(w/2,h/2,Math.min(w,h)*.18,w/2,h/2,Math.max(w,h)*.72);shade.addColorStop(0,'rgba(0,0,0,0)');shade.addColorStop(1,'rgba(0,0,0,.3)');ctx.fillStyle=shade;ctx.fillRect(0,0,w,h);drawCrtFrame(ctx,w,h,grid.crtFrame,fs)}
 else{ctx.fillStyle=grid.background?'#07090c':'#f2f4f6';ctx.fillRect(0,0,w,h);ctx.fillStyle=grid.background?'#e9f2f8':'#101419';ctx.font=fs+'px monospace';ctx.textBaseline='top';let k=0;for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++,k++)if(grid.mask[k])ctx.fillText(grid.chars[(x+y*gridW)%grid.chars.length],x*fs,y*fs)}
 c.toBlob(b=>{if(b){download(b,grid.mode==='crt'?'lem-box-crt.png':'lem-box-halftone.png');setStatus(tr('statusPngDone')+' · '+w+' × '+h)}else setStatus(tr('statusPngFailed'));png.disabled=false},'image/png')
 }catch(e){console.error(e);setStatus(tr('statusPngError'));png.disabled=false}},30)});
