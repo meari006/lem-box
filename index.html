@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LUM3N · 文字网点转换器</title>
+<title>Lem Box · 图像转换器</title>
 <style>
 :root{color-scheme:dark;--bg:#0b0e12;--panel:#141a21;--line:#28323d;--muted:#9aa8b5;--text:#e8eef4;--accent:#9ad8ff}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% 0%,#172635 0,#0b0e12 48%);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
@@ -12,7 +12,7 @@ header{padding:26px 20px 18px;max-width:1200px;margin:auto}h1{margin:0;font-size
 @media(max-width:520px){header{padding:20px 14px 14px}main{padding:0 14px 28px}.controls{display:flex}.panel{padding:14px}}
 </style></head>
 <body>
-<header><h1>LUM3N <span style="color:var(--accent);font-weight:400">/ HALFTONE</span> <span class="version">v0.2.0</span></h1><p>在复古报纸字符网点与老式电脑点阵屏之间切换。所有处理都在本地浏览器完成，图片不会上传。</p></header>
+<header><h1>LEM BOX <span style="color:var(--accent);font-weight:400">/ IMAGE LAB</span> <span class="version">v0.2.1</span></h1><p>在复古报纸字符网点与 CRT 显像管点阵之间切换。所有处理都在本地浏览器完成，图片不会上传。</p></header>
 <main>
 <section class="panel controls">
  <div class="field wide"><label>输入图片</label><div class="drop" id="drop">
@@ -23,7 +23,7 @@ header{padding:26px 20px 18px;max-width:1200px;margin:auto}h1{margin:0;font-size
     <div class="fileInfo"><strong id="fileName"></strong><span id="fileMeta"></span></div>
   </div>
 </div></div>
- <div class="field wide"><label for="outputMode">输出模式</label><select id="outputMode"><option value="halftone" selected>HALFTONE · 报纸字符网点</option><option value="lem-box">LEM BOX · 复古电脑点阵</option></select><div class="hint">HALFTONE 使用文字形成油墨网点；LEM BOX 使用荧光圆点模拟老式显示器。</div></div>
+ <div class="field wide"><label for="outputMode">输出模式</label><select id="outputMode"><option value="halftone" selected>HALFTONE · 报纸字符网点</option><option value="crt">CRT · 显像管点阵</option></select><div class="hint">HALFTONE 使用文字形成油墨网点；CRT 使用荧光圆点模拟显像管。</div></div>
  <div class="field wide" id="glyphField"><label for="glyphs">替换网点的文字</label><input id="glyphs" type="text" maxlength="80" value="LUM3N" placeholder="例如：LUM3N / DEAD VALLEY"><div class="hint">文字会循环填充所有被网点算法选中的位置。</div></div>
  <div class="field"><label for="rowMode">行数设置方式</label><select id="rowMode"><option value="preset" selected>选择预设行数</option><option value="custom">自定义行数</option></select></div>
  <div class="field" id="presetRowsWrap"><label for="rows">输出网格高度（行）</label><select id="rows"><option value="360">360 行 · 快速</option><option value="720">720 行 · 高清</option><option value="1080" selected>1080 行 · Full HD</option><option value="1440">1440 行 · 超清</option></select></div>
@@ -53,13 +53,13 @@ function updateRowMode(){const custom=$('rowMode').value==='custom';$('presetRow
 $('rowMode').addEventListener('change',updateRowMode);
 updateRowMode();
 function updateOutputMode(){
- const lem=$('outputMode').value==='lem-box';
- $('glyphField').hidden=lem;
- $('blackBgOption').hidden=lem;
- $('paletteHint').hidden=lem;
- $('fontSizeLabel').textContent=lem?'导出 PNG 点阵单元大小':'导出 PNG 字符大小';
- convert.textContent=lem?'生成 Lem Box 点阵':'生成文字网点图';
- if(grid){grid.mode=lem?'lem-box':'halftone';grid.background=$('blackBg').checked;renderPreview();setStatus(lem?'已切换为 Lem Box 点阵预览':'已切换为报纸字符网点预览')}
+ const crt=$('outputMode').value==='crt';
+ $('glyphField').hidden=crt;
+ $('blackBgOption').hidden=crt;
+ $('paletteHint').hidden=crt;
+ $('fontSizeLabel').textContent=crt?'导出 PNG 点阵单元大小':'导出 PNG 字符大小';
+ convert.textContent=crt?'生成 CRT 点阵':'生成 HALFTONE 图';
+ if(grid){grid.mode=crt?'crt':'halftone';grid.background=$('blackBg').checked;renderPreview();setStatus(crt?'已切换为 CRT 显像管点阵预览':'已切换为 HALFTONE 报纸字符预览')}
 }
 $('outputMode').addEventListener('change',updateOutputMode);
 updateOutputMode();
@@ -83,7 +83,7 @@ if(algo==='fs'){for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++){let i=y*gridW+x
 else if(algo==='bayer'){const m=bayerMatrix(8);for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++)out[y*gridW+x]=values[y*gridW+x]>(m[y%8][x%8]+.5)/64*255?1:0}
 else{let seed=982451653;function rand(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296}for(let i=0;i<out.length;i++)out[i]=values[i]>rand()*255?1:0}
 const chars=Array.from($('glyphs').value.trim()||'LUM3N'),mode=$('outputMode').value;grid={mask:out,chars,background:$('blackBg').checked,mode};renderPreview();let count=0;for(const v of out)count+=v;
-$('stats').innerHTML='<span class="tag">网格：'+gridW+' × '+gridH+'</span><span class="tag">'+(mode==='lem-box'?'点阵单元：':'字符位置：')+(gridW*gridH).toLocaleString()+'</span><span class="tag">已填充：'+count.toLocaleString()+' ('+(count/out.length*100).toFixed(1)+'%)</span>';txt.disabled=png.disabled=false;setStatus('完成')
+$('stats').innerHTML='<span class="tag">网格：'+gridW+' × '+gridH+'</span><span class="tag">'+(mode==='crt'?'点阵单元：':'字符位置：')+(gridW*gridH).toLocaleString()+'</span><span class="tag">已填充：'+count.toLocaleString()+' ('+(count/out.length*100).toFixed(1)+'%)</span>';txt.disabled=png.disabled=false;setStatus('完成')
 }catch(e){console.error(e);setStatus('处理失败：图片可能过大或内存不足')}finally{convert.disabled=false;busy=false}
 },20)}
 function drawDotMatrix(ctx,unit,color){
@@ -107,7 +107,7 @@ function drawScanlines(ctx,w,h,unit){
 function renderPreview(){
  const scale=Math.min(1000/gridW,760/gridH,1),w=Math.max(1,Math.round(gridW*scale)),h=Math.max(1,Math.round(gridH*scale)),c=document.createElement('canvas');c.width=w;c.height=h;
  const ctx=c.getContext('2d');
- if(grid.mode==='lem-box'){
+ if(grid.mode==='crt'){
   ctx.fillStyle='#030a06';ctx.fillRect(0,0,w,h);drawDotMatrix(ctx,scale,'#9dffb2');drawScanlines(ctx,w,h,scale);
   const shade=ctx.createRadialGradient(w/2,h/2,Math.min(w,h)*.18,w/2,h/2,Math.max(w,h)*.72);shade.addColorStop(0,'rgba(0,0,0,0)');shade.addColorStop(1,'rgba(0,0,0,.3)');ctx.fillStyle=shade;ctx.fillRect(0,0,w,h);
  }else{
@@ -118,13 +118,13 @@ function renderPreview(){
 }
 $('glyphs').addEventListener('input',()=>{if(grid){grid.chars=Array.from($('glyphs').value.trim()||'LUM3N');renderPreview();setStatus('文字已更新；TXT/PNG 导出将使用新文字')}});
 convert.addEventListener('click',process);
-function buildText(){const lines=new Array(gridH);let k=0;for(let y=0;y<gridH;y++){let s='';for(let x=0;x<gridW;x++,k++)s+=grid.mask[k]?(grid.mode==='lem-box'?'.':grid.chars[(x+y*gridW)%grid.chars.length]):' ';lines[y]=s}return lines.join('\n')}
+function buildText(){const lines=new Array(gridH);let k=0;for(let y=0;y<gridH;y++){let s='';for(let x=0;x<gridW;x++,k++)s+=grid.mask[k]?(grid.mode==='crt'?'.':grid.chars[(x+y*gridW)%grid.chars.length]):' ';lines[y]=s}return lines.join('\n')}
 function download(blob,name){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),30000)}
-txt.addEventListener('click',()=>{if(!grid)return;setStatus('正在整理 TXT…');setTimeout(()=>{download(new Blob([buildText()],{type:'text/plain;charset=utf-8'}),grid.mode==='lem-box'?'lem-box.txt':'lumen-halftone.txt');setStatus('TXT 已导出')},20)});
+txt.addEventListener('click',()=>{if(!grid)return;setStatus('正在整理 TXT…');setTimeout(()=>{download(new Blob([buildText()],{type:'text/plain;charset=utf-8'}),grid.mode==='crt'?'lem-box-crt.txt':'lem-box-halftone.txt');setStatus('TXT 已导出')},20)});
 png.addEventListener('click',()=>{if(!grid||busy)return;const fs=Number($('fontSize').value),w=gridW*fs,h=gridH*fs;if(w*h>70000000){setStatus('PNG 尺寸过大，请减小行数或单元大小');return}setStatus('正在绘制 PNG…');png.disabled=true;setTimeout(()=>{try{const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');
-if(grid.mode==='lem-box'){ctx.fillStyle='#030a06';ctx.fillRect(0,0,w,h);drawDotMatrix(ctx,fs,'#9dffb2');drawScanlines(ctx,w,h,fs);const shade=ctx.createRadialGradient(w/2,h/2,Math.min(w,h)*.18,w/2,h/2,Math.max(w,h)*.72);shade.addColorStop(0,'rgba(0,0,0,0)');shade.addColorStop(1,'rgba(0,0,0,.3)');ctx.fillStyle=shade;ctx.fillRect(0,0,w,h)}
+if(grid.mode==='crt'){ctx.fillStyle='#030a06';ctx.fillRect(0,0,w,h);drawDotMatrix(ctx,fs,'#9dffb2');drawScanlines(ctx,w,h,fs);const shade=ctx.createRadialGradient(w/2,h/2,Math.min(w,h)*.18,w/2,h/2,Math.max(w,h)*.72);shade.addColorStop(0,'rgba(0,0,0,0)');shade.addColorStop(1,'rgba(0,0,0,.3)');ctx.fillStyle=shade;ctx.fillRect(0,0,w,h)}
 else{ctx.fillStyle=grid.background?'#07090c':'#f2f4f6';ctx.fillRect(0,0,w,h);ctx.fillStyle=grid.background?'#e9f2f8':'#101419';ctx.font=fs+'px monospace';ctx.textBaseline='top';let k=0;for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++,k++)if(grid.mask[k])ctx.fillText(grid.chars[(x+y*gridW)%grid.chars.length],x*fs,y*fs)}
-c.toBlob(b=>{if(b){download(b,grid.mode==='lem-box'?'lem-box.png':'lumen-halftone.png');setStatus('PNG 已导出 · '+w+' × '+h)}else setStatus('PNG 导出失败');png.disabled=false},'image/png')
+c.toBlob(b=>{if(b){download(b,grid.mode==='crt'?'lem-box-crt.png':'lem-box-halftone.png');setStatus('PNG 已导出 · '+w+' × '+h)}else setStatus('PNG 导出失败');png.disabled=false},'image/png')
 }catch(e){console.error(e);setStatus('PNG 导出失败：内存不足');png.disabled=false}},30)});
 })();
 </script></body></html>
