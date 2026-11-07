@@ -541,10 +541,6 @@ function renderPreview(){
   ctx.fillStyle=grid.background?'#e9f2f8':'#08090a';
   ctx.font=Math.max(2,Math.ceil(factor*3))+'px monospace';
   ctx.textBaseline='top';
-  const advance=ctx.measureText('M').width;
-  ctx.save();
-  if('letterSpacing' in ctx)ctx.letterSpacing=(1-advance)+'px';
-  else ctx.scale(1/Math.max(.1,advance),1);
   for(let y=0;y<rows;y++){
    const sourceY=Math.min(gridH-1,Math.floor((y+.5)*gridH/rows));
    const sourceRow=sourceY*gridW;
@@ -554,9 +550,8 @@ function renderPreview(){
     const index=sourceRow+sourceX;
     line+=grid.mask[index]?grid.chars[(sourceX+sourceRow)%grid.chars.length]:' ';
    }
-   ctx.fillText(line,0,y);
+   ctx.fillText(line,0,y,cols);
   }
-  ctx.restore();
  }
  $('preview').replaceChildren(c);
 }
