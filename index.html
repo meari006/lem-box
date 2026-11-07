@@ -22,7 +22,7 @@ header{padding:26px 20px 18px;max-width:1200px;margin:auto}h1{margin:0;font-size
  <div class="field"><label for="algorithm">网点算法</label><select id="algorithm"><option value="fs">Floyd–Steinberg · 细节优先</option><option value="bayer">Bayer · 规则网点</option><option value="random">随机网点 · 颗粒感</option></select></div>
  <div class="field"><label for="brightness">整体浓度 <span id="brightnessVal">0</span></label><input id="brightness" type="range" min="-100" max="100" value="0"></div>
  <div class="field"><label for="contrast">对比度 <span id="contrastVal">100</span></label><input id="contrast" type="range" min="50" max="200" value="100"></div>
- <div class="field"><label for="fontSize">导出 PNG 字符大小 <span id="fontSizeVal">4</span></label><input id="fontSize" type="range" min="4" max="14" value="4"></div>
+ <div class="field"><label for="fontSize">导出 PNG 字符大小 <span id="fontSizeVal">10</span></label><input id="fontSize" type="range" min="4" max="14" value="10"></div>
  <div class="field wide"><label class="check"><input id="invert" type="checkbox">反转明暗</label><label class="check"><input id="blackBg" type="checkbox" checked>黑色背景、浅色文字</label></div>
  <div class="actions wide"><button class="primary" id="convert" disabled>生成文字网点图</button><button id="txt" disabled>导出 TXT</button><button id="png" disabled>导出 PNG</button></div>
  <div class="hint wide">建议先用 360 行确认效果，再切换 1080 行导出。超大网格可能需要较多内存。</div>
@@ -60,12 +60,12 @@ const out=new Uint8Array(gridW*gridH);
 if(algo==='fs'){for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++){let i=y*gridW+x,old=values[i],v=old>=127.5?255:0;out[i]=v?1:0;let e=old-v;if(x+1<gridW)values[i+1]+=e*7/16;if(y+1<gridH){if(x>0)values[i+gridW-1]+=e*3/16;values[i+gridW]+=e*5/16;if(x+1<gridW)values[i+gridW+1]+=e/16}}}
 else if(algo==='bayer'){const m=bayerMatrix(8);for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++)out[y*gridW+x]=values[y*gridW+x]>(m[y%8][x%8]+.5)/64*255?1:0}
 else{let seed=982451653;function rand(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296}for(let i=0;i<out.length;i++)out[i]=values[i]>rand()*255?1:0}
-const chars=Array.from($('glyphs').value||'LUM3N');grid={mask:out,chars,background:$('blackBg').checked};renderPreview();let count=0;for(const v of out)count+=v;
+const chars=Array.from($('glyphs').value.trim()||'LUM3N');grid={mask:out,chars,background:$('blackBg').checked};renderPreview();let count=0;for(const v of out)count+=v;
 $('stats').innerHTML='<span class="tag">网格：'+gridW+' × '+gridH+'</span><span class="tag">字符位置：'+(gridW*gridH).toLocaleString()+'</span><span class="tag">已填充：'+count.toLocaleString()+' ('+(count/out.length*100).toFixed(1)+'%)</span>';txt.disabled=png.disabled=false;setStatus('完成')
 }catch(e){console.error(e);setStatus('处理失败：图片可能过大或内存不足')}finally{convert.disabled=false;busy=false}
 },20)}
-function renderPreview(){const scale=Math.min(1000/gridW,760/gridH,1),w=Math.max(1,Math.round(gridW*scale)),h=Math.max(1,Math.round(gridH*scale)),c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d'),bg=grid.background?'#07090c':'#f2f4f6',fg=grid.background?'#e9f2f8':'#101419';ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);ctx.fillStyle=fg;ctx.font=Math.max(1,Math.ceil(scale*1.1))+'px monospace';ctx.textBaseline='top';let i=0;for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++,i++)if(grid.mask[i])ctx.fillText(grid.chars[(x+y*gridW)%grid.chars.length],x*scale,y*scale);$('preview').replaceChildren(c)}
-convert.addEventListener('click',process);
+function renderPreview(){const scale=Math.min(1000/gridW,760/gridH,1),w=Math.max(1,Math.round(gridW*scale)),h=Math.max(1,Math.round(gridH*scale)),c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d'),bg=grid.background?'#07090c':'#f2f4f6',fg=grid.background?'#e9f2f8':'#101419';ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);ctx.fillStyle=fg;ctx.font=Math.max(2,Math.ceil(scale*3))+'px monospace';ctx.textBaseline='top';let i=0;for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++,i++)if(grid.mask[i])ctx.fillText(grid.chars[(x+y*gridW)%grid.chars.length],x*scale,y*scale);$('preview').replaceChildren(c)}
+$('glyphs').addEventListener('input',()=>{if(grid){grid.chars=Array.from($('glyphs').value.trim()||'LUM3N');renderPreview();setStatus('文字已更新；TXT/PNG 导出将使用新文字')}});\nconvert.addEventListener('click',process);
 function buildText(){const lines=new Array(gridH);let k=0;for(let y=0;y<gridH;y++){let s='';for(let x=0;x<gridW;x++,k++)s+=grid.mask[k]?grid.chars[(x+y*gridW)%grid.chars.length]:' ';lines[y]=s}return lines.join('\n')}
 function download(blob,name){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),30000)}
 txt.addEventListener('click',()=>{if(!grid)return;setStatus('正在整理 TXT…');setTimeout(()=>{download(new Blob([buildText()],{type:'text/plain;charset=utf-8'}),'lumen-halftone.txt');setStatus('TXT 已导出')},20)});
