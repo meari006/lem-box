@@ -65,7 +65,8 @@ $('stats').innerHTML='<span class="tag">网格：'+gridW+' × '+gridH+'</span><s
 }catch(e){console.error(e);setStatus('处理失败：图片可能过大或内存不足')}finally{convert.disabled=false;busy=false}
 },20)}
 function renderPreview(){const scale=Math.min(1000/gridW,760/gridH,1),w=Math.max(1,Math.round(gridW*scale)),h=Math.max(1,Math.round(gridH*scale)),c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d'),bg=grid.background?'#07090c':'#f2f4f6',fg=grid.background?'#e9f2f8':'#101419';ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);ctx.fillStyle=fg;ctx.font=Math.max(2,Math.ceil(scale*3))+'px monospace';ctx.textBaseline='top';let i=0;for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++,i++)if(grid.mask[i])ctx.fillText(grid.chars[(x+y*gridW)%grid.chars.length],x*scale,y*scale);$('preview').replaceChildren(c)}
-$('glyphs').addEventListener('input',()=>{if(grid){grid.chars=Array.from($('glyphs').value.trim()||'LUM3N');renderPreview();setStatus('文字已更新；TXT/PNG 导出将使用新文字')}});\nconvert.addEventListener('click',process);
+$('glyphs').addEventListener('input',()=>{if(grid){grid.chars=Array.from($('glyphs').value.trim()||'LUM3N');renderPreview();setStatus('文字已更新；TXT/PNG 导出将使用新文字')}});
+convert.addEventListener('click',process);
 function buildText(){const lines=new Array(gridH);let k=0;for(let y=0;y<gridH;y++){let s='';for(let x=0;x<gridW;x++,k++)s+=grid.mask[k]?grid.chars[(x+y*gridW)%grid.chars.length]:' ';lines[y]=s}return lines.join('\n')}
 function download(blob,name){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),30000)}
 txt.addEventListener('click',()=>{if(!grid)return;setStatus('正在整理 TXT…');setTimeout(()=>{download(new Blob([buildText()],{type:'text/plain;charset=utf-8'}),'lumen-halftone.txt');setStatus('TXT 已导出')},20)});
