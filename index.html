@@ -65,7 +65,7 @@ brightness:'整体浓度',contrast:'对比度',fontCharSize:'导出 PNG 字符�
 invert:'反转明暗（亮部生成图案）',blackBg:'黑底白字配色（字符模式）',paletteHint:'反转明暗会改变原图哪些区域生成图案；黑底白字只改变字符模式的成品颜色。',
 convertHalftone:'生成 HALFTONE 图',convertCrt:'生成 CRT 点阵',exportTxt:'导出 TXT',exportPng:'导出 PNG',
 mainHint:'建议先用 360 行确认效果，再切换 1080 行导出。超大网格可能需要较多内存。',
-previewTitle:'实时预览',emptyTitle:'NO IMAGE LOADED',emptyText:'选择一张图片，开始生成图案。',
+previewTitle:'实时预览',emptyTitle:'NO IMAGE LOADED',emptyText:'选择一张图片，开始生成图案。',imageReadyPrompt:'图片已载入，点击“生成”开始转换。',
 statsGrid:'网格',statsChars:'字符位置',statsDots:'点阵单元',statsFilled:'已填充',statsLocal:'本地处理',
 foot:'TXT 是逐格矩阵文本；PNG 使用完整网格绘制，细节比屏幕预览更多。',
 statusWaiting:'等待上传图片',statusImageReady:'图片已载入，点击生成按钮开始转换。',statusLoadError:'图片读取失败：格式不支持或文件可能已损坏。',
@@ -92,7 +92,7 @@ invert:'Invert luminance (use highlights)',blackBg:'Black background, light text
 paletteHint:'Invert luminance changes which parts of the image form the pattern. The color option only changes the HALFTONE output palette.',
 convertHalftone:'Generate HALFTONE',convertCrt:'Generate CRT pattern',exportTxt:'Export TXT',exportPng:'Export PNG',
 mainHint:'Try 360 rows for a quick check, then use 1080 rows for export. Very large grids may require more memory.',
-previewTitle:'Preview',emptyTitle:'NO IMAGE LOADED',emptyText:'Choose an image to create a pattern.',
+previewTitle:'Preview',emptyTitle:'NO IMAGE LOADED',emptyText:'Choose an image to create a pattern.',imageReadyPrompt:'Image loaded. Select Generate to process it.',
 statsGrid:'Grid',statsChars:'Character cells',statsDots:'Dot cells',statsFilled:'Filled',statsLocal:'Local processing',
 foot:'TXT contains the character matrix. PNG is rendered from the full grid and contains more detail than the on-screen preview.',
 statusWaiting:'Waiting for an image',statusImageReady:'Image loaded. Select Generate to begin.',statusLoadError:'Could not read this image. The format may be unsupported or the file may be damaged.',
@@ -215,7 +215,7 @@ file.addEventListener('change',e=>loadFile(e.target.files?.[0]));
 ['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('drag')}));
 ['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('drag')}));
 drop.addEventListener('drop',e=>loadFile(e.dataTransfer.files?.[0]));
-function loadFile(f){if(!f)return;const u=URL.createObjectURL(f),im=new Image();im.onload=()=>{const oldUrl=sourceUrl;source=im;sourceUrl=u;if(oldUrl)URL.revokeObjectURL(oldUrl);convert.disabled=false;currentFile=f;setStatus(tr('statusImageReady')+' '+im.naturalWidth+' × '+im.naturalHeight);$('preview').innerHTML='<div class="empty"><b>IMAGE READY</b><span>'+tr('emptyText')+'</span></div>';$('thumbnail').src=u;$('fileName').textContent=f.name;updateFileMeta();$('filePreview').hidden=false;grid=null;txt.disabled=png.disabled=true};im.onerror=()=>{URL.revokeObjectURL(u);setStatus(tr('statusLoadError'))};im.src=u}
+function loadFile(f){if(!f)return;const u=URL.createObjectURL(f),im=new Image();im.onload=()=>{const oldUrl=sourceUrl;source=im;sourceUrl=u;if(oldUrl)URL.revokeObjectURL(oldUrl);convert.disabled=false;currentFile=f;setStatus(tr('statusImageReady')+' '+im.naturalWidth+' × '+im.naturalHeight);$('preview').innerHTML='<div class="empty"><b>IMAGE READY</b><span>'+tr('imageReadyPrompt')+'</span></div>';$('thumbnail').src=u;$('fileName').textContent=f.name;updateFileMeta();$('filePreview').hidden=false;grid=null;txt.disabled=png.disabled=true};im.onerror=()=>{URL.revokeObjectURL(u);setStatus(tr('statusLoadError'))};im.src=u}
 function bayerMatrix(n){let m=[[0,2],[3,1]];while(m.length<n){const s=m.length,out=Array.from({length:s*2},()=>Array(s*2).fill(0));for(let y=0;y<s;y++)for(let x=0;x<s;x++){let v=m[y][x]*4;out[y][x]=v;out[y][x+s]=v+2;out[y+s][x]=v+3;out[y+s][x+s]=v+1}m=out}return m}
 function process(){if(!source||busy)return;busy=true;convert.disabled=true;txt.disabled=png.disabled=true;setStatus(tr('statusProcessing'));setTimeout(()=>{
 try{
