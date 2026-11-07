@@ -80,7 +80,7 @@ rowModeLabel:'行数设置方式',rowPresetOption:'选择预设行数',rowCustom
 rowsLabel:'输出网格高度（行）',row360:'360 行 · 快速',row720:'720 行 · 高清',row1080:'1080 行 · Full HD',row1440:'1440 行 · 超清',
 customRowsLabel:'自定义行数（64–2400）',algorithmLabel:'网点算法',algoFs:'Floyd–Steinberg · 细节优先',algoBayer:'Bayer · 规则网点',algoRandom:'随机网点 · 颗粒感',
 brightness:'整体浓度',contrast:'对比度',fontCharSize:'导出 PNG 字符大小',fontDotSize:'导出 PNG 点阵单元大小',
-invert:'反转明暗（亮部生成图案）',blackBg:'黑底白字配色（字符模式）',paletteHint:'反转明暗会改变原图哪些区域生成图案；黑底白字只改变字符模式的成品颜色。',
+invert:'反转明暗（亮部生成图案）',blackBg:'黑底白字配色（字符模式）',paletteHint:'反转明暗会改变原图中哪些区域生成图案。',
 convertHalftone:'生成 HALFTONE 图',convertCrt:'生成 CRT 点阵',exportTxt:'导出 TXT',exportPng:'导出 PNG',
 mainHint:'建议先用 360 行确认效果，再切换 1080 行导出。超大网格可能需要较多内存。',
 previewTitle:'实时预览',emptyTitle:'NO IMAGE LOADED',emptyText:'选择一张图片，开始生成图案。',imageReadyPrompt:'图片已载入，点击“生成”开始转换。',
@@ -109,7 +109,7 @@ rowsLabel:'Output grid height (rows)',row360:'360 rows · Fast',row720:'720 rows
 customRowsLabel:'Custom rows (64–2400)',algorithmLabel:'Dithering algorithm',algoFs:'Floyd–Steinberg · Detail',algoBayer:'Bayer · Ordered pattern',algoRandom:'Random · Grain',
 brightness:'Density',contrast:'Contrast',fontCharSize:'PNG character size',fontDotSize:'PNG dot cell size',
 invert:'Invert luminance (use highlights)',blackBg:'Black background, light text (HALFTONE)',
-paletteHint:'Invert luminance changes which parts of the image form the pattern. The color option only changes the HALFTONE output palette.',
+paletteHint:'Invert luminance changes which parts of the image form the pattern.',
 convertHalftone:'Generate HALFTONE',convertCrt:'Generate CRT pattern',exportTxt:'Export TXT',exportPng:'Export PNG',
 mainHint:'Try 360 rows for a quick check, then use 1080 rows for export. Very large grids may require more memory.',
 previewTitle:'Preview',emptyTitle:'NO IMAGE LOADED',emptyText:'Choose an image to create a pattern.',imageReadyPrompt:'Image loaded. Select Generate to process it.',
@@ -146,7 +146,7 @@ function applyLanguage(){
  crtPreviewQualityLabel:'previewQualityLabel',crtPreviewQualityHint:'previewQualityHint',glyphLabel:'glyphLabel',glyphHint:'glyphHint',
  rowModeLabel:'rowModeLabel',rowPresetOption:'rowPresetOption',rowCustomOption:'rowCustomOption',rowsLabel:'rowsLabel',
  customRowsLabel:'customRowsLabel',algorithmLabel:'algorithmLabel',brightnessName:'brightness',contrastName:'contrast',
- invertName:'invert',blackBgName:'blackBg',paletteHint:'paletteHint',mainHint:'mainHint',previewTitle:'previewTitle',emptyTitle:'emptyTitle',
+ invertName:'invert',paletteHint:'paletteHint',mainHint:'mainHint',previewTitle:'previewTitle',emptyTitle:'emptyTitle',
  emptyText:'emptyText',foot:'foot'};
  for(const [id,key] of Object.entries(map))$(id).textContent=tr(key);
  $('themeMode').options[0].textContent=tr('themeDark');$('themeMode').options[1].textContent=tr('themeLight');
