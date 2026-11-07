@@ -167,15 +167,15 @@ header{padding:26px 20px 18px;max-width:1200px;margin:auto}.headerTop{display:fl
 :root[data-skin="crt"] button:focus-visible{outline:2px solid #68ff85;outline-offset:2px}
 
 
-/* v0.8.1: remove the decorative paper panel behind the HALFTONE preview.
-   The exported/preview canvas already paints its own white or black paper. */
+/* v0.8.2: keep the newspaper frame, but leave its interior transparent.
+   The opaque white/black paper belongs to the canvas, not the frame. */
 .preview.halftone-shell,
 :root[data-theme="light"] .preview.halftone-shell,
 :root[data-skin="halftone"] .preview.halftone-shell{
  background:transparent!important;
- border:0!important;
- border-radius:0!important;
- padding:0!important;
+ border:3px solid #292b2d!important;
+ border-radius:6px!important;
+ padding:22px!important;
  box-shadow:none!important;
 }
 :root[data-skin="halftone"] .preview{
@@ -183,7 +183,7 @@ header{padding:26px 20px 18px;max-width:1200px;margin:auto}.headerTop{display:fl
 }
 </style></head>
 <body>
-<header><div class="headerTop"><h1>LEM BOX <span style="color:var(--accent);font-weight:400">/ IMAGE LAB</span> <span class="version">v0.8.1</span></h1><div class="headerTools"><label class="languageControl" for="language"><span id="languageLabel">语言</span><select id="language"><option value="zh" selected>中文</option><option value="en">English</option></select></label></div></div><p id="intro">在复古报纸字符网点与 CRT 显像管点阵之间切换。所有处理都在本地浏览器完成，图片不会上传。</p></header>
+<header><div class="headerTop"><h1>LEM BOX <span style="color:var(--accent);font-weight:400">/ IMAGE LAB</span> <span class="version">v0.8.2</span></h1><div class="headerTools"><label class="languageControl" for="language"><span id="languageLabel">语言</span><select id="language"><option value="zh" selected>中文</option><option value="en">English</option></select></label></div></div><p id="intro">在复古报纸字符网点与 CRT 显像管点阵之间切换。所有处理都在本地浏览器完成，图片不会上传。</p></header>
 <main>
 <section class="panel controls">
  <div class="field wide"><label id="uploadTitle">输入图片</label><div class="drop" id="drop">
@@ -202,7 +202,7 @@ header{padding:26px 20px 18px;max-width:1200px;margin:auto}.headerTop{display:fl
  <div class="field" id="presetRowsWrap"><label for="rows" id="rowsLabel">输出网格高度（行）</label><select id="rows"><option value="360">360 行 · 快速</option><option value="720">720 行 · 高清</option><option value="1080" selected>1080 行 · Full HD</option><option value="1440">1440 行 · 超清</option></select></div>
  <div class="field" id="customWrap" hidden><label for="customRows" id="customRowsLabel">自定义行数（64–2400）</label><input id="customRows" type="number" min="64" max="2400" value="1080"></div>
  <div class="field"><label for="algorithm" id="algorithmLabel">网点算法</label><select id="algorithm"><option value="fs">Floyd–Steinberg · 细节优先</option><option value="bayer">Bayer · 规则网点</option><option value="random">随机网点 · 颗粒感</option></select></div>
- <div class="field"><label for="brightness"><span id="brightnessName">整体浓度</span> <span id="brightnessVal">20</span></label><input id="brightness" type="range" min="-150" max="150" value="20"></div>
+ <div class="field"><label for="brightness"><span id="brightnessName">整体浓度</span> <span id="brightnessVal">25</span></label><input id="brightness" type="range" min="-150" max="150" value="25"></div>
  <div class="field"><label for="contrast"><span id="contrastName">对比度</span> <span id="contrastVal">125</span></label><input id="contrast" type="range" min="50" max="200" value="125"></div>
  <div class="field"><label for="fontSize"><span id="fontSizeLabel">导出 PNG 字符大小</span> <span id="fontSizeVal">10</span></label><input id="fontSize" type="range" min="4" max="14" value="10"></div>
  <div class="field wide"><label class="check"><input id="invert" type="checkbox"><span id="invertName">反转明暗（亮部生成图案）</span></label><div class="hint" id="paletteHint">反转明暗会改变原图哪些区域生成图案。</div></div>
@@ -575,11 +575,72 @@ convert.addEventListener('click',process);
 function buildText(){const lines=new Array(gridH);let k=0;for(let y=0;y<gridH;y++){let s='';for(let x=0;x<gridW;x++,k++)s+=grid.mask[k]?(grid.mode==='crt'?'.':grid.chars[(x+y*gridW)%grid.chars.length]):' ';lines[y]=s}return lines.join('\n')}
 function download(blob,name){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),30000)}
 txt.addEventListener('click',()=>{if(!grid)return;setStatus(tr('statusTxt'));setTimeout(()=>{download(new Blob([buildText()],{type:'text/plain;charset=utf-8'}),grid.mode==='crt'?'lem-box-crt.txt':'lem-box-halftone.txt');setStatus(tr('statusTxtDone'))},20)});
-png.addEventListener('click',()=>{if(!grid||busy)return;const fs=Number($('fontSize').value),w=gridW*fs,h=gridH*fs;if(w*h>70000000){setStatus(tr('statusPngTooLarge'));return}setStatus(tr('statusPng'));png.disabled=true;setTimeout(()=>{try{const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');
-if(grid.mode==='crt'){ctx.fillStyle=grid.crtBackground;ctx.fillRect(0,0,w,h);drawDotMatrix(ctx,fs,grid.crtForeground,gridW,gridH);drawScanlines(ctx,w,h,fs);const shade=ctx.createRadialGradient(w/2,h/2,Math.min(w,h)*.18,w/2,h/2,Math.max(w,h)*.72);shade.addColorStop(0,'rgba(0,0,0,0)');shade.addColorStop(1,'rgba(0,0,0,.3)');ctx.fillStyle=shade;ctx.fillRect(0,0,w,h)}
-else{ctx.fillStyle=grid.background?'#07090c':'#ffffff';ctx.fillRect(0,0,w,h);ctx.fillStyle=grid.background?'#e9f2f8':'#08090a';ctx.font=fs+'px monospace';ctx.textBaseline='top';let k=0;for(let y=0;y<gridH;y++)for(let x=0;x<gridW;x++,k++)if(grid.mask[k])ctx.fillText(grid.chars[(x+y*gridW)%grid.chars.length],x*fs,y*fs)}
-c.toBlob(b=>{if(b){download(b,grid.mode==='crt'?'lem-box-crt.png':'lem-box-halftone.png');setStatus(tr('statusPngDone')+' · '+w+' × '+h)}else setStatus(tr('statusPngFailed'));png.disabled=false},'image/png')
-}catch(e){console.error(e);setStatus(tr('statusPngError'));png.disabled=false}},30)});
+function pngU32(value){return new Uint8Array([(value>>>24)&255,(value>>>16)&255,(value>>>8)&255,value&255])}
+const pngCrcTable=(()=>{const table=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?(0xedb88320^(c>>>1)):(c>>>1);table[n]=c>>>0}return table})();
+function pngCrc32(typeBytes,data){let crc=0xffffffff;for(const part of [typeBytes,data])for(let i=0;i<part.length;i++)crc=pngCrcTable[(crc^part[i])&255]^(crc>>>8);return (crc^0xffffffff)>>>0}
+function pngChunkParts(type,data){const typeBytes=new TextEncoder().encode(type);return [pngU32(data.length),typeBytes,data,pngU32(pngCrc32(typeBytes,data))]}
+async function buildHalftonePng(fs,w,h){
+ if(typeof CompressionStream==='undefined')throw new Error('CompressionStream unavailable');
+ const compressor=new CompressionStream('deflate'),writer=compressor.writable.getWriter(),reader=compressor.readable.getReader();
+ const compressed=[];
+ const readerTask=(async()=>{while(true){const part=await reader.read();if(part.done)break;compressed.push(part.value)}})();
+ const batch=new Uint8Array(1024*1024);let used=0;
+ async function flush(){if(used){const part=batch.slice(0,used);used=0;await writer.write(part)}}
+ async function appendRow(row){let offset=0;while(offset<row.length){const count=Math.min(batch.length-used,row.length-offset);batch.set(row.subarray(offset,offset+count),used);used+=count;offset+=count;if(used===batch.length)await flush()}}
+ const cellsPerTile=Math.max(1,Math.floor(4096/fs));
+ const background=grid.background?'#07090c':'#ffffff',foreground=grid.background?'#e9f2f8':'#08090a';
+ try{
+  for(let gy=0;gy<gridH;gy++){
+   const tiles=[];
+   for(let x0=0;x0<gridW;x0+=cellsPerTile){
+    const cols=Math.min(cellsPerTile,gridW-x0),tw=cols*fs;
+    const canvas=document.createElement('canvas');canvas.width=tw;canvas.height=fs;
+    const ctx=canvas.getContext('2d',{willReadFrequently:true});
+    ctx.fillStyle=background;ctx.fillRect(0,0,tw,fs);
+    ctx.fillStyle=foreground;ctx.font=fs+'px monospace';ctx.textBaseline='top';
+    const start=gy*gridW+x0;
+    for(let x=0;x<cols;x++){const sourceX=x0+x,index=start+x;if(grid.mask[index])ctx.fillText(grid.chars[(sourceX+gy*gridW)%grid.chars.length],x*fs,0)}
+    tiles.push({width:tw,data:ctx.getImageData(0,0,tw,fs).data});
+   }
+   for(let py=0;py<fs;py++){
+    const scanline=new Uint8Array(1+w*4);scanline[0]=0;let dest=1;
+    for(const tile of tiles){const bytes=tile.width*4,src=py*bytes;scanline.set(tile.data.subarray(src,src+bytes),dest);dest+=bytes}
+    await appendRow(scanline);
+   }
+   if((gy+1)%16===0){setStatus(tr('statusPng')+' '+Math.round((gy+1)/gridH*100)+'%');await yieldToBrowser()}
+  }
+  await flush();await writer.close();await readerTask;
+ }catch(error){try{await writer.abort(error)}catch{};throw error}
+ const ihdr=new Uint8Array(13);ihdr.set(pngU32(w),0);ihdr.set(pngU32(h),4);ihdr[8]=8;ihdr[9]=6;
+ const parts=[new Uint8Array([137,80,78,71,13,10,26,10]),...pngChunkParts('IHDR',ihdr)];
+ for(const part of compressed)parts.push(...pngChunkParts('IDAT',part));
+ parts.push(...pngChunkParts('IEND',new Uint8Array(0)));
+ return new Blob(parts,{type:'image/png'});
+}
+png.addEventListener('click',()=>{
+ if(!grid||busy)return;
+ const fs=Number($('fontSize').value),w=gridW*fs,h=gridH*fs;
+ if(grid.mode==='crt'&&w*h>70000000){setStatus(tr('statusPngTooLarge'));return}
+ setStatus(tr('statusPng'));png.disabled=true;
+ setTimeout(async()=>{
+  try{
+   let blob;
+   if(grid.mode==='halftone'){
+    blob=await buildHalftonePng(fs,w,h);
+   }else{
+    const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');
+    ctx.fillStyle=grid.crtBackground;ctx.fillRect(0,0,w,h);
+    drawDotMatrix(ctx,fs,grid.crtForeground,gridW,gridH);drawScanlines(ctx,w,h,fs);
+    const shade=ctx.createRadialGradient(w/2,h/2,Math.min(w,h)*.18,w/2,h/2,Math.max(w,h)*.72);
+    shade.addColorStop(0,'rgba(0,0,0,0)');shade.addColorStop(1,'rgba(0,0,0,.3)');ctx.fillStyle=shade;ctx.fillRect(0,0,w,h);
+    blob=await new Promise((resolve,reject)=>c.toBlob(b=>b?resolve(b):reject(new Error('PNG encoding failed')),'image/png'));
+   }
+   download(blob,grid.mode==='crt'?'lem-box-crt.png':'lem-box-halftone.png');
+   setStatus(tr('statusPngDone')+' · '+w+' × '+h);
+  }catch(e){console.error(e);setStatus(tr('statusPngError')+(e?.message==='CompressionStream unavailable'?' · 请更新浏览器':''))}
+  finally{png.disabled=false}
+ },30);
+});
 applyLanguage();
 setPreviewSkin($('outputMode').value);
 })();
