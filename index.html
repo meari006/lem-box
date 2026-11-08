@@ -237,6 +237,7 @@ header{padding:26px 20px 18px;max-width:1200px;margin:auto}.headerTop{display:fl
 .mode-card-copy{display:flex;flex-direction:column;gap:4px;min-width:0}
 .mode-card-copy strong{font-size:14px;line-height:1.2;color:#fff;letter-spacing:.06em}
 .mode-card-copy small{font-size:12px;line-height:1.35;color:#fff;opacity:.82}
+:root[data-skin] *{border-color:var(--mode-border)!important}
 :root[data-skin] .panel{border-color:var(--mode-border)!important}
 :root[data-skin] .preview{border-color:var(--mode-border)!important}
 :root[data-skin] .previewHead{border-color:var(--mode-border)!important}
@@ -272,7 +273,7 @@ header{padding:26px 20px 18px;max-width:1200px;margin:auto}.headerTop{display:fl
 <body>
 <header><div class="headerTop"><h1>LEM BOX <span style="color:var(--accent);font-weight:400">/ IMAGE LAB</span> <span class="version">v0.10.0</span></h1><div class="headerTools"><label class="languageControl" for="language"><span id="languageLabel">语言</span><select id="language"><option value="zh" selected>中文</option><option value="en">English</option></select></label></div></div><p id="intro">在复古报纸字符网点与 CRT 显像管点阵之间切换。所有处理都在本地浏览器完成，图片不会上传。</p></header>
 <section class="mode-switcher-wrap">
- <div class="mode-switcher" role="group" aria-labelledby="modePickerTitle">
+ <div class="mode-switcher" id="modeSwitcher" role="group" aria-labelledby="modePickerTitle">
   <div class="mode-switcher-head"><strong id="modePickerTitle">选择模式</strong><span id="modePickerHint">切换图像的呈现方式</span></div>
   <div class="mode-cards">
    <button type="button" class="mode-card is-active" data-mode="halftone" aria-pressed="true">
@@ -309,7 +310,7 @@ header{padding:26px 20px 18px;max-width:1200px;margin:auto}.headerTop{display:fl
  <div class="field"><label for="contrast"><span id="contrastName">对比度</span> <span id="contrastVal">125</span></label><input id="contrast" type="range" min="50" max="200" value="125"></div>
  <div class="field"><label for="fontSize"><span id="fontSizeLabel">导出 PNG 字符大小</span> <span id="fontSizeVal">10</span></label><input id="fontSize" type="range" min="4" max="14" value="10"></div>
  <div class="field wide"><label class="check"><input id="invert" type="checkbox"><span id="invertName">反转明暗（亮部生成图案）</span></label><div class="hint" id="paletteHint">反转明暗会改变原图哪些区域生成图案。</div></div>
- <div class="field wide" id="halftonePaletteField"><label for="halftonePalette" id="halftonePaletteLabel">HALFTONE 配色</label><select id="halftonePalette"><option value="light" selected>白底黑字</option><option value="dark">黑底白字</option></select><div class="hint" id="halftonePaletteHint">只改变字符画的底色和文字颜色，不改变网点分布。</div></div>
+ <div class="field wide" id="halftonePaletteField"><label for="halftonePalette" id="halftonePaletteLabel">GLYPH 配色</label><select id="halftonePalette"><option value="light" selected>白底黑字</option><option value="dark">黑底白字</option></select><div class="hint" id="halftonePaletteHint">只改变字符画的底色和文字颜色，不改变网点分布。</div></div>
  <div class="actions wide"><button class="primary" id="convert" disabled>生成文字网点图</button><button id="txt" disabled>导出 TXT</button><button id="png" disabled>导出 PNG</button></div>
  <div class="hint wide" id="mainHint">建议先用 360 行确认效果，再切换 1080 行导出。超大网格可能需要较多内存。</div>
 </section>
@@ -340,7 +341,7 @@ rowModeLabel:'行数设置方式',rowPresetOption:'选择预设行数',rowCustom
 rowsLabel:'输出网格高度（行）',row360:'360 行 · 快速',row720:'720 行 · 高清',row1080:'1080 行 · Full HD',row1440:'1440 行 · 超清',
 customRowsLabel:'自定义行数（64–2400）',algorithmLabel:'网点算法',algoFs:'Floyd–Steinberg · 细节优先',algoBayer:'Bayer · 规则网点',algoRandom:'随机网点 · 颗粒感',
 brightness:'整体浓度',contrast:'对比度',fontCharSize:'导出 PNG 字符大小',fontDotSize:'导出 PNG 点阵单元大小',
-invert:'反转明暗（亮部生成图案）',blackBg:'黑底白字配色（字符模式）',paletteHint:'反转明暗会改变原图中哪些区域生成图案。',
+invert:'反转明暗（亮部生成图案）',blackBg:'黑底白字配色（GLYPH 模式）',paletteHint:'反转明暗会改变原图中哪些区域生成图案。',
 convertHalftone:'生成 GLYPH 字符图',convertCrt:'生成 CRT 点阵',convertDotprint:'生成 DOT 纸面网点图',exportTxt:'导出 TXT',exportPng:'导出 PNG',
 mainHint:'建议先用 360 行确认效果，再切换 1080 行导出。超大网格可能需要较多内存。',
 previewTitle:'实时预览',emptyTitle:'NO IMAGE LOADED',emptyText:'选择一张图片，开始生成图案。',imageReadyPrompt:'图片已载入，点击“生成”开始转换。',
@@ -369,7 +370,7 @@ rowModeLabel:'Grid height setting',rowPresetOption:'Use a preset',rowCustomOptio
 rowsLabel:'Output grid height (rows)',row360:'360 rows · Fast',row720:'720 rows · HD',row1080:'1080 rows · Full HD',row1440:'1440 rows · Ultra',
 customRowsLabel:'Custom rows (64–2400)',algorithmLabel:'Dithering algorithm',algoFs:'Floyd–Steinberg · Detail',algoBayer:'Bayer · Ordered pattern',algoRandom:'Random · Grain',
 brightness:'Density',contrast:'Contrast',fontCharSize:'PNG character size',fontDotSize:'PNG dot cell size',
-invert:'Invert luminance (use highlights)',blackBg:'Black background, light text (HALFTONE)',
+invert:'Invert luminance (use highlights)',blackBg:'Black background, light text (GLYPH)',
 paletteHint:'Invert luminance changes which parts of the image form the pattern.',
 convertHalftone:'Generate GLYPH characters',convertCrt:'Generate CRT pattern',convertDotprint:'Generate DOT print pattern',exportTxt:'Export TXT',exportPng:'Export PNG',
 mainHint:'Try 360 rows for a quick check, then use 1080 rows for export. Very large grids may require more memory.',
@@ -401,7 +402,7 @@ function applyLanguage(){
  document.documentElement.lang=language==='zh'?'zh-CN':'en';
  document.title=language==='zh'?'Lem Box · 图像转换器':'Lem Box · Image Converter';
  $('languageLabel').textContent=language==='zh'?'语言':'Language';
- const map={intro:'intro',uploadTitle:'uploadTitle',uploadHint:'uploadHint',modePickerTitle:'modePickerTitle',modePickerHint:'modePickerHint',modeGlyphDesc:'modeGlyphDesc',modeCrtDesc:'modeCrtDesc',modeDotDesc:'modeDotDesc',outputModeLabel:'outputModeLabel',outputModeHint:'outputModeHint',
+ const map={intro:'intro',uploadTitle:'uploadTitle',uploadHint:'uploadHint',modePickerTitle:'modePickerTitle',modePickerHint:'modePickerHint',modeGlyphDesc:'modeGlyphDesc',modeCrtDesc:'modeCrtDesc',modeDotDesc:'modeDotDesc',
  crtPaletteLabel:'crtPaletteLabel',crtCustomColorLabel:'crtCustomColorLabel',crtPaletteHint:'crtPaletteHint',
  halftonePaletteLabel:'halftonePaletteLabel',halftonePaletteHint:'halftonePaletteHint',
  crtPreviewQualityLabel:'previewQualityLabel',crtPreviewQualityHint:'previewQualityHint',glyphLabel:'glyphLabel',glyphHint:'glyphHint',
