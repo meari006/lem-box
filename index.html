@@ -271,7 +271,7 @@ header{padding:26px 20px 18px;max-width:1200px;margin:auto}.headerTop{display:fl
 }
 </style></head>
 <body>
-<header><div class="headerTop"><h1>LEM BOX <span style="color:var(--accent);font-weight:400">/ IMAGE LAB</span> <span class="version">v0.10.0</span></h1><div class="headerTools"><label class="languageControl" for="language"><span id="languageLabel">语言</span><select id="language"><option value="zh" selected>中文</option><option value="en">English</option></select></label></div></div><p id="intro">在 GLYPH 报纸字符、DOT 纸面圆点与 CRT 显像管点阵之间切换。所有处理都在本地浏览器完成，图片不会上传。</p></header>
+<header><div class="headerTop"><h1>LEM BOX <span style="color:var(--accent);font-weight:400">/ IMAGE LAB</span> <span class="version">v0.11.0</span></h1><div class="headerTools"><label class="languageControl" for="language"><span id="languageLabel">语言</span><select id="language"><option value="zh" selected>中文</option><option value="en">English</option></select></label></div></div><p id="intro">在 GLYPH 报纸字符、DOT 纸面圆点与 CRT 显像管点阵之间切换。所有处理都在本地浏览器完成，图片不会上传。</p></header>
 <section class="mode-switcher-wrap">
  <div class="mode-switcher" id="modeSwitcher" role="group" aria-labelledby="modePickerTitle">
   <div class="mode-switcher-head"><strong id="modePickerTitle">选择模式</strong><span id="modePickerHint">切换图像的呈现方式</span></div>
@@ -301,7 +301,19 @@ header{padding:26px 20px 18px;max-width:1200px;margin:auto}.headerTop{display:fl
  <select id="outputMode" hidden aria-hidden="true" tabindex="-1"><option value="halftone" selected>GLYPH · 报纸字符网点</option><option value="crt">CRT · 显像管点阵</option><option value="dotprint">DOT · 纸面网点</option></select>
  <div class="field wide" id="crtPaletteField" hidden><label for="crtPalette" id="crtPaletteLabel">CRT 荧光颜色</label><select id="crtPalette"><option value="green" selected>Phosphor Green · 荧光绿</option><option value="amber">Amber · 琥珀色</option><option value="ice">Ice Blue · 冰蓝</option><option value="white">Cool White · 冷白</option><option value="red">Ruby · 红色</option><option value="violet">Violet · 紫色</option><option value="custom">Custom · 自定义颜色</option></select><div class="field" id="crtCustomWrap" hidden><label for="crtCustomColor" id="crtCustomColorLabel">自定义荧光色</label><input id="crtCustomColor" type="color" value="#9dffb2"></div><div class="hint" id="crtPaletteHint">选择单色显像管风格；自定义颜色会自动生成匹配的暗色屏幕背景。</div></div>
  <div class="field wide" id="crtPreviewQualityField" hidden><label for="crtPreviewQuality" id="crtPreviewQualityLabel">CRT 预览质量</label><select id="crtPreviewQuality"><option value="standard" selected>标准预览 · 流畅</option><option value="high">高清预览 · 更多细节</option></select><div class="hint" id="crtPreviewQualityHint">只影响屏幕预览；PNG 导出使用完整网格，细节更多。</div></div>
- <div class="field wide" id="glyphField"><label for="glyphs" id="glyphLabel">替换网点的文字</label><input id="glyphs" type="text" maxlength="80" value="LUM3N" placeholder="例如：LUM3N / DEAD VALLEY"><div class="hint" id="glyphHint">文字会循环填充所有被网点算法选中的位置。</div></div>
+ <div class="field wide" id="glyphField">
+  <label for="glyphBlock" id="glyphBlockLabel">每个字符覆盖的像素数</label>
+  <select id="glyphBlock">
+   <option value="1" selected>1 像素 · 1×1</option>
+   <option value="2">4 像素 · 2×2</option>
+   <option value="4">16 像素 · 4×4</option>
+   <option value="8">64 像素 · 8×8</option>
+  </select>
+  <div class="hint" id="glyphBlockHint">每个方块合成为一个字符；边缘不满整块时按实际像素计算，不裁切。</div>
+  <label for="glyphs" id="glyphLabel">像素文字</label>
+  <input id="glyphs" type="text" maxlength="80" value="LUM3N" placeholder="例如：LUM3N">
+  <div class="hint" id="glyphHint">输入一组由浅到深的字符。方块内像素覆盖率越高，使用越靠后的字符；1×1 时保持逐像素循环文字。</div>
+ </div>
  <div class="field"><label for="rowMode" id="rowModeLabel">行数设置方式</label><select id="rowMode"><option id="rowPresetOption" value="preset" selected>选择预设行数</option><option id="rowCustomOption" value="custom">自定义行数</option></select></div>
  <div class="field" id="presetRowsWrap"><label for="rows" id="rowsLabel">输出网格高度（行）</label><select id="rows"><option value="360">360 行 · 快速</option><option value="720">720 行 · 高清</option><option value="1080" selected>1080 行 · Full HD</option><option value="1440">1440 行 · 超清</option></select></div>
  <div class="field" id="customWrap" hidden><label for="customRows" id="customRowsLabel">自定义行数（64–2400）</label><input id="customRows" type="number" min="64" max="2400" value="1080"></div>
@@ -336,7 +348,7 @@ modePickerTitle:'选择模式',modePickerHint:'切换图像的呈现方式',mode
 outputModeLabel:'输出模式',outputModeHint:'GLYPH 用字符排成报纸网点；DOT 用实心墨点模拟纸面印刷；CRT 用荧光点模拟显像管。',
 crtPaletteLabel:'CRT 荧光颜色',crtCustomColorLabel:'自定义荧光色',crtPaletteHint:'选择单色显像管风格；自定义颜色会自动生成匹配的暗色屏幕背景。',
 previewQualityLabel:'CRT 预览质量',previewStandard:'标准预览 · 流畅',previewHigh:'高清预览 · 更多细节',previewQualityHint:'只影响屏幕预览；PNG 导出使用完整网格，细节更多。',
-glyphLabel:'替换网点的文字',glyphHint:'文字会循环填充所有被网点算法选中的位置。',glyphPlaceholder:'例如：LUM3N / DEAD VALLEY',
+glyphLabel:'像素文字',glyphHint:'输入一组由浅到深的字符。方块内像素覆盖率越高，使用越靠后的字符；1×1 时保持逐像素循环文字。',glyphPlaceholder:'例如：LUM3N',glyphBlockLabel:'每个字符覆盖的像素数',glyphBlockHint:'每个方块合成为一个字符；边缘不满整块时按实际像素计算，不裁切。',glyphBlock1:'1 像素 · 1×1',glyphBlock2:'4 像素 · 2×2',glyphBlock4:'16 像素 · 4×4',glyphBlock8:'64 像素 · 8×8',
 rowModeLabel:'行数设置方式',rowPresetOption:'选择预设行数',rowCustomOption:'自定义行数',
 rowsLabel:'输出网格高度（行）',row360:'360 行 · 快速',row720:'720 行 · 高清',row1080:'1080 行 · Full HD',row1440:'1440 行 · 超清',
 customRowsLabel:'自定义行数（64–2400）',algorithmLabel:'网点算法',algoFs:'Floyd–Steinberg · 细节优先',algoBayer:'Bayer · 规则网点',algoRandom:'随机网点 · 颗粒感',
@@ -351,7 +363,7 @@ statusWaiting:'等待上传图片',statusImageReady:'图片已载入，点击生
 statusProcessing:'正在计算网点…',statusDone:'完成',statusProcessError:'处理失败：图片可能过大或内存不足。',
 statusModeCrt:'已切换为 CRT 显像管点阵预览',statusModeHalftone:'已切换为 GLYPH 报纸字符预览',statusModeDotprint:'已切换为纸面圆点印刷预览',
 statusPalette:'CRT 荧光颜色已更新',statusCustomColor:'自定义荧光颜色已更新',statusPreview:'预览质量已更新',
-statusGlyph:'文字已更新；TXT/PNG 导出将使用新文字',statusTxt:'正在整理 TXT…',statusTxtDone:'TXT 已导出',
+statusGlyph:'像素文字已更新；TXT/PNG 导出将使用新文字',statusGlyphBlock:'字符覆盖像素数已更新',statusTxt:'正在整理 TXT…',statusTxtDone:'TXT 已导出',
 statusPng:'正在绘制 PNG…',statusPngDone:'PNG 已导出',statusPngError:'PNG 导出失败：内存不足',statusPngUnsupported:'当前浏览器不支持流式 PNG 导出，请更新浏览器',
 statusPngTooLarge:'PNG 尺寸过大，请减小行数或单元大小',statusPngFailed:'PNG 导出失败',
 fileReady:'已就绪',fileSizeUnit:'MB'
@@ -365,7 +377,7 @@ modePickerTitle:'Choose a mode',modePickerHint:'Select how the image is rendered
 outputModeLabel:'Output mode',outputModeHint:'GLYPH uses repeating characters; DOT uses solid ink dots on paper; CRT recreates a phosphor display.',
 crtPaletteLabel:'CRT phosphor color',crtCustomColorLabel:'Custom phosphor color',crtPaletteHint:'Choose a monochrome CRT phosphor. A matching dark screen background is generated automatically for custom colors.',
 previewQualityLabel:'CRT preview quality',previewStandard:'Standard · Faster',previewHigh:'High detail · More dots',previewQualityHint:'Affects screen preview only. PNG export uses the full grid for higher detail.',
-glyphLabel:'Text for the halftone pattern',glyphHint:'Your text repeats across all positions selected by the halftone algorithm.',glyphPlaceholder:'e.g. LUM3N / DEAD VALLEY',
+glyphLabel:'Pixel text',glyphHint:'Enter characters ordered from light to dark. Higher block coverage selects a later character; 1×1 keeps the original repeating-text pattern.',glyphPlaceholder:'e.g. LUM3N',glyphBlockLabel:'Pixels per character',glyphBlockHint:'Each square becomes one character. Partial edge blocks use only the pixels that exist; nothing is cropped.',glyphBlock1:'1 pixel · 1×1',glyphBlock2:'4 pixels · 2×2',glyphBlock4:'16 pixels · 4×4',glyphBlock8:'64 pixels · 8×8',
 rowModeLabel:'Grid height setting',rowPresetOption:'Use a preset',rowCustomOption:'Custom height',
 rowsLabel:'Output grid height (rows)',row360:'360 rows · Fast',row720:'720 rows · HD',row1080:'1080 rows · Full HD',row1440:'1440 rows · Ultra',
 customRowsLabel:'Custom rows (64–2400)',algorithmLabel:'Dithering algorithm',algoFs:'Floyd–Steinberg · Detail',algoBayer:'Bayer · Ordered pattern',algoRandom:'Random · Grain',
@@ -381,7 +393,7 @@ statusWaiting:'Waiting for an image',statusImageReady:'Image loaded. Select Gene
 statusProcessing:'Calculating pattern…',statusDone:'Done',statusProcessError:'Processing failed: the image may be too large or memory may be insufficient.',
 statusModeCrt:'Switched to CRT preview',statusModeHalftone:'Switched to GLYPH newspaper preview',statusModeDotprint:'Switched to printed dot preview',
 statusPalette:'CRT phosphor color updated',statusCustomColor:'Custom phosphor color updated',statusPreview:'Preview quality updated',
-statusGlyph:'Text updated. TXT and PNG exports will use the new text.',statusTxt:'Preparing TXT…',statusTxtDone:'TXT exported',
+statusGlyph:'Pixel text updated. TXT and PNG exports will use the new text.',statusGlyphBlock:'Pixels per character updated',statusTxt:'Preparing TXT…',statusTxtDone:'TXT exported',
 statusPng:'Rendering PNG…',statusPngDone:'PNG exported',statusPngError:'PNG export failed: insufficient memory',statusPngUnsupported:'This browser does not support streamed PNG export. Please update it.',
 statusPngTooLarge:'PNG is too large. Reduce the grid height or cell size.',statusPngFailed:'PNG export failed',
 fileReady:'Ready',fileSizeUnit:'MB'
@@ -395,8 +407,12 @@ function updateFileMeta(){
 }
 function updateStats(){
  if(!grid){$('stats').innerHTML='<span class="tag">'+tr('statsGrid')+': —</span><span class="tag">'+tr('statsChars')+': —</span><span class="tag">'+tr('statsLocal')+'</span>';return}
- const count=grid.activeCount||0;
- $('stats').innerHTML='<span class="tag">'+tr('statsGrid')+': '+gridW+' × '+gridH+'</span><span class="tag">'+(grid.mode==='halftone'?tr('statsChars'):tr('statsDots'))+': '+(gridW*gridH).toLocaleString()+'</span><span class="tag">'+tr('statsFilled')+': '+count.toLocaleString()+' ('+(count/(gridW*gridH)*100).toFixed(1)+'%)</span>';
+ const glyph=grid.mode==='halftone',dims=glyph?getGlyphDimensions():{cols:gridW,rows:gridH};
+ let count=0;
+ if(glyph){
+  for(let y=0;y<dims.rows;y++)for(let x=0;x<dims.cols;x++)if(getGlyphCharacter(x,y)!==' ')count++;
+ }else count=grid.activeCount||0;
+ $('stats').innerHTML='<span class="tag">'+tr('statsGrid')+': '+gridW+' × '+gridH+'</span><span class="tag">'+(glyph?tr('statsChars'):tr('statsDots'))+': '+(dims.cols*dims.rows).toLocaleString()+'</span><span class="tag">'+tr('statsFilled')+': '+count.toLocaleString()+' ('+(count/(dims.cols*dims.rows)*100).toFixed(1)+'%)</span>';
 }
 function applyLanguage(){
  document.documentElement.lang=language==='zh'?'zh-CN':'en';
@@ -405,7 +421,7 @@ function applyLanguage(){
  const map={intro:'intro',uploadTitle:'uploadTitle',uploadHint:'uploadHint',modePickerTitle:'modePickerTitle',modePickerHint:'modePickerHint',modeGlyphDesc:'modeGlyphDesc',modeCrtDesc:'modeCrtDesc',modeDotDesc:'modeDotDesc',
  crtPaletteLabel:'crtPaletteLabel',crtCustomColorLabel:'crtCustomColorLabel',crtPaletteHint:'crtPaletteHint',
  halftonePaletteLabel:'halftonePaletteLabel',halftonePaletteHint:'halftonePaletteHint',
- crtPreviewQualityLabel:'previewQualityLabel',crtPreviewQualityHint:'previewQualityHint',glyphLabel:'glyphLabel',glyphHint:'glyphHint',
+ crtPreviewQualityLabel:'previewQualityLabel',crtPreviewQualityHint:'previewQualityHint',glyphLabel:'glyphLabel',glyphHint:'glyphHint',glyphBlockLabel:'glyphBlockLabel',glyphBlockHint:'glyphBlockHint',
  rowModeLabel:'rowModeLabel',rowPresetOption:'rowPresetOption',rowCustomOption:'rowCustomOption',rowsLabel:'rowsLabel',
  customRowsLabel:'customRowsLabel',algorithmLabel:'algorithmLabel',brightnessName:'brightness',contrastName:'contrast',
  invertName:'invert',paletteHint:'paletteHint',mainHint:'mainHint',previewTitle:'previewTitle',emptyTitle:'emptyTitle',
@@ -422,6 +438,7 @@ function applyLanguage(){
  paletteNames.forEach((name,i)=>$('crtPalette').options[i].textContent=name);
  $('crtPreviewQuality').options[0].textContent=tr('previewStandard');$('crtPreviewQuality').options[1].textContent=tr('previewHigh');
  $('glyphs').placeholder=tr('glyphPlaceholder');
+ $('glyphBlock').options[0].textContent=tr('glyphBlock1');$('glyphBlock').options[1].textContent=tr('glyphBlock2');$('glyphBlock').options[2].textContent=tr('glyphBlock4');$('glyphBlock').options[3].textContent=tr('glyphBlock8');
  $('txt').textContent=tr('exportTxt');$('png').textContent=tr('exportPng');
  $('fontSizeLabel').textContent=tr($('outputMode').value==='crt'?'fontDotSize':'fontCharSize');
  updateOutputMode();updateStats();updateFileMeta();
@@ -590,7 +607,7 @@ function process(){
      if((y+1)%96===0)await yieldToBrowser();
     }
    }
-   const chars=Array.from($('glyphs').value.trim()||'LUM3N'),mode=$('outputMode').value,crtColors=getCrtPalette();
+   const chars=Array.from($('glyphs').value||'LUM3N'),mode=$('outputMode').value,crtColors=getCrtPalette();
    grid={mask:out,chars,background:$('halftonePalette').value==='dark',mode,crtForeground:crtColors.foreground,crtBackground:crtColors.background,crtFrame:crtColors.frame,activeCount:0};
    let count=0;for(const v of out)count+=v;grid.activeCount=count;
    renderPreview();updateStats();txt.disabled=png.disabled=false;setStatus(tr('statusDone'));
@@ -691,26 +708,44 @@ function renderPreview(){
   ctx.fillStyle=grid.background?'#07090c':'#ffffff';ctx.fillRect(0,0,c.width,c.height);
   drawPrintDots(ctx,unit,grid.background?'#e9f2f8':'#08090a',cols,rows);
  }else{
-  const factor=Math.min(1,900/gridW,680/gridH);
-  const cols=Math.max(1,Math.floor(gridW*factor)),rows=Math.max(1,Math.floor(gridH*factor));
+  const dims=getGlyphDimensions();
+  const factor=Math.min(1,900/dims.cols,680/dims.rows);
+  const cols=Math.max(1,Math.floor(dims.cols*factor)),rows=Math.max(1,Math.floor(dims.rows*factor));
   c.width=cols;c.height=rows;
   ctx.fillStyle=grid.background?'#07090c':'#ffffff';ctx.fillRect(0,0,cols,rows);
   ctx.fillStyle=grid.background?'#e9f2f8':'#08090a';ctx.font=Math.max(2,Math.ceil(factor*3))+'px monospace';ctx.textBaseline='top';
   for(let y=0;y<rows;y++){
-   const sourceY=Math.min(gridH-1,Math.floor((y+.5)*gridH/rows)),sourceRow=sourceY*gridW;
+   const sourceY=Math.min(dims.rows-1,Math.floor((y+.5)*dims.rows/rows));
    let line='';
    for(let x=0;x<cols;x++){
-    const sourceX=Math.min(gridW-1,Math.floor((x+.5)*gridW/cols)),index=sourceRow+sourceX;
-    line+=grid.mask[index]?grid.chars[(sourceX+sourceRow)%grid.chars.length]:' ';
+    const sourceX=Math.min(dims.cols-1,Math.floor((x+.5)*dims.cols/cols));
+    line+=getGlyphCharacter(sourceX,sourceY);
    }
    ctx.fillText(line,0,y,cols);
   }
  }
  $('preview').replaceChildren(c);
 }
-$('glyphs').addEventListener('input',()=>{if(grid){grid.chars=Array.from($('glyphs').value.trim()||'LUM3N');renderPreview();setStatus(tr('statusGlyph'))}});
+$('glyphs').addEventListener('input',()=>{
+ if(grid){grid.chars=Array.from($('glyphs').value||'LUM3N');renderPreview();updateStats();setStatus(tr('statusGlyph'))}
+});
+$('glyphBlock').addEventListener('change',()=>{
+ if(grid&&grid.mode==='halftone'){renderPreview();updateStats();setStatus(tr('statusGlyphBlock'))}
+});
 convert.addEventListener('click',process);
-function buildText(){const lines=new Array(gridH);let k=0;for(let y=0;y<gridH;y++){let s='';for(let x=0;x<gridW;x++,k++)s+=grid.mask[k]?(grid.mode==='halftone'?grid.chars[(x+y*gridW)%grid.chars.length]:'.'):' ';lines[y]=s}return lines.join('\n')}
+function buildText(){
+ const glyph=grid.mode==='halftone',dims=glyph?getGlyphDimensions():{cols:gridW,rows:gridH};
+ const lines=new Array(dims.rows);
+ for(let y=0;y<dims.rows;y++){
+  let line='';
+  for(let x=0;x<dims.cols;x++){
+   if(glyph)line+=getGlyphCharacter(x,y);
+   else line+=grid.mask[y*gridW+x]?'.':' ';
+  }
+  lines[y]=line;
+ }
+ return lines.join('\n');
+}
 function download(blob,name){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),30000)}
 txt.addEventListener('click',()=>{if(!grid)return;setStatus(tr('statusTxt'));setTimeout(()=>{download(new Blob([buildText()],{type:'text/plain;charset=utf-8'}),grid.mode==='crt'?'lem-box-crt.txt':grid.mode==='dotprint'?'lem-box-dot.txt':'lem-box-glyph.txt');setStatus(tr('statusTxtDone'))},20)});
 function pngU32(value){return new Uint8Array([(value>>>24)&255,(value>>>16)&255,(value>>>8)&255,value&255])}
@@ -719,6 +754,8 @@ function pngCrc32(typeBytes,data){let crc=0xffffffff;for(const part of [typeByte
 function pngChunkParts(type,data){const typeBytes=new TextEncoder().encode(type);return [pngU32(data.length),typeBytes,data,pngU32(pngCrc32(typeBytes,data))]}
 async function buildPaperPng(fs,w,h,mode='halftone'){
  if(typeof CompressionStream==='undefined')throw new Error('CompressionStream unavailable');
+ const glyph=mode==='halftone',dims=glyph?getGlyphDimensions():{cols:gridW,rows:gridH};
+ const outputCols=dims.cols,outputRows=dims.rows;
  const compressor=new CompressionStream('deflate'),writer=compressor.writable.getWriter(),reader=compressor.readable.getReader();
  const compressed=[];
  const readerTask=(async()=>{while(true){const part=await reader.read();if(part.done)break;compressed.push(part.value)}})();
@@ -729,10 +766,10 @@ async function buildPaperPng(fs,w,h,mode='halftone'){
  const background=grid.background?'#07090c':'#ffffff',foreground=grid.background?'#e9f2f8':'#08090a';
  const canvas=document.createElement('canvas');
  try{
-  for(let gy=0;gy<gridH;gy++){
+  for(let gy=0;gy<outputRows;gy++){
    const tiles=[];
-   for(let x0=0;x0<gridW;x0+=cellsPerTile){
-    const cols=Math.min(cellsPerTile,gridW-x0),tw=cols*fs;
+   for(let x0=0;x0<outputCols;x0+=cellsPerTile){
+    const cols=Math.min(cellsPerTile,outputCols-x0),tw=cols*fs;
     canvas.width=tw;canvas.height=fs;
     const ctx=canvas.getContext('2d',{willReadFrequently:true});
     ctx.fillStyle=background;ctx.fillRect(0,0,tw,fs);
@@ -744,7 +781,10 @@ async function buildPaperPng(fs,w,h,mode='halftone'){
      ctx.fill();
     }else{
      ctx.font=fs+'px monospace';ctx.textBaseline='top';
-     for(let x=0;x<cols;x++){const sourceX=x0+x,index=start+x;if(grid.mask[index])ctx.fillText(grid.chars[(sourceX+gy*gridW)%grid.chars.length],x*fs,0)}
+     for(let x=0;x<cols;x++){
+      const ch=getGlyphCharacter(x0+x,gy);
+      if(ch!==' ')ctx.fillText(ch,x*fs,0);
+     }
     }
     tiles.push({width:tw,data:ctx.getImageData(0,0,tw,fs).data});
    }
@@ -753,7 +793,7 @@ async function buildPaperPng(fs,w,h,mode='halftone'){
     for(const tile of tiles){const bytes=tile.width*4,src=py*bytes;scanline.set(tile.data.subarray(src,src+bytes),dest);dest+=bytes}
     await appendRow(scanline);
    }
-   if((gy+1)%16===0){setStatus(tr('statusPng')+' '+Math.round((gy+1)/gridH*100)+'%');await yieldToBrowser()}
+   if((gy+1)%16===0){setStatus(tr('statusPng')+' '+Math.round((gy+1)/outputRows*100)+'%');await yieldToBrowser()}
   }
   await flush();await writer.close();await readerTask;
  }catch(error){try{await writer.abort(error)}catch{};throw error}
@@ -765,7 +805,7 @@ async function buildPaperPng(fs,w,h,mode='halftone'){
 }
 png.addEventListener('click',()=>{
  if(!grid||busy)return;
- const fs=Number($('fontSize').value),w=gridW*fs,h=gridH*fs;
+ const fs=Number($('fontSize').value),dims=grid.mode==='halftone'?getGlyphDimensions():{cols:gridW,rows:gridH},w=dims.cols*fs,h=dims.rows*fs;
  if(grid.mode==='crt'&&w*h>70000000){setStatus(tr('statusPngTooLarge'));return}
  setStatus(tr('statusPng'));png.disabled=true;
  setTimeout(async()=>{
