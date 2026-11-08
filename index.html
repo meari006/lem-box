@@ -410,7 +410,8 @@ function updateStats(){
  const glyph=grid.mode==='halftone',dims=glyph?getGlyphDimensions():{cols:gridW,rows:gridH};
  let count=0;
  if(glyph){
-  for(let y=0;y<dims.rows;y++)for(let x=0;x<dims.cols;x++)if(getGlyphCharacter(x,y)!==' ')count++;
+  if(dims.block===1)count=grid.activeCount||0;
+  else for(let y=0;y<dims.rows;y++)for(let x=0;x<dims.cols;x++)if(getGlyphCharacter(x,y)!==' ')count++;
  }else count=grid.activeCount||0;
  $('stats').innerHTML='<span class="tag">'+tr('statsGrid')+': '+gridW+' × '+gridH+'</span><span class="tag">'+(glyph?tr('statsChars'):tr('statsDots'))+': '+(dims.cols*dims.rows).toLocaleString()+'</span><span class="tag">'+tr('statsFilled')+': '+count.toLocaleString()+' ('+(count/(dims.cols*dims.rows)*100).toFixed(1)+'%)</span>';
 }
