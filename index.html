@@ -272,7 +272,7 @@ header{padding:26px 20px 18px;max-width:1200px;margin:auto}.headerTop{display:fl
  .mode-card-copy small{font-size:10px}
 }
  
-/* v0.15.0 — fixed masthead and mode selector */
+/* v0.16.0 — fixed masthead and mode selector */
 .site-header{
  max-width:1440px!important;
  min-height:104px!important;
@@ -423,25 +423,41 @@ main{display:grid!important;grid-template-columns:minmax(340px,.88fr) minmax(0,1
 .mode-options-slot>.field,.mode-options-slot>#glyphField,.mode-options-slot>#halftonePaletteField{grid-column:auto!important}
 @media(max-width:900px){main{grid-template-columns:minmax(0,1fr)!important;align-items:stretch!important}.workspace{height:auto;min-height:0}.preview{min-height:480px!important;max-height:70vh!important}.settings-column{gap:12px}}
 @media(max-width:620px){.site-header h1{white-space:normal!important}.site-header h1 span:first-of-type{display:none!important}.preview{min-height:380px!important;max-height:70vh!important}}
+
+/* LEM BOX v0.16.0 — fluid layout, top sliders, bottom mode selector */
+.site-header{width:100%!important;max-width:none!important;margin:0!important;padding:22px clamp(16px,2.2vw,36px) 16px!important}
+.site-header .headerTop{width:100%!important}
+.mode-switcher-wrap{width:100%!important;max-width:none!important;margin:0!important;padding:0!important}
+.mode-switcher{width:100%!important;height:auto!important}
+main{width:100%!important;max-width:none!important;margin:0!important;padding:0 clamp(16px,2.2vw,36px) 36px!important;display:grid!important;grid-template-columns:minmax(360px,.82fr) minmax(0,1.18fr)!important;align-items:stretch!important;gap:20px!important}
+.settings-column{height:100%;min-height:0;align-self:stretch;display:flex;flex-direction:column;gap:14px!important}
+.settings-spacer{flex:1 1 auto;min-height:30px}
+.settings-column>.panel{width:100%;min-width:0}
+.controls{display:flex!important;flex-direction:column!important;gap:14px!important;align-items:stretch!important}
+.slider-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;width:100%;align-items:start}
+.slider-row>.field{min-width:0}
+.slider-row label{min-height:40px;align-items:flex-end}
+.slider-row input[type=range]{margin:6px 0 0}
+.mode-options-slot{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important;align-items:start!important;width:100%!important}
+.mode-options-slot>.field{grid-column:auto!important;min-width:0}
+.mode-options-slot>#glyphField{grid-column:1/-1!important}
+.mode-options-slot>#halftonePaletteField{grid-column:auto!important}
+.mode-options-slot>#crtPaletteField,.mode-options-slot>#crtPreviewQualityField{grid-column:span 1!important}
+.mode-cards{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;align-items:stretch!important}
+:root[data-skin] .mode-card{height:96px!important;min-height:96px!important;width:100%!important;min-width:0!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:5px!important;padding:8px 4px!important;text-align:center!important;overflow:hidden}
+.mode-card-mark{width:34px!important;height:34px!important;flex:0 0 34px!important;font-size:13px!important}
+.mode-card-copy{width:100%;min-width:0;align-items:center!important;gap:3px!important}
+.mode-card-copy strong{font-size:12px!important;line-height:1.1!important}
+.mode-card-copy small{font-size:10px!important;line-height:1.2!important;overflow-wrap:anywhere}
+.workspace{width:100%!important;min-width:0;min-height:100%;height:100%;display:flex;flex-direction:column;gap:10px!important}
+.preview{width:100%!important;flex:1 1 auto!important;min-height:480px!important;max-height:none!important;height:auto!important}
+.preview canvas{max-width:100%;max-height:78vh!important;object-fit:contain}
+@media(max-width:1050px){main{grid-template-columns:minmax(320px,.9fr) minmax(0,1.1fr)!important;gap:14px!important}.slider-row{gap:9px}.slider-row label{font-size:12px}}
+@media(max-width:900px){main{grid-template-columns:minmax(0,1fr)!important;gap:14px!important}.settings-column{height:auto;min-height:0}.settings-spacer{display:none}.workspace{height:auto;min-height:0}.preview{min-height:480px!important;max-height:70vh!important}.mode-switcher-wrap{margin-top:0!important}}
+@media(max-width:620px){.site-header{padding:18px 14px 14px!important}main{padding:0 12px 28px!important;gap:12px!important}.slider-row{grid-template-columns:1fr!important;gap:12px!important}.slider-row label{min-height:0;align-items:center}.mode-options-slot{grid-template-columns:1fr!important;gap:10px!important}.mode-options-slot>#glyphField,.mode-options-slot>#halftonePaletteField{grid-column:1/-1!important}.mode-cards{gap:6px!important}:root[data-skin] .mode-card{height:82px!important;min-height:82px!important;padding:5px 2px!important}.mode-card-mark{width:28px!important;height:28px!important;flex-basis:28px!important}.mode-card-copy strong{font-size:11px!important}.mode-card-copy small{font-size:9px!important}}
 </style></head>
 <body>
 <header class="site-header"><div class="headerTop"><h1>LEM BOX <span style="color:var(--accent);font-weight:400">/ IMAGE LAB</span> <span class="version">v0.15.0</span></h1><div class="headerTools"><label class="languageControl" for="language"><span id="languageLabel">语言</span><select id="language"><option value="zh" selected>中文</option><option value="en">English</option></select></label></div></div><p id="intro">在 GLYPH 报纸字符、DOT 纸面圆点与 CRT 显像管点阵之间切换。所有处理都在本地浏览器完成，图片不会上传。</p></header>
-<section class="mode-switcher-wrap">
- <div class="mode-switcher" id="modeSwitcher" role="group" aria-labelledby="modePickerTitle">
-  <div class="mode-switcher-head"><strong id="modePickerTitle">选择模式</strong><span id="modePickerHint">切换图像的呈现方式</span></div>
-  <div class="mode-cards">
-   <button type="button" class="mode-card is-active" data-mode="halftone" aria-pressed="true">
-    <span class="mode-card-mark glyph-mark">Ag</span><span class="mode-card-copy"><strong id="modeGlyphName">GLYPH</strong><small id="modeGlyphDesc">报纸字符 · 字形网点</small></span>
-   </button>
-   <button type="button" class="mode-card" data-mode="crt" aria-pressed="false">
-    <span class="mode-card-mark crt-mark">CRT</span><span class="mode-card-copy"><strong id="modeCrtName">CRT</strong><small id="modeCrtDesc">显像管 · 荧光点阵</small></span>
-   </button>
-   <button type="button" class="mode-card" data-mode="dotprint" aria-pressed="false">
-    <span class="mode-card-mark dot-mark">•••</span><span class="mode-card-copy"><strong id="modeDotName">DOT</strong><small id="modeDotDesc">纸面印刷 · 实心圆点</small></span>
-   </button>
-  </div>
- </div>
-</section>
 <main>
  <div class="settings-column">
   <section class="input-toolbar panel">
@@ -456,6 +472,19 @@ main{display:grid!important;grid-template-columns:minmax(340px,.88fr) minmax(0,1
  </section>
   <section class="panel controls">
   <select id="outputMode" hidden aria-hidden="true" tabindex="-1"><option value="halftone" selected>GLYPH · 报纸字符网点</option><option value="crt">CRT · 显像管点阵</option><option value="dotprint">DOT · 纸面网点</option></select>
+  <div class="slider-row wide">
+  <div class="field"><label for="brightness"><span id="brightnessName">整体浓度</span> <span id="brightnessVal">25</span></label><input id="brightness" type="range" min="-150" max="150" value="25"></div>
+  <div class="field"><label for="contrast"><span id="contrastName">对比度</span> <span id="contrastVal">125</span></label><input id="contrast" type="range" min="50" max="200" value="125"></div>
+  <div class="field"><label for="fontSize"><span id="fontSizeLabel">导出 PNG 字符大小</span> <span id="fontSizeVal">10</span></label><input id="fontSize" type="range" min="4" max="14" value="10"></div>
+  </div>
+ <div class="field"><label for="rowMode" id="rowModeLabel">行数设置方式</label><select id="rowMode"><option id="rowPresetOption" value="preset" selected>选择预设行数</option><option id="rowCustomOption" value="custom">自定义行数</option></select></div>
+ <div class="field" id="presetRowsWrap"><label for="rows" id="rowsLabel">输出网格高度（行）</label><select id="rows"><option value="360">360 行 · 快速</option><option value="720">720 行 · 高清</option><option value="1080" selected>1080 行 · Full HD</option><option value="1440">1440 行 · 超清</option></select></div>
+ <div class="field" id="customWrap" hidden><label for="customRows" id="customRowsLabel">自定义行数（64–2400）</label><input id="customRows" type="number" min="64" max="2400" value="1080"></div>
+ <div class="field"><label for="algorithm" id="algorithmLabel">网点算法</label><select id="algorithm"><option value="fs">Floyd–Steinberg · 细节优先</option><option value="bayer">Bayer · 规则网点</option><option value="random">随机网点 · 颗粒感</option></select></div>
+
+
+
+ <div class="field wide"><label class="check"><input id="invert" type="checkbox"><span id="invertName">反转明暗（亮部生成图案）</span></label><div class="hint" id="paletteHint">反转明暗会改变原图哪些区域生成图案。</div></div>
  <div class="mode-options-slot wide" id="modeOptionsSlot">
   <div class="field wide" id="crtPaletteField" hidden><label for="crtPalette" id="crtPaletteLabel">CRT 荧光颜色</label><select id="crtPalette"><option value="green" selected>Phosphor Green · 荧光绿</option><option value="amber">Amber · 琥珀色</option><option value="ice">Ice Blue · 冰蓝</option><option value="white">Cool White · 冷白</option><option value="red">Ruby · 红色</option><option value="violet">Violet · 紫色</option><option value="custom">Custom · 自定义颜色</option></select><div class="field" id="crtCustomWrap" hidden><label for="crtCustomColor" id="crtCustomColorLabel">自定义荧光色</label><input id="crtCustomColor" type="color" value="#9dffb2"></div><div class="hint" id="crtPaletteHint">选择单色显像管风格；自定义颜色会自动生成匹配的暗色屏幕背景。</div></div>
   <div class="field wide" id="crtPreviewQualityField" hidden><label for="crtPreviewQuality" id="crtPreviewQualityLabel">CRT 预览质量</label><select id="crtPreviewQuality"><option value="standard" selected>标准预览 · 流畅</option><option value="high">高清预览 · 更多细节</option></select><div class="hint" id="crtPreviewQualityHint">只影响屏幕预览；PNG 导出使用完整网格，细节更多。</div></div>
@@ -475,16 +504,25 @@ main{display:grid!important;grid-template-columns:minmax(340px,.88fr) minmax(0,1
   </div>
   <div class="field wide" id="halftonePaletteField"><label for="halftonePalette" id="halftonePaletteLabel">GLYPH 配色</label><select id="halftonePalette"><option value="light" selected>白底黑字</option><option value="dark">黑底白字</option></select><div class="hint" id="halftonePaletteHint">只改变字符画的底色和文字颜色，不改变网点分布。</div></div>
  </div>
- <div class="field"><label for="rowMode" id="rowModeLabel">行数设置方式</label><select id="rowMode"><option id="rowPresetOption" value="preset" selected>选择预设行数</option><option id="rowCustomOption" value="custom">自定义行数</option></select></div>
- <div class="field" id="presetRowsWrap"><label for="rows" id="rowsLabel">输出网格高度（行）</label><select id="rows"><option value="360">360 行 · 快速</option><option value="720">720 行 · 高清</option><option value="1080" selected>1080 行 · Full HD</option><option value="1440">1440 行 · 超清</option></select></div>
- <div class="field" id="customWrap" hidden><label for="customRows" id="customRowsLabel">自定义行数（64–2400）</label><input id="customRows" type="number" min="64" max="2400" value="1080"></div>
- <div class="field"><label for="algorithm" id="algorithmLabel">网点算法</label><select id="algorithm"><option value="fs">Floyd–Steinberg · 细节优先</option><option value="bayer">Bayer · 规则网点</option><option value="random">随机网点 · 颗粒感</option></select></div>
- <div class="field"><label for="brightness"><span id="brightnessName">整体浓度</span> <span id="brightnessVal">25</span></label><input id="brightness" type="range" min="-150" max="150" value="25"></div>
- <div class="field"><label for="contrast"><span id="contrastName">对比度</span> <span id="contrastVal">125</span></label><input id="contrast" type="range" min="50" max="200" value="125"></div>
- <div class="field"><label for="fontSize"><span id="fontSizeLabel">导出 PNG 字符大小</span> <span id="fontSizeVal">10</span></label><input id="fontSize" type="range" min="4" max="14" value="10"></div>
- <div class="field wide"><label class="check"><input id="invert" type="checkbox"><span id="invertName">反转明暗（亮部生成图案）</span></label><div class="hint" id="paletteHint">反转明暗会改变原图哪些区域生成图案。</div></div>
  <div class="actions wide"><button class="primary" id="convert" disabled>生成文字网点图</button><button id="txt" disabled>导出 TXT</button><button id="png" disabled>导出 PNG</button></div>
  <div class="hint wide" id="mainHint">建议先用 360 行确认效果，再切换 1080 行导出。超大网格可能需要较多内存。</div>
+</section>
+  <div class="settings-spacer" aria-hidden="true"></div>
+<section class="mode-switcher-wrap">
+ <div class="mode-switcher" id="modeSwitcher" role="group" aria-labelledby="modePickerTitle">
+  <div class="mode-switcher-head"><strong id="modePickerTitle">选择模式</strong><span id="modePickerHint">切换图像的呈现方式</span></div>
+  <div class="mode-cards">
+   <button type="button" class="mode-card is-active" data-mode="halftone" aria-pressed="true">
+    <span class="mode-card-mark glyph-mark">Ag</span><span class="mode-card-copy"><strong id="modeGlyphName">GLYPH</strong><small id="modeGlyphDesc">报纸字符 · 字形网点</small></span>
+   </button>
+   <button type="button" class="mode-card" data-mode="crt" aria-pressed="false">
+    <span class="mode-card-mark crt-mark">CRT</span><span class="mode-card-copy"><strong id="modeCrtName">CRT</strong><small id="modeCrtDesc">显像管 · 荧光点阵</small></span>
+   </button>
+   <button type="button" class="mode-card" data-mode="dotprint" aria-pressed="false">
+    <span class="mode-card-mark dot-mark">•••</span><span class="mode-card-copy"><strong id="modeDotName">DOT</strong><small id="modeDotDesc">纸面印刷 · 实心圆点</small></span>
+   </button>
+  </div>
+ </div>
 </section>
  </div>
  <section class="workspace">
