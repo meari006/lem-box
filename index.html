@@ -216,9 +216,77 @@ header{padding:26px 20px 18px;max-width:1200px;margin:auto}.headerTop{display:fl
 :root[data-skin] .filePreview img{background:#5a5a5a!important;border-color:#929292!important}
 :root[data-skin] input:focus-visible,:root[data-skin] select:focus-visible,:root[data-skin] button:focus-visible{outline:2px solid #fff!important;outline-offset:2px}
 :root[data-skin] .preview canvas{max-width:100%;max-height:72vh;object-fit:contain}
+
+/* LEM BOX v0.10.0 — standalone three-mode selector and global mode-color borders */
+:root[data-skin="halftone"]{--mode-border:#2896ff;--mode-border-rgb:40,150,255}
+:root[data-skin="crt"]{--mode-border:#45e86a;--mode-border-rgb:69,232,106}
+:root[data-skin="dotprint"]{--mode-border:#f4f4f4;--mode-border-rgb:244,244,244}
+.mode-switcher-wrap{max-width:1200px;margin:0 auto;padding:0 20px 18px}
+.mode-switcher{background:#454545;border:1px solid var(--mode-border);border-radius:9px;padding:14px;box-shadow:0 4px 12px rgba(0,0,0,.18)}
+.mode-switcher-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 2px 12px;color:#fff}
+.mode-switcher-head strong{font-size:14px;letter-spacing:.04em}
+.mode-switcher-head span{font-size:12px;color:#fff;opacity:.78}
+.mode-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+:root[data-skin] .mode-card{display:flex;align-items:center;gap:12px;min-width:0;min-height:78px;padding:12px;text-align:left;background:#505050!important;border:1px solid var(--mode-border)!important;border-radius:7px!important;color:#fff!important;box-shadow:none!important}
+:root[data-skin] .mode-card:hover{background:#5b5b5b!important}
+:root[data-skin] .mode-card.is-active{background:rgba(var(--mode-border-rgb),.16)!important;border:2px solid var(--mode-border)!important;box-shadow:inset 0 0 0 1px rgba(var(--mode-border-rgb),.25)!important}
+.mode-card-mark{width:46px;height:46px;flex:0 0 46px;display:flex;align-items:center;justify-content:center;border:1px solid var(--mode-border);border-radius:6px;color:#fff;font:700 15px/1 ui-monospace,Consolas,monospace}
+.glyph-mark{font-family:Georgia,serif;font-size:21px}
+.crt-mark{font-size:12px;letter-spacing:-.08em}
+.dot-mark{font-size:20px;letter-spacing:2px}
+.mode-card-copy{display:flex;flex-direction:column;gap:4px;min-width:0}
+.mode-card-copy strong{font-size:14px;line-height:1.2;color:#fff;letter-spacing:.06em}
+.mode-card-copy small{font-size:12px;line-height:1.35;color:#fff;opacity:.82}
+:root[data-skin] .panel{border-color:var(--mode-border)!important}
+:root[data-skin] .preview{border-color:var(--mode-border)!important}
+:root[data-skin] .previewHead{border-color:var(--mode-border)!important}
+:root[data-skin] input[type=text],
+:root[data-skin] input[type=number],
+:root[data-skin] input[type=file],
+:root[data-skin] input[type=color],
+:root[data-skin] select{border-color:var(--mode-border)!important}
+:root[data-skin] button{border-color:var(--mode-border)!important}
+:root[data-skin] .drop{border-color:var(--mode-border)!important}
+:root[data-skin] .filePreview{border-color:var(--mode-border)!important}
+:root[data-skin] .filePreview img{border-color:var(--mode-border)!important}
+:root[data-skin] .tag{border-color:var(--mode-border)!important}
+:root[data-skin] .version{border-color:var(--mode-border)!important}
+:root[data-skin] .mode-switcher{border-color:var(--mode-border)!important}
+:root[data-skin] .mode-card{border-color:var(--mode-border)!important}
+:root[data-skin] .mode-card-mark{border-color:var(--mode-border)!important}
+:root[data-skin] input:focus-visible,
+:root[data-skin] select:focus-visible,
+:root[data-skin] button:focus-visible{outline-color:var(--mode-border)!important}
+@media(max-width:850px){.mode-switcher-wrap{padding:0 14px 14px}}
+@media(max-width:520px){
+ .mode-switcher{padding:10px}
+ .mode-cards{gap:7px}
+ :root[data-skin] .mode-card{min-height:72px;flex-direction:column;justify-content:center;gap:6px;padding:8px 4px;text-align:center}
+ .mode-card-mark{width:34px;height:34px;flex-basis:34px;font-size:12px}
+ .glyph-mark{font-size:18px}
+ .mode-card-copy{align-items:center}
+ .mode-card-copy strong{font-size:12px}
+ .mode-card-copy small{font-size:10px}
+}
 </style></head>
 <body>
-<header><div class="headerTop"><h1>LEM BOX <span style="color:var(--accent);font-weight:400">/ IMAGE LAB</span> <span class="version">v0.9.0</span></h1><div class="headerTools"><label class="languageControl" for="language"><span id="languageLabel">语言</span><select id="language"><option value="zh" selected>中文</option><option value="en">English</option></select></label></div></div><p id="intro">在复古报纸字符网点与 CRT 显像管点阵之间切换。所有处理都在本地浏览器完成，图片不会上传。</p></header>
+<header><div class="headerTop"><h1>LEM BOX <span style="color:var(--accent);font-weight:400">/ IMAGE LAB</span> <span class="version">v0.10.0</span></h1><div class="headerTools"><label class="languageControl" for="language"><span id="languageLabel">语言</span><select id="language"><option value="zh" selected>中文</option><option value="en">English</option></select></label></div></div><p id="intro">在复古报纸字符网点与 CRT 显像管点阵之间切换。所有处理都在本地浏览器完成，图片不会上传。</p></header>
+<section class="mode-switcher-wrap">
+ <div class="mode-switcher" role="group" aria-labelledby="modePickerTitle">
+  <div class="mode-switcher-head"><strong id="modePickerTitle">选择模式</strong><span id="modePickerHint">切换图像的呈现方式</span></div>
+  <div class="mode-cards">
+   <button type="button" class="mode-card is-active" data-mode="halftone" aria-pressed="true">
+    <span class="mode-card-mark glyph-mark">Ag</span><span class="mode-card-copy"><strong id="modeGlyphName">GLYPH</strong><small id="modeGlyphDesc">报纸字符 · 字形网点</small></span>
+   </button>
+   <button type="button" class="mode-card" data-mode="crt" aria-pressed="false">
+    <span class="mode-card-mark crt-mark">CRT</span><span class="mode-card-copy"><strong id="modeCrtName">CRT</strong><small id="modeCrtDesc">显像管 · 荧光点阵</small></span>
+   </button>
+   <button type="button" class="mode-card" data-mode="dotprint" aria-pressed="false">
+    <span class="mode-card-mark dot-mark">•••</span><span class="mode-card-copy"><strong id="modeDotName">DOT</strong><small id="modeDotDesc">纸面印刷 · 实心圆点</small></span>
+   </button>
+  </div>
+ </div>
+</section>
 <main>
 <section class="panel controls">
  <div class="field wide"><label id="uploadTitle">输入图片</label><div class="drop" id="drop">
@@ -229,7 +297,7 @@ header{padding:26px 20px 18px;max-width:1200px;margin:auto}.headerTop{display:fl
     <div class="fileInfo"><strong id="fileName"></strong><span id="fileMeta"></span></div>
   </div>
 </div></div>
- <div class="field wide"><label for="outputMode" id="outputModeLabel">输出模式</label><select id="outputMode"><option value="halftone" selected>HALFTONE · 报纸字符网点</option><option value="crt">CRT · 显像管点阵</option><option value="dotprint">DOT PRINT · 纸面网点</option></select><div class="hint" id="outputModeHint">HALFTONE 使用文字形成油墨网点；CRT 使用荧光圆点模拟显像管。</div></div>
+ <select id="outputMode" hidden aria-hidden="true" tabindex="-1"><option value="halftone" selected>GLYPH · 报纸字符网点</option><option value="crt">CRT · 显像管点阵</option><option value="dotprint">DOT · 纸面网点</option></select>
  <div class="field wide" id="crtPaletteField" hidden><label for="crtPalette" id="crtPaletteLabel">CRT 荧光颜色</label><select id="crtPalette"><option value="green" selected>Phosphor Green · 荧光绿</option><option value="amber">Amber · 琥珀色</option><option value="ice">Ice Blue · 冰蓝</option><option value="white">Cool White · 冷白</option><option value="red">Ruby · 红色</option><option value="violet">Violet · 紫色</option><option value="custom">Custom · 自定义颜色</option></select><div class="field" id="crtCustomWrap" hidden><label for="crtCustomColor" id="crtCustomColorLabel">自定义荧光色</label><input id="crtCustomColor" type="color" value="#9dffb2"></div><div class="hint" id="crtPaletteHint">选择单色显像管风格；自定义颜色会自动生成匹配的暗色屏幕背景。</div></div>
  <div class="field wide" id="crtPreviewQualityField" hidden><label for="crtPreviewQuality" id="crtPreviewQualityLabel">CRT 预览质量</label><select id="crtPreviewQuality"><option value="standard" selected>标准预览 · 流畅</option><option value="high">高清预览 · 更多细节</option></select><div class="hint" id="crtPreviewQualityHint">只影响屏幕预览；PNG 导出使用完整网格，细节更多。</div></div>
  <div class="field wide" id="glyphField"><label for="glyphs" id="glyphLabel">替换网点的文字</label><input id="glyphs" type="text" maxlength="80" value="LUM3N" placeholder="例如：LUM3N / DEAD VALLEY"><div class="hint" id="glyphHint">文字会循环填充所有被网点算法选中的位置。</div></div>
@@ -259,11 +327,12 @@ const file=$('file'),drop=$('drop'),convert=$('convert'),txt=$('txt'),png=$('png
 let language='zh',currentFile=null;
 const I18N={
 zh:{
-intro:'在报纸字符、纸面圆点和 CRT 显像管三种图像风格之间切换。所有处理都在本地浏览器完成，图片不会上传。',
+intro:'在 GLYPH 字符、DOT 纸面圆点和 CRT 显像管三种图像风格之间切换。所有处理都在本地浏览器完成，图片不会上传。',
 themeLabel:'界面主题',themeDark:'暗色',themeLight:'浅色',
-halftonePaletteLabel:'HALFTONE 配色',halftoneLight:'白底黑字',halftoneDark:'黑底白字',halftonePaletteHint:'只改变字符画的底色和文字颜色，不改变网点分布。',
+halftonePaletteLabel:'GLYPH 配色',halftoneLight:'白底黑字',halftoneDark:'黑底白字',halftonePaletteHint:'只改变字符画的底色和文字颜色，不改变网点分布。',
 uploadTitle:'输入图片',uploadHint:'也可以把图片拖到这里。支持 JPG / PNG / WebP。',
-outputModeLabel:'输出模式',outputModeHint:'HALFTONE 用字符排成报纸网点；DOT PRINT 用实心墨点模拟纸面印刷；CRT 用荧光点模拟显像管。',
+modePickerTitle:'选择模式',modePickerHint:'切换图像的呈现方式',modeGlyphDesc:'报纸字符 · 字形网点',modeCrtDesc:'显像管 · 荧光点阵',modeDotDesc:'纸面印刷 · 实心圆点',
+outputModeLabel:'输出模式',outputModeHint:'GLYPH 用字符排成报纸网点；DOT 用实心墨点模拟纸面印刷；CRT 用荧光点模拟显像管。',
 crtPaletteLabel:'CRT 荧光颜色',crtCustomColorLabel:'自定义荧光色',crtPaletteHint:'选择单色显像管风格；自定义颜色会自动生成匹配的暗色屏幕背景。',
 previewQualityLabel:'CRT 预览质量',previewStandard:'标准预览 · 流畅',previewHigh:'高清预览 · 更多细节',previewQualityHint:'只影响屏幕预览；PNG 导出使用完整网格，细节更多。',
 glyphLabel:'替换网点的文字',glyphHint:'文字会循环填充所有被网点算法选中的位置。',glyphPlaceholder:'例如：LUM3N / DEAD VALLEY',
@@ -272,14 +341,14 @@ rowsLabel:'输出网格高度（行）',row360:'360 行 · 快速',row720:'720 �
 customRowsLabel:'自定义行数（64–2400）',algorithmLabel:'网点算法',algoFs:'Floyd–Steinberg · 细节优先',algoBayer:'Bayer · 规则网点',algoRandom:'随机网点 · 颗粒感',
 brightness:'整体浓度',contrast:'对比度',fontCharSize:'导出 PNG 字符大小',fontDotSize:'导出 PNG 点阵单元大小',
 invert:'反转明暗（亮部生成图案）',blackBg:'黑底白字配色（字符模式）',paletteHint:'反转明暗会改变原图中哪些区域生成图案。',
-convertHalftone:'生成报纸字符图',convertCrt:'生成 CRT 点阵',convertDotprint:'生成纸面网点图',exportTxt:'导出 TXT',exportPng:'导出 PNG',
+convertHalftone:'生成 GLYPH 字符图',convertCrt:'生成 CRT 点阵',convertDotprint:'生成 DOT 纸面网点图',exportTxt:'导出 TXT',exportPng:'导出 PNG',
 mainHint:'建议先用 360 行确认效果，再切换 1080 行导出。超大网格可能需要较多内存。',
 previewTitle:'实时预览',emptyTitle:'NO IMAGE LOADED',emptyText:'选择一张图片，开始生成图案。',imageReadyPrompt:'图片已载入，点击“生成”开始转换。',
 statsGrid:'网格',statsChars:'字符位置',statsDots:'点阵单元',statsFilled:'已填充',statsLocal:'本地处理',
 foot:'TXT 是逐格矩阵文本；PNG 使用完整网格绘制，细节比屏幕预览更多。',
 statusWaiting:'等待上传图片',statusImageReady:'图片已载入，点击生成按钮开始转换。',statusLoadError:'图片读取失败：格式不支持或文件可能已损坏。',
 statusProcessing:'正在计算网点…',statusDone:'完成',statusProcessError:'处理失败：图片可能过大或内存不足。',
-statusModeCrt:'已切换为 CRT 显像管点阵预览',statusModeHalftone:'已切换为报纸字符预览',statusModeDotprint:'已切换为纸面圆点印刷预览',
+statusModeCrt:'已切换为 CRT 显像管点阵预览',statusModeHalftone:'已切换为 GLYPH 报纸字符预览',statusModeDotprint:'已切换为纸面圆点印刷预览',
 statusPalette:'CRT 荧光颜色已更新',statusCustomColor:'自定义荧光颜色已更新',statusPreview:'预览质量已更新',
 statusGlyph:'文字已更新；TXT/PNG 导出将使用新文字',statusTxt:'正在整理 TXT…',statusTxtDone:'TXT 已导出',
 statusPng:'正在绘制 PNG…',statusPngDone:'PNG 已导出',statusPngError:'PNG 导出失败：内存不足',statusPngUnsupported:'当前浏览器不支持流式 PNG 导出，请更新浏览器',
@@ -287,11 +356,12 @@ statusPngTooLarge:'PNG 尺寸过大，请减小行数或单元大小',statusPngF
 fileReady:'已就绪',fileSizeUnit:'MB'
 },
 en:{
-intro:'Switch between newspaper typography, printed ink dots, and CRT phosphor pixels. Everything runs locally in your browser; your images are never uploaded.',
+intro:'Switch between GLYPH newspaper characters, DOT ink patterns, and CRT phosphor pixels. Everything runs locally in your browser; your images are never uploaded.',
 themeLabel:'Interface theme',themeDark:'Dark',themeLight:'Light',
-halftonePaletteLabel:'HALFTONE palette',halftoneLight:'White background · Black text',halftoneDark:'Black background · White text',halftonePaletteHint:'Changes only the text and background colors, not the halftone pattern.',
+halftonePaletteLabel:'GLYPH palette',halftoneLight:'White background · Black text',halftoneDark:'Black background · White text',halftonePaletteHint:'Changes only the text and background colors, not the halftone pattern.',
 uploadTitle:'Source image',uploadHint:'Drop an image here, or browse. Supports JPG / PNG / WebP.',
-outputModeLabel:'Output mode',outputModeHint:'HALFTONE uses repeating characters; DOT PRINT uses solid ink dots on paper; CRT recreates a phosphor display.',
+modePickerTitle:'Choose a mode',modePickerHint:'Select how the image is rendered',modeGlyphDesc:'Newspaper type · Glyph pattern',modeCrtDesc:'Cathode-ray tube · Phosphor',modeDotDesc:'Paper print · Solid ink dots',
+outputModeLabel:'Output mode',outputModeHint:'GLYPH uses repeating characters; DOT uses solid ink dots on paper; CRT recreates a phosphor display.',
 crtPaletteLabel:'CRT phosphor color',crtCustomColorLabel:'Custom phosphor color',crtPaletteHint:'Choose a monochrome CRT phosphor. A matching dark screen background is generated automatically for custom colors.',
 previewQualityLabel:'CRT preview quality',previewStandard:'Standard · Faster',previewHigh:'High detail · More dots',previewQualityHint:'Affects screen preview only. PNG export uses the full grid for higher detail.',
 glyphLabel:'Text for the halftone pattern',glyphHint:'Your text repeats across all positions selected by the halftone algorithm.',glyphPlaceholder:'e.g. LUM3N / DEAD VALLEY',
@@ -301,14 +371,14 @@ customRowsLabel:'Custom rows (64–2400)',algorithmLabel:'Dithering algorithm',a
 brightness:'Density',contrast:'Contrast',fontCharSize:'PNG character size',fontDotSize:'PNG dot cell size',
 invert:'Invert luminance (use highlights)',blackBg:'Black background, light text (HALFTONE)',
 paletteHint:'Invert luminance changes which parts of the image form the pattern.',
-convertHalftone:'Generate newspaper text',convertCrt:'Generate CRT pattern',convertDotprint:'Generate printed dots',exportTxt:'Export TXT',exportPng:'Export PNG',
+convertHalftone:'Generate GLYPH characters',convertCrt:'Generate CRT pattern',convertDotprint:'Generate DOT print pattern',exportTxt:'Export TXT',exportPng:'Export PNG',
 mainHint:'Try 360 rows for a quick check, then use 1080 rows for export. Very large grids may require more memory.',
 previewTitle:'Preview',emptyTitle:'NO IMAGE LOADED',emptyText:'Choose an image to create a pattern.',imageReadyPrompt:'Image loaded. Select Generate to process it.',
 statsGrid:'Grid',statsChars:'Character cells',statsDots:'Dot cells',statsFilled:'Filled',statsLocal:'Local processing',
 foot:'TXT contains the character matrix. PNG is rendered from the full grid and contains more detail than the on-screen preview.',
 statusWaiting:'Waiting for an image',statusImageReady:'Image loaded. Select Generate to begin.',statusLoadError:'Could not read this image. The format may be unsupported or the file may be damaged.',
 statusProcessing:'Calculating pattern…',statusDone:'Done',statusProcessError:'Processing failed: the image may be too large or memory may be insufficient.',
-statusModeCrt:'Switched to CRT preview',statusModeHalftone:'Switched to newspaper text preview',statusModeDotprint:'Switched to printed dot preview',
+statusModeCrt:'Switched to CRT preview',statusModeHalftone:'Switched to GLYPH newspaper preview',statusModeDotprint:'Switched to printed dot preview',
 statusPalette:'CRT phosphor color updated',statusCustomColor:'Custom phosphor color updated',statusPreview:'Preview quality updated',
 statusGlyph:'Text updated. TXT and PNG exports will use the new text.',statusTxt:'Preparing TXT…',statusTxtDone:'TXT exported',
 statusPng:'Rendering PNG…',statusPngDone:'PNG exported',statusPngError:'PNG export failed: insufficient memory',statusPngUnsupported:'This browser does not support streamed PNG export. Please update it.',
@@ -331,7 +401,7 @@ function applyLanguage(){
  document.documentElement.lang=language==='zh'?'zh-CN':'en';
  document.title=language==='zh'?'Lem Box · 图像转换器':'Lem Box · Image Converter';
  $('languageLabel').textContent=language==='zh'?'语言':'Language';
- const map={intro:'intro',uploadTitle:'uploadTitle',uploadHint:'uploadHint',outputModeLabel:'outputModeLabel',outputModeHint:'outputModeHint',
+ const map={intro:'intro',uploadTitle:'uploadTitle',uploadHint:'uploadHint',modePickerTitle:'modePickerTitle',modePickerHint:'modePickerHint',modeGlyphDesc:'modeGlyphDesc',modeCrtDesc:'modeCrtDesc',modeDotDesc:'modeDotDesc',outputModeLabel:'outputModeLabel',outputModeHint:'outputModeHint',
  crtPaletteLabel:'crtPaletteLabel',crtCustomColorLabel:'crtCustomColorLabel',crtPaletteHint:'crtPaletteHint',
  halftonePaletteLabel:'halftonePaletteLabel',halftonePaletteHint:'halftonePaletteHint',
  crtPreviewQualityLabel:'previewQualityLabel',crtPreviewQualityHint:'previewQualityHint',glyphLabel:'glyphLabel',glyphHint:'glyphHint',
@@ -341,9 +411,10 @@ function applyLanguage(){
  emptyText:'emptyText',foot:'foot'};
  for(const [id,key] of Object.entries(map))$(id).textContent=tr(key);
  $('halftonePalette').options[0].textContent=tr('halftoneLight');$('halftonePalette').options[1].textContent=tr('halftoneDark');
- $('outputMode').options[0].textContent=language==='zh'?'HALFTONE · 报纸字符网点':'HALFTONE · Newspaper halftone';
+ $('outputMode').options[0].textContent=language==='zh'?'GLYPH · 报纸字符网点':'GLYPH · Newspaper glyphs';
  $('outputMode').options[1].textContent=language==='zh'?'CRT · 显像管点阵':'CRT · Cathode-ray tube';
- $('outputMode').options[2].textContent=language==='zh'?'DOT PRINT · 纸面网点':'DOT PRINT · Printed ink dots';
+ $('outputMode').options[2].textContent=language==='zh'?'DOT · 纸面网点':'DOT · Printed ink dots';
+ $('modeGlyphName').textContent='GLYPH';$('modeCrtName').textContent='CRT';$('modeDotName').textContent='DOT';
  $('rows').options[0].textContent=tr('row360');$('rows').options[1].textContent=tr('row720');$('rows').options[2].textContent=tr('row1080');$('rows').options[3].textContent=tr('row1440');
  $('algorithm').options[0].textContent=tr('algoFs');$('algorithm').options[1].textContent=tr('algoBayer');$('algorithm').options[2].textContent=tr('algoRandom');
  const paletteNames=language==='zh'?['Phosphor Green · 荧光绿','Amber · 琥珀色','Ice Blue · 冰蓝','Cool White · 冷白','Ruby · 红色','Violet · 紫色','Custom · 自定义颜色']:['Phosphor Green','Amber','Ice Blue','Cool White','Ruby','Violet','Custom'];
@@ -406,6 +477,7 @@ updateRowMode();
 function setPreviewSkin(mode){
  const crt=mode==='crt',dot=mode==='dotprint';
  document.documentElement.dataset.skin=crt?'crt':dot?'dotprint':'halftone';
+ $('modeSwitcher')?.setAttribute('data-active-mode',mode);
  $('preview').classList.toggle('crt-shell',crt);
  $('preview').classList.toggle('halftone-shell',!crt&&!dot);
  $('preview').classList.toggle('dotprint-shell',dot);
@@ -413,15 +485,22 @@ function setPreviewSkin(mode){
  $('previewHead').classList.toggle('paper-head',!crt&&!dot);
  $('previewHead').classList.toggle('dot-head',dot);
 }
+function syncModeCards(){
+ document.querySelectorAll('.mode-card').forEach(card=>{
+  const active=card.dataset.mode===$('outputMode').value;
+  card.classList.toggle('is-active',active);
+  card.setAttribute('aria-pressed',active?'true':'false');
+ });
+}
 function updateOutputMode(){
  const mode=$('outputMode').value,crt=mode==='crt',dot=mode==='dotprint';
- setPreviewSkin(mode);
+ setPreviewSkin(mode);syncModeCards();
  $('glyphField').hidden=mode!=='halftone';
  $('crtPaletteField').hidden=!crt;
  $('crtPreviewQualityField').hidden=!crt;
  $('halftonePaletteField').hidden=crt;
  $('paletteHint').hidden=mode!=='halftone';
- $('halftonePaletteLabel').textContent=language==='zh'?(dot?'DOT PRINT 配色':'HALFTONE 配色'):(dot?'DOT PRINT palette':'HALFTONE palette');
+ $('halftonePaletteLabel').textContent=language==='zh'?(dot?'DOT 配色':'GLYPH 配色'):(dot?'DOT palette':'GLYPH palette');
  $('halftonePaletteHint').textContent=language==='zh'?(dot?'控制纸面与油墨颜色，模拟白纸黑墨或反相印刷。':'只改变字符画的底色和文字颜色，不改变网点分布。'):(dot?'Choose paper and ink colors for the printed dot pattern.':'Changes only the character and paper colors, not the halftone pattern.');
  $('fontSizeLabel').textContent=tr(mode==='halftone'?'fontCharSize':'fontDotSize');
  convert.textContent=tr(crt?'convertCrt':dot?'convertDotprint':'convertHalftone');
@@ -437,6 +516,11 @@ $('halftonePalette').addEventListener('change',()=>{
  if(grid&&grid.mode!=='crt'){grid.background=$('halftonePalette').value==='dark';renderPreview()}
 });
 $('outputMode').addEventListener('change',updateOutputMode);
+document.querySelectorAll('.mode-card').forEach(card=>card.addEventListener('click',()=>{
+ if($('outputMode').value===card.dataset.mode)return;
+ $('outputMode').value=card.dataset.mode;
+ updateOutputMode();
+}));
 $('language').addEventListener('change',()=>{language=$('language').value;applyLanguage()});
 updateOutputMode();
 $('brightness').addEventListener('input',()=> $('brightnessVal').textContent=$('brightness').value);
@@ -627,7 +711,7 @@ $('glyphs').addEventListener('input',()=>{if(grid){grid.chars=Array.from($('glyp
 convert.addEventListener('click',process);
 function buildText(){const lines=new Array(gridH);let k=0;for(let y=0;y<gridH;y++){let s='';for(let x=0;x<gridW;x++,k++)s+=grid.mask[k]?(grid.mode==='halftone'?grid.chars[(x+y*gridW)%grid.chars.length]:'.'):' ';lines[y]=s}return lines.join('\n')}
 function download(blob,name){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),30000)}
-txt.addEventListener('click',()=>{if(!grid)return;setStatus(tr('statusTxt'));setTimeout(()=>{download(new Blob([buildText()],{type:'text/plain;charset=utf-8'}),grid.mode==='crt'?'lem-box-crt.txt':grid.mode==='dotprint'?'lem-box-dotprint.txt':'lem-box-halftone.txt');setStatus(tr('statusTxtDone'))},20)});
+txt.addEventListener('click',()=>{if(!grid)return;setStatus(tr('statusTxt'));setTimeout(()=>{download(new Blob([buildText()],{type:'text/plain;charset=utf-8'}),grid.mode==='crt'?'lem-box-crt.txt':grid.mode==='dotprint'?'lem-box-dot.txt':'lem-box-glyph.txt');setStatus(tr('statusTxtDone'))},20)});
 function pngU32(value){return new Uint8Array([(value>>>24)&255,(value>>>16)&255,(value>>>8)&255,value&255])}
 const pngCrcTable=(()=>{const table=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?(0xedb88320^(c>>>1)):(c>>>1);table[n]=c>>>0}return table})();
 function pngCrc32(typeBytes,data){let crc=0xffffffff;for(const part of [typeBytes,data])for(let i=0;i<part.length;i++)crc=pngCrcTable[(crc^part[i])&255]^(crc>>>8);return (crc^0xffffffff)>>>0}
@@ -696,7 +780,7 @@ png.addEventListener('click',()=>{
     shade.addColorStop(0,'rgba(0,0,0,0)');shade.addColorStop(1,'rgba(0,0,0,.3)');ctx.fillStyle=shade;ctx.fillRect(0,0,w,h);
     blob=await new Promise((resolve,reject)=>c.toBlob(b=>b?resolve(b):reject(new Error('PNG encoding failed')),'image/png'));
    }
-   download(blob,grid.mode==='crt'?'lem-box-crt.png':grid.mode==='dotprint'?'lem-box-dotprint.png':'lem-box-halftone.png');
+   download(blob,grid.mode==='crt'?'lem-box-crt.png':grid.mode==='dotprint'?'lem-box-dot.png':'lem-box-glyph.png');
    setStatus(tr('statusPngDone')+' · '+w+' × '+h);
   }catch(e){console.error(e);setStatus(tr(e?.message==='CompressionStream unavailable'?'statusPngUnsupported':'statusPngError'))}
   finally{png.disabled=false}
