@@ -2,7 +2,7 @@
 
 **LEM BOX 是一个在浏览器本地运行的图像转换工具。** 它可以把图片转换成报纸字符、印刷圆点或 CRT 荧光点阵。无需安装软件，也不需要把图片上传到服务器。
 
-- **在线使用：** https://meari006.github.io/lumen-halftone/
+- **在线使用：** https://meari006.github.io/lem-box/
 - **当前版本：** v0.12.0
 - **运行方式：** 静态网页，使用浏览器打开即可
 
@@ -75,7 +75,7 @@
 
 ## 使用方法
 
-1. 打开 [LEM BOX 在线页面](https://meari006.github.io/lumen-halftone/)。
+1. 打开 [LEM BOX 在线页面](https://meari006.github.io/lem-box/)。
 2. 选择图片，或把图片拖入上传区域。支持 JPG、PNG、WebP 等常见格式。
 3. 在顶部选择 **GLYPH**、**DOT** 或 **CRT**。
 4. 调整网格高度、网点算法、浓度和对比度等参数。
