@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 860" role="img" aria-labelledby="title desc">
+<title id="title">LEM BOX image conversion examples</title>
+<desc id="desc">One mountain landscape rendered as the original image, newspaper glyphs, printed ink dots, and a green CRT phosphor display.</desc>
+<defs>
+  <linearGradient id="bg" x2="0" y2="1"><stop stop-color="#41464b"/><stop offset="1" stop-color="#292d31"/></linearGradient>
+  <linearGradient id="sourceSky" x2="0" y2="1"><stop stop-color="#aab0b4"/><stop offset="1" stop-color="#555d64"/></linearGradient>
+  <linearGradient id="crtSky" x2="0" y2="1"><stop stop-color="#0e3219"/><stop offset="1" stop-color="#031009"/></linearGradient>
+  <pattern id="glyphs" width="43" height="24" patternUnits="userSpaceOnUse"><text x="0" y="17" font-family="monospace" font-size="16" letter-spacing="1" fill="#f0f0ec">LUM3N</text></pattern>
+  <pattern id="dots" width="15" height="15" patternUnits="userSpaceOnUse"><circle cx="7.5" cy="7.5" r="3.6" fill="#f4f4f0"/></pattern>
+  <pattern id="crtDots" width="13" height="13" patternUnits="userSpaceOnUse"><circle cx="6.5" cy="6.5" r="3.3" fill="#76ff91"/></pattern>
+  <pattern id="scan" width="4" height="7" patternUnits="userSpaceOnUse"><rect width="4" height="1.4" fill="#000" opacity=".35"/></pattern>
+  <clipPath id="glyphMountain"><path d="M18 258 L78 185 116 221 164 136 228 218 267 178 310 258Z"/></clipPath>
+  <clipPath id="dotMountain"><path d="M18 258 L78 185 116 221 164 136 228 218 267 178 310 258Z"/></clipPath>
+  <clipPath id="crtMountain"><path d="M18 258 L78 185 116 221 164 136 228 218 267 178 310 258Z"/></clipPath>
+  <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="1440" height="860" fill="url(#bg)"/>
+<g font-family="Arial,'Helvetica Neue',sans-serif" fill="#fff">
+  <text x="64" y="82" font-size="42" font-weight="700" letter-spacing="4">LEM BOX</text>
+  <text x="66" y="116" font-size="16" fill="#cbd0d4" letter-spacing="3">IMAGE LAB  /  ONE IMAGE · FOUR VIEWS</text>
+  <text x="1374" y="82" text-anchor="end" font-size="14" fill="#cbd0d4">LOCAL IMAGE PROCESSING</text>
+</g>
+<g id="cards" font-family="Arial,'Helvetica Neue',sans-serif">
+  <g transform="translate(60 160)">
+    <rect width="310" height="570" rx="12" fill="#363b40" stroke="#8b9297" stroke-width="2"/>
+    <text x="22" y="42" fill="#fff" font-size="22" font-weight="700">SOURCE</text>
+    <text x="22" y="66" fill="#c3c9cd" font-size="12" letter-spacing="1.5">ORIGINAL IMAGE</text>
+    <g transform="translate(0 88)">
+      <rect x="12" y="0" width="286" height="290" rx="7" fill="url(#sourceSky)"/>
+      <circle cx="225" cy="64" r="27" fill="#e8e7df"/>
+      <path d="M12 230 L85 128 129 180 189 98 298 230V290H12Z" fill="#353d43"/>
+      <path d="M12 255 L90 190 151 235 227 159 298 223V290H12Z" fill="#171c20"/>
+      <path d="M12 255 L90 190 151 235 227 159 298 223" fill="none" stroke="#bfc5c8" stroke-width="2" opacity=".55"/>
+      <path d="M12 275 Q85 251 145 272 T298 264V290H12Z" fill="#0b0e11"/>
+      <rect x="12" y="0" width="286" height="290" rx="7" fill="none" stroke="#bec4c8" opacity=".45"/>
+    </g>
+    <text x="22" y="432" fill="#fff" font-size="15" font-weight="700">Input</text>
+    <text x="22" y="459" fill="#c3c9cd" font-size="13">Grayscale landscape</text>
+    <text x="22" y="482" fill="#c3c9cd" font-size="13">with clear light and shadow</text>
+    <rect x="22" y="520" width="84" height="25" rx="4" fill="#51585e"/>
+    <text x="64" y="537" text-anchor="middle" fill="#fff" font-size="11">JPG / PNG</text>
+  </g>
+  <g transform="translate(405 160)">
+    <rect width="310" height="570" rx="12" fill="#363b40" stroke="#2896ff" stroke-width="2"/>
+    <text x="22" y="42" fill="#fff" font-size="22" font-weight="700">GLYPH</text>
+    <text x="22" y="66" fill="#9bcfff" font-size="12" letter-spacing="1.5">NEWSPAPER CHARACTERS</text>
+    <g transform="translate(0 88)">
+      <rect x="12" y="0" width="286" height="290" rx="7" fill="#15191d"/>
+      <circle cx="225" cy="64" r="27" fill="#aeb4b8" opacity=".8"/>
+      <rect x="12" y="0" width="286" height="290" fill="url(#glyphs)" opacity=".08"/>
+      <g clip-path="url(#glyphMountain)"><rect x="12" y="0" width="286" height="290" fill="url(#glyphs)"/></g>
+      <path d="M12 258 L78 185 116 221 164 136 228 218 267 178 310 258Z" fill="none" stroke="#e5e8e9" stroke-width="1.5" opacity=".9"/>
+      <rect x="12" y="0" width="286" height="290" rx="7" fill="none" stroke="#2896ff" opacity=".55"/>
+    </g>
+    <text x="22" y="432" fill="#fff" font-size="15" font-weight="700">Character halftone</text>
+    <text x="22" y="459" fill="#c3c9cd" font-size="13">1×1 · 2×2 · 4×4 · 6×6 · 8×8</text>
+    <text x="22" y="482" fill="#c3c9cd" font-size="13">Custom character ramp</text>
+    <rect x="22" y="520" width="84" height="25" rx="4" fill="#174a78"/>
+    <text x="64" y="537" text-anchor="middle" fill="#fff" font-size="11">TEXT</text>
+  </g>
+  <g transform="translate(750 160)">
+    <rect width="310" height="570" rx="12" fill="#363b40" stroke="#f4f4f4" stroke-width="2"/>
+    <text x="22" y="42" fill="#fff" font-size="22" font-weight="700">DOT</text>
+    <text x="22" y="66" fill="#d4d7d9" font-size="12" letter-spacing="1.5">PRINTED INK DOTS</text>
+    <g transform="translate(0 88)">
+      <rect x="12" y="0" width="286" height="290" rx="7" fill="#111519"/>
+      <circle cx="225" cy="64" r="27" fill="#d8dcde"/>
+      <g clip-path="url(#dotMountain)"><rect x="12" y="0" width="286" height="290" fill="url(#dots)"/></g>
+      <path d="M12 258 L78 185 116 221 164 136 228 218 267 178 310 258Z" fill="none" stroke="#e9ecee" stroke-width="1.5" opacity=".75"/>
+      <path d="M12 270 Q92 244 146 264 T298 259" fill="none" stroke="#f4f4f4" stroke-width="1.4" opacity=".55"/>
+      <rect x="12" y="0" width="286" height="290" rx="7" fill="none" stroke="#fff" opacity=".35"/>
+    </g>
+    <text x="22" y="432" fill="#fff" font-size="15" font-weight="700">Solid ink pattern</text>
+    <text x="22" y="459" fill="#c3c9cd" font-size="13">Round dots on a regular grid</text>
+    <text x="22" y="482" fill="#c3c9cd" font-size="13">Paper-like monochrome output</text>
+    <rect x="22" y="520" width="84" height="25" rx="4" fill="#5a5f63"/>
+    <text x="64" y="537" text-anchor="middle" fill="#fff" font-size="11">PRINT</text>
+  </g>
+  <g transform="translate(1095 160)">
+    <rect width="285" height="570" rx="12" fill="#363b40" stroke="#45e86a" stroke-width="2"/>
+    <text x="22" y="42" fill="#fff" font-size="22" font-weight="700">CRT</text>
+    <text x="22" y="66" fill="#87f59a" font-size="12" letter-spacing="1.5">PHOSPHOR DISPLAY</text>
+    <g transform="translate(0 88)">
+      <rect x="12" y="0" width="261" height="290" rx="7" fill="url(#crtSky)"/>
+      <circle cx="213" cy="64" r="27" fill="#94ffa7" opacity=".85" filter="url(#glow)"/>
+      <g clip-path="url(#crtMountain)" filter="url(#glow)"><rect x="12" y="0" width="261" height="290" fill="url(#crtDots)"/></g>
+      <path d="M12 258 L78 185 116 221 164 136 228 218 267 178 273 258Z" fill="none" stroke="#72ff8c" stroke-width="1.5" opacity=".8"/>
+      <rect x="12" y="0" width="261" height="290" fill="url(#scan)" opacity=".55"/>
+      <rect x="12" y="0" width="261" height="290" rx="7" fill="none" stroke="#45e86a" opacity=".5"/>
+    </g>
+    <text x="22" y="432" fill="#fff" font-size="15" font-weight="700">Phosphor matrix</text>
+    <text x="22" y="459" fill="#c3c9cd" font-size="13">Soft glow and scanlines</text>
+    <text x="22" y="482" fill="#c3c9cd" font-size="13">Multiple phosphor colors</text>
+    <rect x="22" y="520" width="84" height="25" rx="4" fill="#174d27"/>
+    <text x="64" y="537" text-anchor="middle" fill="#fff" font-size="11">DISPLAY</text>
+  </g>
+</g>
+<g font-family="Arial,'Helvetica Neue',sans-serif">
+  <path d="M60 775H1380" stroke="#70777c" stroke-width="1"/>
+  <text x="64" y="814" fill="#fff" font-size="18" font-weight="700" letter-spacing="1">ONE IMAGE</text>
+  <text x="251" y="814" fill="#9ba3a9" font-size="18">→</text>
+  <text x="286" y="814" fill="#fff" font-size="18" font-weight="700" letter-spacing="1">THREE RENDERING MODES</text>
+  <text x="690" y="814" fill="#9ba3a9" font-size="18">→</text>
+  <text x="726" y="814" fill="#fff" font-size="18" font-weight="700" letter-spacing="1">TXT / PNG EXPORT</text>
+  <text x="1378" y="814" text-anchor="end" fill="#b8c0c5" font-size="12">LEM BOX · v0.13.0</text>
+</g>
+</svg>
