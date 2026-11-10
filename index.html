@@ -490,9 +490,61 @@ main{grid-template-columns:minmax(330px,.78fr) minmax(0,1.22fr)!important;align-
 @media(max-width:1050px){main{grid-template-columns:minmax(300px,.9fr) minmax(0,1.1fr)!important;gap:14px!important}.option-grid{gap:11px!important}}
 @media(max-width:900px){main{grid-template-columns:minmax(0,1fr)!important;align-items:stretch!important}.settings-column{height:auto!important}.workspace{height:auto!important}.workspace>.preview{min-height:480px!important;max-height:70vh!important}}
 @media(max-width:620px){.option-grid{grid-template-columns:1fr!important;gap:10px!important}.option-grid>.field{grid-column:1/-1!important}.mode-cards{gap:6px!important}:root[data-skin] .mode-card{height:78px!important;min-height:78px!important;padding:5px 2px!important}.mode-card-mark{width:28px!important;height:28px!important;flex-basis:28px!important}.mode-card-copy strong{font-size:11px!important}.mode-card-copy small{font-size:9px!important}.workspace>.preview{min-height:380px!important;max-height:70vh!important}}
+
+/* v0.18.1 — dedicated mobile layout and horizontal overflow guard */
+@media(max-width:620px){
+ html,body{width:100%;max-width:100%;overflow-x:hidden!important}
+ .site-header,.mode-switcher-wrap,main{
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+ }
+ .site-header{padding:18px 12px 14px!important}
+ .site-header .headerTop{width:100%!important;min-width:0!important;flex-wrap:wrap!important;gap:8px!important}
+ .site-header h1{width:100%!important;max-width:100%!important;min-width:0!important;white-space:normal!important;overflow-wrap:anywhere}
+ .site-header .headerTools{max-width:100%;min-width:0}
+ .mode-switcher-wrap{padding:0 12px 12px!important}
+ .mode-switcher{width:100%!important;max-width:100%!important;min-width:0!important}
+ .mode-switcher-head{min-width:0;flex-wrap:wrap}
+ .mode-cards{width:100%;min-width:0;grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ .mode-card{min-width:0!important;max-width:100%!important}
+ .mode-card-copy,.mode-card-copy strong,.mode-card-copy small{min-width:0;max-width:100%;overflow-wrap:anywhere}
+ main{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  align-items:stretch!important;
+  gap:12px!important;
+  margin:0!important;
+  padding:0 12px 28px!important;
+ }
+ main>* ,.settings-column,.workspace,.settings-column>.panel,.controls,
+ .option-grid,.mode-options-slot,.preview,.previewHead,.drop,.filePreview{
+  min-width:0!important;
+  max-width:100%!important;
+ }
+ .settings-column{width:100%;height:auto!important;min-height:0!important;gap:12px!important}
+ .workspace{width:100%!important;height:auto!important;min-height:0!important}
+ .input-toolbar{width:100%!important;padding:10px!important}
+ .input-toolbar .field{grid-template-columns:minmax(0,1fr)!important;gap:6px!important}
+ .input-toolbar .drop{grid-template-columns:minmax(0,1fr)!important;gap:8px!important}
+ input[type=file],input[type=text],input[type=number],select{width:100%;min-width:0!important;max-width:100%!important}
+ .controls{width:100%!important;display:flex!important;flex-direction:column!important;padding:12px!important;gap:12px!important}
+ .slider-row{display:flex!important;flex-direction:column!important;width:100%!important;min-width:0!important;gap:12px!important}
+ .slider-row>.field,.option-grid>.field{width:100%!important;min-width:0!important}
+ .option-grid{display:grid!important;grid-template-columns:minmax(0,1fr)!important;width:100%!important;gap:10px!important}
+ .option-grid>.field{grid-column:1/-1!important}
+ .mode-options-slot{display:contents!important}
+ .preview{width:100%!important;min-height:380px!important;max-height:70vh!important;padding:10px!important}
+ .preview canvas{display:block;max-width:100%!important;max-height:68vh!important;width:auto;height:auto;object-fit:contain}
+ .workspace>.preview{width:100%!important;min-width:0!important}
+ .fileInfo{min-width:0!important}
+ .fileInfo strong,.hint,.status{overflow-wrap:anywhere}
+}
+
 </style></head>
 <body>
-<header class="site-header"><div class="headerTop"><h1>LEM BOX <span style="color:var(--accent);font-weight:400">/ IMAGE LAB</span> <span class="version">v0.18.0</span></h1><div class="headerTools"><label class="languageControl" for="language"><span id="languageLabel">语言</span><select id="language"><option value="zh" selected>中文</option><option value="en">English</option></select></label></div></div><p id="intro">在 GLYPH 报纸字符、DOT 纸面圆点与 CRT 显像管点阵之间切换。所有处理都在本地浏览器完成，图片不会上传。</p></header>
+<header class="site-header"><div class="headerTop"><h1>LEM BOX <span style="color:var(--accent);font-weight:400">/ IMAGE LAB</span> <span class="version">v0.18.1</span></h1><div class="headerTools"><label class="languageControl" for="language"><span id="languageLabel">语言</span><select id="language"><option value="zh" selected>中文</option><option value="en">English</option></select></label></div></div><p id="intro">在 GLYPH 报纸字符、DOT 纸面圆点与 CRT 显像管点阵之间切换。所有处理都在本地浏览器完成，图片不会上传。</p></header>
 <main>
  <div class="settings-column">
   <section class="input-toolbar panel">
